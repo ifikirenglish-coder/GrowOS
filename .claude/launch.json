@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "flowcharts",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "ifikir-english/output", "-p", "3456", "--no-clipboard"],
+      "port": 3456
+    }
+  ]
+}

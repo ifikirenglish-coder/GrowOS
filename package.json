@@ -1,0 +1,19 @@
+{
+  "name": "growos-v0.1",
+  "version": "1.0.0",
+  "description": "Your AI marketing system. Newsletters, social media, ads, landing pages, video editing, and more — in your voice, learning from every correction.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.85.0",
+    "mammoth": "^1.12.0",
+    "pdf-parse": "^1.1.1",
+    "xlsx": "^0.18.5"
+  }
+}
