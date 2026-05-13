@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Kuasai English — Trial Class Journey</title>
+
+  <script>
+    // ↓ PASTE YOUR WORKBOOK GOOGLE DRIVE DOWNLOAD LINK HERE ↓
+    // 1. Upload KE workbook.pdf to Google Drive
+    // 2. Share → "Anyone with link" → Copy link
+    // 3. Change format: .../file/d/FILE_ID/view → uc?export=download&id=FILE_ID
+    const WORKBOOK_URL = "https://drive.google.com/uc?export=download&id=1XEQu8ZaSXz0TRPbo-EM7sXpQjGlSReCW";
+    //
+    // TO SHARE: netlify.com/drop → drag this file → instant free link
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:       #E8E8E8;
+      --bg-mid:   #DCDCDC;
+      --bg-dark:  #2C2C2E;
+      --white:    #FFFFFF;
+      --text:     #1D1D1F;
+      --sub:      #6e6e73;
+      --sub2:     #3d3d3f;
+      --line:     rgba(0,0,0,0.10);
+      --line-dk:  rgba(255,255,255,0.10);
+      --orange:   #F47C1F;
+      --orange-dk:#CC6316;
+      --radius:   18px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── PROGRESS ─── */
+    #progress {
+      position: fixed; top: 0; left: 0;
+      height: 2px; width: 0%;
+      background: var(--orange);
+      z-index: 200;
+      transition: width 0.05s linear;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px;
+      background: rgba(232,232,232,0.82);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--line);
+      z-index: 100;
+    }
+    .nav-logo { height: 22px; width: auto; display: block; }
+    .nav-cta {
+      font-size: 13px; font-weight: 600;
+      color: var(--orange);
+      text-decoration: none;
+      padding: 7px 16px;
+      border: 1px solid rgba(244,124,31,0.35);
+      border-radius: 100px;
+    }
+
+    /* ─── REVEAL ─── */
+    .reveal {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.65s cubic-bezier(.25,.46,.45,.94),
+                  transform 0.65s cubic-bezier(.25,.46,.45,.94);
+    }
+    .reveal.on { opacity: 1; transform: none; }
+    .d1 { transition-delay: .08s; } .d2 { transition-delay: .16s; }
+    .d3 { transition-delay: .24s; } .d4 { transition-delay: .32s; }
+    .d5 { transition-delay: .40s; }
+
+    /* ─── WRAPPERS ─── */
+    .w { max-width: 560px; margin: 0 auto; padding: 0 22px; }
+
+    /* ─── SECTION TYPES ─── */
+    .s-light  { background: var(--bg); }
+    .s-mid    { background: var(--bg-mid); }
+    .s-dark   { background: var(--bg-dark); }
+    .s-white  { background: var(--white); }
+    .s-orange { background: var(--orange); }
+
+    .s-pad { padding-top: 88px; padding-bottom: 88px; }
+    .s-pad-sm { padding-top: 56px; padding-bottom: 56px; }
+
+    /* ─── HERO ─── */
+    #hero {
+      background: var(--bg);
+      padding-top: 52px; /* nav height */
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .hero-img-wrap {
+      width: 100%; overflow: hidden;
+      background: var(--bg-mid);
+    }
+    .hero-img-wrap img {
+      width: 100%; height: auto; display: block;
+      object-fit: cover;
+    }
+    .hero-text { padding: 40px 22px 64px; max-width: 560px; margin: 0 auto; }
+
+    .eyebrow {
+      display: block;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(40px, 10vw, 64px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    h1 .muted { color: var(--sub); }
+
+    .hero-sub {
+      font-size: 16px; color: var(--sub);
+      line-height: 1.6; max-width: 340px;
+      margin-bottom: 36px;
+    }
+
+    .stat-row { display: flex; gap: 28px; padding-top: 28px; border-top: 1px solid var(--line); }
+    .stat .num { font-size: 26px; font-weight: 700; letter-spacing: -1px; color: var(--text); }
+    .stat .lbl { font-size: 12px; color: var(--sub); margin-top: 2px; }
+
+    .scroll-hint {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 6px; margin-top: 40px;
+      color: var(--sub); font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--sub), transparent);
+      animation: sp 2s ease-in-out infinite;
+    }
+    @keyframes sp { 0%,100%{opacity:.35} 50%{opacity:1} }
+
+    /* ─── SHARED TYPOGRAPHY ─── */
+    h2 {
+      font-size: clamp(30px, 7vw, 48px);
+      font-weight: 800; letter-spacing: -1.2px; line-height: 1.08;
+      margin-bottom: 20px;
+    }
+    h2 .muted { color: var(--sub); }
+    .s-dark h2 { color: #f5f5f7; }
+    .s-dark h2 .muted { color: rgba(255,255,255,.4); }
+
+    .body-text { font-size: 16px; color: var(--sub); line-height: 1.65; margin-bottom: 40px; }
+    .s-dark .body-text { color: rgba(255,255,255,.55); }
+
+    /* ─── STEP LIST ─── */
+    .step-list { list-style: none; }
+    .step-item {
+      display: grid; grid-template-columns: 44px 1fr;
+      gap: 0 16px; padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+    }
+    .step-item:first-child { border-top: 1px solid var(--line); }
+    .s-dark .step-item { border-color: var(--line-dk); }
+    .s-dark .step-item:first-child { border-top-color: var(--line-dk); }
+
+    .s-num { font-size: 12px; font-weight: 600; color: var(--sub); padding-top: 3px; }
+    .s-dark .s-num { color: rgba(255,255,255,.4); }
+
+    .s-info h3 { font-size: 17px; font-weight: 600; letter-spacing: -.2px; margin-bottom: 5px; }
+    .s-dark .s-info h3 { color: #f5f5f7; }
+    .s-info p { font-size: 14px; color: var(--sub); line-height: 1.55; }
+    .s-dark .s-info p { color: rgba(255,255,255,.5); }
+    .s-time {
+      display: inline-block; margin-top: 10px;
+      font-size: 11px; color: var(--sub);
+      border: 1px solid var(--line); border-radius: 100px; padding: 3px 10px;
+    }
+    .s-dark .s-time { border-color: var(--line-dk); color: rgba(255,255,255,.4); }
+
+    /* ─── PULL QUOTE ─── */
+    .pullquote {
+      font-size: clamp(20px, 5vw, 30px);
+      font-weight: 700; letter-spacing: -.6px; line-height: 1.25;
+      padding: 48px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin: 48px 0;
+    }
+    .pullquote span { color: var(--orange); }
+    .s-dark .pullquote { border-color: var(--line-dk); color: #f5f5f7; }
+
+    /* ─── CHECKLIST ─── */
+    .ck-list { list-style: none; margin-top: 28px; }
+    .ck-item {
+      display: flex; gap: 14px; padding: 17px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 15px; line-height: 1.5; color: var(--sub2);
+    }
+    .ck-item:first-child { border-top: 1px solid var(--line); }
+    .ck-mark { color: var(--orange); font-size: 15px; min-width: 18px; padding-top: 2px; font-weight: 700; }
+
+    /* ─── SECRETS ACCORDION ─── */
+    .acc-item { border-bottom: 1px solid var(--line); cursor: pointer; }
+    .acc-item:first-child { border-top: 1px solid var(--line); }
+    .s-dark .acc-item { border-color: var(--line-dk); }
+    .s-dark .acc-item:first-child { border-top-color: var(--line-dk); }
+
+    .acc-trigger {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 14px;
+      padding: 22px 0;
+    }
+    .acc-left { display: flex; align-items: baseline; gap: 18px; }
+    .acc-n { font-size: 12px; font-weight: 600; color: var(--sub); min-width: 18px; }
+    .s-dark .acc-n { color: rgba(255,255,255,.4); }
+    .acc-title { font-size: 17px; font-weight: 600; letter-spacing: -.2px; }
+    .s-dark .acc-title { color: #f5f5f7; }
+    .acc-plus {
+      font-size: 22px; font-weight: 300; color: var(--sub);
+      min-width: 22px; text-align: right;
+      transition: transform .3s cubic-bezier(.4,0,.2,1);
+    }
+    .acc-item.open .acc-plus { transform: rotate(45deg); color: var(--orange); }
+
+    .acc-body { overflow: hidden; max-height: 0; transition: max-height .5s cubic-bezier(.4,0,.2,1); }
+    .acc-item.open .acc-body { max-height: 480px; }
+    .acc-inner { padding-bottom: 26px; padding-left: 36px; }
+    .acc-inner p { font-size: 15px; color: var(--sub); line-height: 1.65; margin-bottom: 12px; }
+    .s-dark .acc-inner p { color: rgba(255,255,255,.55); }
+    .acc-inner p:last-child { margin-bottom: 0; }
+    .acc-inner strong { color: var(--text); font-weight: 600; }
+    .s-dark .acc-inner strong { color: #f5f5f7; }
+
+    .acc-highlight {
+      font-size: 14px; font-weight: 600; color: var(--orange);
+      padding: 12px 0 0; border-top: 1px solid var(--line);
+      margin-top: 14px;
+    }
+    .s-dark .acc-highlight { border-top-color: var(--line-dk); }
+
+    /* ─── LEAPER GRID ─── */
+    .leaper-row {
+      display: flex; margin-top: 28px;
+      border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+    }
+    .s-dark .leaper-row { border-color: var(--line-dk); }
+    .lp-cell {
+      flex: 1; padding: 16px 4px; text-align: center;
+      border-right: 1px solid var(--line);
+    }
+    .s-dark .lp-cell { border-right-color: var(--line-dk); }
+    .lp-cell:last-child { border-right: none; }
+    .lp-l { font-size: 24px; font-weight: 800; color: var(--orange); line-height: 1; }
+    .lp-w { font-size: 9px; font-weight: 600; color: var(--sub); margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+    .s-dark .lp-w { color: rgba(255,255,255,.4); }
+
+    /* ─── WORKBOOK ─── */
+    .wb-meta { font-size: 14px; color: var(--sub); line-height: 1.65; margin-bottom: 28px; }
+    .wb-list { list-style: none; margin-bottom: 36px; }
+    .wb-list li {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 0; border-bottom: 1px solid var(--line);
+      font-size: 15px; color: var(--sub2);
+    }
+    .wb-list li:first-child { border-top: 1px solid var(--line); }
+    .wb-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--orange); min-width: 5px; }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: block; width: 100%;
+      padding: 17px 24px;
+      font-family: inherit; font-size: 16px; font-weight: 600;
+      border: none; border-radius: 14px; cursor: pointer;
+      text-decoration: none; text-align: center;
+      transition: opacity .15s, transform .1s;
+    }
+    .btn:active { transform: scale(0.99); opacity: .88; }
+    .btn-orange { background: var(--orange); color: #fff; }
+    .btn-dark   { background: var(--text); color: #fff; }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 1px solid rgba(0,0,0,.2);
+      margin-top: 10px;
+    }
+    .btn-outline-lt {
+      background: transparent; color: #f5f5f7;
+      border: 1px solid rgba(255,255,255,.2);
+      margin-top: 10px;
+    }
+
+    /* ─── CTA BIG NUMBER ─── */
+    .big-num {
+      font-size: clamp(80px, 20vw, 130px);
+      font-weight: 900; letter-spacing: -5px; line-height: 1;
+      color: rgba(244,124,31,.15);
+      margin-bottom: -20px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 48px 22px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      max-width: 560px; margin: 0 auto;
+    }
+    .s-dark footer { border-top-color: var(--line-dk); }
+    footer p { font-size: 13px; color: var(--sub); line-height: 1.9; }
+    footer a { color: var(--sub2); text-decoration: none; }
+
+    /* ─── FLOAT BUTTON ─── */
+    #float-dl {
+      position: fixed; bottom: 18px; right: 16px;
+      background: var(--orange); color: #fff;
+      font-size: 13px; font-weight: 700;
+      padding: 11px 20px; border-radius: 100px; border: none;
+      cursor: pointer; z-index: 99;
+      box-shadow: 0 4px 20px rgba(244,124,31,.35);
+      transform: translateY(72px);
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+      text-decoration: none;
+    }
+    #float-dl.show { transform: translateY(0); }
+
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <img class="nav-logo"
+    src="https://ifikirenglish.com/wp-content/uploads/2020/12/TM-Logo-iFikir-English-1.png"
+    alt="iFikir English"
+    onerror="this.outerHTML='<span style=\'font-size:14px;font-weight:700\'>iFikir <span style=\'color:#F47C1F\'>English</span></span>'">
+  <a class="nav-cta" href="#workbook">Workbook ↓</a>
+</nav>
+
+<!-- FLOAT BUTTON -->
+<a id="float-dl" href="#" onclick="handleDownload(event)">↓ Workbook</a>
+
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<div id="hero" class="s-light">
+
+  <div class="hero-img-wrap reveal">
+    <img src="https://ifikirenglish.com/wp-content/uploads/2025/09/Kuasai-English-20-1.webp"
+         alt="Kuasai English Trial Class"
+         loading="eager"
+         onerror="this.parentElement.style.display='none'">
+  </div>
+
+  <div class="hero-text">
+    <span class="eyebrow reveal">iFikir English · Trial Class 2025</span>
+    <h1 class="reveal d1">Kuasai<br><span class="muted">English.</span></h1>
+    <p class="hero-sub reveal d2">
+      100 minit. 3 secrets. Satu formula yang akan ubah cara anda cakap English — tanpa hafal grammar.
+    </p>
+    <div class="stat-row reveal d3">
+      <div class="stat"><div class="num">20K+</div><div class="lbl">Peserta</div></div>
+      <div class="stat"><div class="num">4.9★</div><div class="lbl">Google Rating</div></div>
+      <div class="stat"><div class="num">2013</div><div class="lbl">Bermula</div></div>
+    </div>
+    <div class="scroll-hint reveal d4">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     JOURNEY
+══════════════════════════════════════ -->
+<div class="s-mid s-pad">
+  <div class="w">
+    <span class="eyebrow reveal">Program hari ini</span>
+    <h2 class="reveal d1">Apa yang<br><span class="muted">akan berlaku.</span></h2>
+
+    <ul class="step-list">
+      <li class="step-item reveal d1">
+        <div class="s-num">01</div>
+        <div class="s-info">
+          <h3>Pre Session</h3>
+          <p>Masuk Zoom 15 minit awal. Download workbook. Set mindset.</p>
+          <span class="s-time">30 minit sebelum kelas</span>
+        </div>
+      </li>
+      <li class="step-item reveal d2">
+        <div class="s-num">02</div>
+        <div class="s-info">
+          <h3>3 Secrets Utama</h3>
+          <p>Kenapa anda tak yakin — dan cara betulkan dalam satu sesi.</p>
+          <span class="s-time">Dalam kelas · 2 jam</span>
+        </div>
+      </li>
+      <li class="step-item reveal d3">
+        <div class="s-num">03</div>
+        <div class="s-info">
+          <h3>LEAPER Formula</h3>
+          <p>Sistem neurosains untuk bina speaking habit yang kekal selepas kelas.</p>
+          <span class="s-time">Bahagian akhir kelas</span>
+        </div>
+      </li>
+      <li class="step-item reveal d4">
+        <div class="s-num">04</div>
+        <div class="s-info">
+          <h3>Langkah Seterusnya</h3>
+          <p>Pilih sama ada nak teruskan perjalanan — tanpa sebarang tekanan.</p>
+          <span class="s-time">Selepas kelas</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PRE SESSION
+══════════════════════════════════════ -->
+<div class="s-light s-pad">
+  <div class="w">
+    <span class="eyebrow reveal">Sebelum kelas bermula</span>
+    <h2 class="reveal d1">Sedia<br><span class="muted">dulu.</span></h2>
+    <p class="body-text reveal d2">Datang dengan mindset yang betul dan bahan yang lengkap. Setiap minit dalam kelas ini penting.</p>
+
+    <ul class="ck-list">
+      <li class="ck-item reveal d1"><span class="ck-mark">✓</span> Download workbook anda (link ada di bawah)</li>
+      <li class="ck-item reveal d2"><span class="ck-mark">✓</span> Pen dan kertas untuk exercises dalam kelas</li>
+      <li class="ck-item reveal d3"><span class="ck-mark">✓</span> Zoom installed, internet connection stabil</li>
+      <li class="ck-item reveal d4"><span class="ck-mark">✓</span> Duduk di tempat yang senyap, fokus penuh</li>
+      <li class="ck-item reveal d5"><span class="ck-mark">✓</span> Lupakan grammar rules buat masa sekarang</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PULLQUOTE — dark section
+══════════════════════════════════════ -->
+<div class="s-dark s-pad-sm">
+  <div class="w">
+    <div class="pullquote reveal">
+      "Masalah anda bukan grammar. Masalah anda adalah <span>cara otak anda proses bahasa.</span>"
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     3 SECRETS — dark section
+══════════════════════════════════════ -->
+<div class="s-dark s-pad">
+  <div class="w">
+    <span class="eyebrow reveal">Dalam kelas</span>
+    <h2 class="reveal d1">3 secrets<br><span class="muted">yang akan dibongkar.</span></h2>
+    <p class="body-text reveal d2">Tap setiap satu untuk tahu apa yang akan anda pelajari hari ini.</p>
+
+    <!-- Secret 1 -->
+    <div class="acc-item reveal d1 open" onclick="toggleAcc(this)">
+      <div class="acc-trigger">
+        <div class="acc-left">
+          <span class="acc-n">01</span>
+          <span class="acc-title">Punca sebenar anda tak yakin</span>
+        </div>
+        <span class="acc-plus">+</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p>Ramai orang fikir masalah mereka adalah <strong>grammar yang lemah</strong>. Tapi selepas mengajar lebih 20,000 orang — itu bukan punca sebenar.</p>
+          <p>Secret #1 akan tunjukkan satu punca spesifik yang buatkan anda <em>blank</em> setiap kali nak cakap — dan ia ada kaitan dengan cara otak proses bahasa baru.</p>
+          <div class="acc-highlight">Exercise: Anda akan jawab soalan "Apa punca sebenar?" — dalam kelas.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secret 2 -->
+    <div class="acc-item reveal d2" onclick="toggleAcc(this)">
+      <div class="acc-trigger">
+        <div class="acc-left">
+          <span class="acc-n">02</span>
+          <span class="acc-title">Cara bina ayat dalam 60 saat</span>
+        </div>
+        <span class="acc-plus">+</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p>Anda akan belajar satu building block paling penting dalam bahasa Inggeris. Bukan teori — <strong>practice terus dalam kelas</strong>.</p>
+          <p>Dalam masa 5 minit, anda boleh bina 20 ayat penuh menggunakan perkara yang anda buat setiap hari.</p>
+          <div class="acc-highlight">Exercises: "I ___" → "You ___" → "We ___" → bina ayat penuh.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secret 3 -->
+    <div class="acc-item reveal d3" onclick="toggleAcc(this)">
+      <div class="acc-trigger">
+        <div class="acc-left">
+          <span class="acc-n">03</span>
+          <span class="acc-title">LEAPER Formula</span>
+        </div>
+        <span class="acc-plus">+</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p>Sistem yang digunakan oleh 20,000+ peserta iFikir English. Berdasarkan neurosains — bukan hafalan. <strong>Cara otak sebenarnya belajar bahasa.</strong></p>
+          <div class="leaper-row">
+            <div class="lp-cell"><div class="lp-l">L</div><div class="lp-w">Learn</div></div>
+            <div class="lp-cell"><div class="lp-l">E</div><div class="lp-w">Expose</div></div>
+            <div class="lp-cell"><div class="lp-l">A</div><div class="lp-w">Apply</div></div>
+            <div class="lp-cell"><div class="lp-l">P</div><div class="lp-w">Practice</div></div>
+            <div class="lp-cell"><div class="lp-l">E</div><div class="lp-w">Evaluate</div></div>
+            <div class="lp-cell"><div class="lp-l">R</div><div class="lp-w">Repeat</div></div>
+          </div>
+          <div class="acc-highlight" style="margin-top:18px;">Formula ini bukan untuk kelas sahaja — ia untuk seumur hidup anda.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     WORKBOOK — mid grey
+══════════════════════════════════════ -->
+<div class="s-mid s-pad" id="workbook">
+  <div class="w">
+    <span class="eyebrow reveal">Bahan anda</span>
+    <h2 class="reveal d1">Download<br><span class="muted">workbook.</span></h2>
+
+    <p class="wb-meta reveal d2">
+      Workbook eksklusif untuk peserta Trial Class. Bawa masuk ke kelas — ada ruang untuk semua exercises dan nota penting.
+    </p>
+
+    <ul class="wb-list reveal d3">
+      <li>3 Secrets exercises</li>
+      <li>Verb list builder — 20 verbs harian anda</li>
+      <li>Sentence builder practice</li>
+      <li>LEAPER Formula reference</li>
+      <li>Noun exercise (15 benda sekeliling anda)</li>
+      <li>Next steps — Wolf &amp; Panther Package</li>
+    </ul>
+
+    <div class="reveal d4">
+      <a href="#" class="btn btn-dark" onclick="handleDownload(event)">
+        Download Workbook — Percuma
+      </a>
+      <p style="font-size:12px; color:var(--sub); text-align:center; margin-top:10px;">
+        PDF · 8 muka surat · Percuma untuk peserta
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     NEXT STEPS — light
+══════════════════════════════════════ -->
+<div class="s-light s-pad">
+  <div class="w">
+    <span class="eyebrow reveal">Selepas kelas</span>
+    <div class="big-num reveal">15</div>
+    <h2 class="reveal d1">Bulan untuk<br><span class="muted">fluency penuh.</span></h2>
+    <p class="body-text reveal d2">
+      Trial class hari ini hanyalah permulaan. Program penuh iFikir English membawa anda ke tahap fluency dalam 15 bulan — 66 sesi live, 80% practice.
+    </p>
+
+    <ul class="step-list reveal d3" style="margin-bottom:36px;">
+      <li class="step-item">
+        <div class="s-num" style="font-size:20px;padding-top:0;">🐺</div>
+        <div class="s-info">
+          <h3>Wolf Package</h3>
+          <p>Program asas untuk bina keyakinan berbahasa Inggeris dari scratch.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="s-num" style="font-size:20px;padding-top:0;">🐆</div>
+        <div class="s-info">
+          <h3>Panther Package</h3>
+          <p>Program premium — full fluency dalam 15 bulan. HRD Corp claimable.</p>
+        </div>
+      </li>
+    </ul>
+
+    <div class="reveal d4">
+      <a href="https://iFikirIntake.com" target="_blank" class="btn btn-orange">
+        Daftar di iFikirIntake.com
+      </a>
+      <a href="https://ifikirenglish.com" target="_blank" class="btn btn-outline">
+        Tahu lebih lanjut →
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<div class="s-mid">
+  <footer>
+    <p>
+      © 2025 iFikir Sdn. Bhd.<br>
+      <a href="https://ifikirenglish.com">ifikirenglish.com</a>&nbsp;·&nbsp;
+      <a href="https://wa.me/60113990214">WhatsApp kami</a>
+    </p>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     JS
+══════════════════════════════════════ -->
+<script>
+  // Progress bar + float button
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (window.scrollY / (h.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+    document.getElementById('float-dl').classList.toggle('show', pct > 10);
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -28px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Accordion
+  function toggleAcc(el) {
+    const open = el.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(a => a.classList.remove('open'));
+    if (!open) el.classList.add('open');
+  }
+
+  // Download
+  function handleDownload(e) {
+    e.preventDefault();
+    if (WORKBOOK_URL.includes('YOUR_FILE_ID_HERE')) {
+      alert('Setup: Upload KE workbook.pdf ke Google Drive → Share → "Anyone with link" → Copy link → Replace WORKBOOK_URL dalam HTML.\n\nSee comment at top of file.');
+      return;
+    }
+    window.open(WORKBOOK_URL, '_blank');
+  }
+</script>
+
+</body>
+</html>
