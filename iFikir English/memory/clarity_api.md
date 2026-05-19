@@ -1,0 +1,12 @@
+# Microsoft Clarity — API Credentials
+# Used by GrowOS daily routine to pull landing page analytics
+
+PROJECT_ID: woitwv8pge
+TOKEN: eyJhbGciOiJSUzI1NiIsImtpZCI6IjQ4M0FCMDhFNUYwRDMxNjdEOTRFMTQ3M0FEQTk2RTcyRDkwRUYwRkYiLCJ0eXAiOiJKV1QifQ.eyJqdGkiOiI1MzAwNDBhYi0xZjY5LTQwNzItYmMxYi0xN2ExMjJhNjE2MWUiLCJzdWIiOiIzMzE5MTAwOTIwMjAxNjk0Iiwic2NvcGUiOiJEYXRhLkV4cG9ydCIsIm5iZiI6MTc3ODM3NTUwNSwiZXhwIjo0OTMxOTc1NTA1LCJpYXQiOjE3NzgzNzU1MDUsImlzcyI6ImNsYXJpdHkiLCJhdWQiOiJjbGFyaXR5LmRhdGEtZXhwb3J0ZXIifQ.VLiEYhO0WS8BfJd4ib--UvtYhakA7K2QkCVk_tJh_do_bWqrZjRDy13riNqqlw6NBykrInXBzHuMSdNOnzq1At9wlJwBmUx7R8_xWzWXG2-HNqocDVjxr5wxRF0ZtNiaPcYFrPF4_r-W2c3QvntGBR2cSrECcUOsHWX0YnOqU-71dzyN8XZF9FBT1WgqBtifXgSc85RwAv5M5X6oMINnYx94uchSBFbDZaT4OZME_ZI6q9ZSHj5ywViZXPVqIcjesZB49FhYzt_NIa_h1kOcRcHR67FAfCCuAA3rYA4o2qFK4BdgpPhU9wg7St-sNA7zo5HRAhcu0frqIR7W9O1kiw
+ENDPOINT: https://www.clarity.ms/export-data/api/v1/project-live-insights
+DASHBOARD: https://clarity.microsoft.com/projects/view/woitwv8pge/dashboard
+
+# Notes
+# Token expires: 2126 (long-lived JWT)
+# Max 10 API calls per day per project
+# numOfDays: 1, 2, or 3 only (no date range)
