@@ -1,0 +1,1 @@
+[2026-05-20] ERROR: Clarity API returned HTTP 403 — "Host not in allowlist". The remote execution environment's IP address is not permitted by Clarity's API allowlist. Resolution: Add the outbound IP of the Claude Code cloud environment to the Clarity project's allowed hosts, or run this agent from a local or static-IP environment.
