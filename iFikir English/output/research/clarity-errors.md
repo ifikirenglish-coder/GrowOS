@@ -6,3 +6,4 @@
 [2026-05-25] ERROR: All 4 Clarity API calls (overall, Device, Source, OS) returned "Host not in allowlist". Sixth consecutive day blocked. Remote cloud container IP not in Clarity's allowed hosts. Sheet write and CSV append skipped.
 [2026-05-26] ERROR: All 4 Clarity API calls (overall, Device, Source, OS) returned "Host not in allowlist". Seventh consecutive day blocked. Remote cloud container IP not in Clarity's allowed hosts. Sheet write and CSV append skipped.
 [2026-05-27] ERROR: All 4 Clarity API calls (overall, Device, Source, OS) returned "Host not in allowlist". Eighth consecutive day blocked. Remote cloud container IP not in Clarity's allowed hosts. Sheet write and CSV append skipped.
+[2026-05-28] ERROR: All 4 Clarity API calls (overall, Device, Source, OS) returned "Host not in allowlist". Ninth consecutive day blocked. Remote cloud container IP not in Clarity's allowed hosts. Sheet write and CSV append skipped.
