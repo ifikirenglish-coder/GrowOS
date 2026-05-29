@@ -7,3 +7,11 @@
 [2026-05-26] ERROR: All 4 Clarity API calls (overall, Device, Source, OS) returned "Host not in allowlist". Seventh consecutive day blocked. Remote cloud container IP not in Clarity's allowed hosts. Sheet write and CSV append skipped.
 [2026-05-27] ERROR: All 4 Clarity API calls (overall, Device, Source, OS) returned "Host not in allowlist". Eighth consecutive day blocked. Remote cloud container IP not in Clarity's allowed hosts. Sheet write and CSV append skipped.
 [2026-05-28] ERROR: All 4 Clarity API calls (overall, Device, Source, OS) returned "Host not in allowlist". Ninth consecutive day blocked. Remote cloud container IP not in Clarity's allowed hosts. Sheet write and CSV append skipped.
+
+---
+## Error — 2026-05-29 Friday
+**Time (KL):** 09:10
+**Error:** Host not in allowlist — all 4 Clarity API calls blocked by environment network policy.
+**URL attempted:** https://www.clarity.ms/export-data/api/v1/project-live-insights
+**Action required:** clarity.ms must be added to the allowlist for this Claude Code environment. Go to environment settings at https://code.claude.com and add clarity.ms to the allowed outbound hosts.
+**Data written:** None — CSV and Sheet rows skipped for this run.
