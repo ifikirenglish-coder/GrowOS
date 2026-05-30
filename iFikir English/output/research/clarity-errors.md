@@ -15,3 +15,12 @@
 **URL attempted:** https://www.clarity.ms/export-data/api/v1/project-live-insights
 **Action required:** clarity.ms must be added to the allowlist for this Claude Code environment. Go to environment settings at https://code.claude.com and add clarity.ms to the allowed outbound hosts.
 **Data written:** None — CSV and Sheet rows skipped for this run.
+
+## Error — 2026-05-30 Saturday
+
+**Time (UTC):** 2026-05-30 01:09:36 UTC
+**Status:** 403 Forbidden — `x-deny-reason: host_not_allowed`
+**Message:** Host not in allowlist (sandbox egress policy blocks outbound to www.clarity.ms)
+**Impact:** All 4 API calls failed. Metrics logged as zeros for this date.
+**Action required:** Run from a machine/environment with outbound HTTPS access to www.clarity.ms
+
