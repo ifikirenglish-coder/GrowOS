@@ -24,3 +24,4 @@
 **Impact:** All 4 API calls failed. Metrics logged as zeros for this date.
 **Action required:** Run from a machine/environment with outbound HTTPS access to www.clarity.ms
 
+[2026-05-31 Sunday] ERROR: Clarity API returned 403 on all 4 calls — Host not in allowlist. Container IP not permitted by Clarity project settings.
