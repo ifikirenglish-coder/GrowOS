@@ -15,3 +15,17 @@ The remote execution environment (Claude Code on the web) has a network policy t
 **Impact:** No metrics were collected. Sheet write and CSV append were skipped.
 
 **Resolution needed:** Run this script locally (on your machine) or configure a GitHub Action trigger that runs outside the restricted sandbox.
+
+## 2026-06-04 — Network blocked
+
+All 4 Clarity API calls returned: `Host not in allowlist`
+
+The remote execution environment's network policy does not allow outbound connections to `www.clarity.ms`. This is an environment-level network restriction, not a token issue.
+
+**Resolution:** Run this routine locally (your machine or a server with unrestricted outbound access), or ask the environment provider to allowlist `www.clarity.ms`.
+
+Calls attempted:
+- `GET /project-live-insights?numOfDays=1` → Host not in allowlist
+- `GET /project-live-insights?numOfDays=1&dimension1=Device` → Host not in allowlist
+- `GET /project-live-insights?numOfDays=1&dimension1=Source` → Host not in allowlist
+- `GET /project-live-insights?numOfDays=1&dimension1=OS` → Host not in allowlist
