@@ -40,3 +40,11 @@ Calls attempted:
 - **Result:** No data collected. Sheet and CSV not updated.
 - **Fix:** In Microsoft Clarity → Project Settings → API → add the remote environment's egress IP to the allowlist. Alternatively, run this routine from a machine/IP already on the allowlist.
 
+## 2026-06-06 Saturday — API Error
+
+- **Date (KL):** 2026-06-06 Saturday
+- **Error:** All 4 Clarity API calls blocked — `Host not in allowlist`
+- **Calls attempted:** base, Device, Source, OS
+- **Result:** No data collected. Sheet and CSV not updated.
+- **Note:** 4th consecutive day blocked (Jun 3–6). This is a persistent environment-level network restriction.
+
