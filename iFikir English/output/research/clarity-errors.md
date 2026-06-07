@@ -48,3 +48,11 @@ Calls attempted:
 - **Result:** No data collected. Sheet and CSV not updated.
 - **Note:** 4th consecutive day blocked (Jun 3–6). This is a persistent environment-level network restriction.
 
+## 2026-06-07 Sunday — API Error
+
+- **Date (KL):** 2026-06-07 Sunday
+- **Error:** All 4 Clarity API calls blocked — `Host not in allowlist`
+- **Calls attempted:** base, Device, Source, OS
+- **Result:** No data collected. Sheet and CSV not updated.
+- **Note:** 5th consecutive day blocked (Jun 3–7). Persistent environment-level network restriction to `www.clarity.ms`.
+
