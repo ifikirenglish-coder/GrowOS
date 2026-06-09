@@ -64,3 +64,18 @@ Calls attempted:
 - **Result:** No data collected. Sheet and CSV not updated.
 - **Note:** 6th consecutive day blocked (Jun 3–8). Persistent environment-level network restriction to `www.clarity.ms`.
 
+
+---
+## 2026-06-09 Tuesday — Run failed
+
+**Error:** `Host not in allowlist`
+
+All 4 Clarity API calls to `https://www.clarity.ms/export-data/api/v1/project-live-insights` were blocked by the remote execution environment's outbound network policy. The host `clarity.ms` is not in the allowed list for this container.
+
+**Impact:** No data collected. Sheet write skipped. CSV row not appended.
+
+**Resolution:** The daily analytics agent must be run from an environment that permits outbound HTTPS to `clarity.ms`. Options:
+1. Add `clarity.ms` to the environment's network allowlist.
+2. Run this agent from a local Claude Code session (not the cloud container).
+3. Use a GitHub Action with unrestricted outbound access.
+
