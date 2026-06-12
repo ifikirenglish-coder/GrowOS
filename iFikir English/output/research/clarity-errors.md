@@ -1,5 +1,21 @@
 # Clarity API Error Log
 
+## 2026-06-12 Friday (KL Time)
+
+**Error:** All 4 Clarity API calls failed — `Host not in allowlist`
+
+**Cause:** Same as previous days — remote execution environment blocks outbound access to `www.clarity.ms`.
+
+**Calls attempted:**
+- `GET /api/v1/project-live-insights?numOfDays=1` → blocked
+- `GET /api/v1/project-live-insights?numOfDays=1&dimension1=Device` → blocked
+- `GET /api/v1/project-live-insights?numOfDays=1&dimension1=Source` → blocked
+- `GET /api/v1/project-live-insights?numOfDays=1&dimension1=OS` → blocked
+
+**Impact:** No metrics written to Google Sheet or CSV for this date.
+
+---
+
 ## 2026-06-11 Thursday (KL Time)
 
 **Error:** All 4 Clarity API calls failed — `Host not in allowlist`
