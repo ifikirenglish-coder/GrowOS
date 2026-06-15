@@ -74,3 +74,16 @@ Alternatively, run this analytics agent locally (where there are no outbound res
 **Cause:** The remote execution environment's network policy does not permit outbound connections to `www.clarity.ms`.
 **Impact:** All 4 Clarity API calls failed. No metrics collected. Google Sheet not updated. CSV not appended.
 **Action required:** Add `www.clarity.ms` to the environment's network egress allowlist in Claude Code on the web settings, or run this routine from an environment with unrestricted outbound access.
+
+## 2026-06-15 (Monday) — Network Egress Block
+
+**Time:** 2026-06-15 ~09:00 KL (01:00 UTC)
+**Error:** All 4 Clarity API calls failed with:
+> Host not in allowlist: www.clarity.ms. Add this host to your network egress settings to allow access.
+
+**Cause:** The remote execution environment (Claude Code on the web) does not allow outbound connections to `www.clarity.ms`.
+**Impact:** No data collected for 2026-06-15. CSV not updated. Google Sheet not written.
+**Action required:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code environment settings.
+  - Go to: https://code.claude.com/docs/en/claude-code-on-the-web
+  - Under Environment configuration → Network policy, add `www.clarity.ms` to the allowed hosts.
+
