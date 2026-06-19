@@ -109,6 +109,19 @@ Alternatively, run this analytics agent locally (where there are no outbound res
 **Days affected:** 8 consecutive days (2026-06-10 through 2026-06-17).
 **Action required:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code environment settings.
 
+## 2026-06-19 (Friday) — Network Egress Block
+
+**Time:** 2026-06-19 ~09:00 KL (01:00 UTC)
+**Error:** All 4 Clarity API calls failed with:
+> Host not in allowlist: www.clarity.ms. Add this host to your network egress settings to allow access.
+
+**Cause:** Same persistent issue — remote execution environment (Claude Code on the web) does not allow outbound connections to `www.clarity.ms`.
+**Impact:** No data collected for 2026-06-19. CSV not updated. Google Sheet not written.
+**Days affected:** 10 consecutive days (2026-06-10 through 2026-06-19).
+**Action required:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code environment settings.
+
+---
+
 ## 2026-06-18 (Thursday) — Network Egress Block
 
 **Time:** 2026-06-18 ~09:00 KL (01:00 UTC)
