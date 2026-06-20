@@ -133,3 +133,14 @@ Alternatively, run this analytics agent locally (where there are no outbound res
 **Days affected:** 9 consecutive days (2026-06-10 through 2026-06-18).
 **Action required:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code environment settings.
 
+
+---
+## 2026-06-20 Saturday — Network Egress Block
+
+All 4 Clarity API calls failed. Host not in allowlist:
+- www.clarity.ms is blocked by the remote execution environment's network policy.
+
+**Action required:** Add `www.clarity.ms` to the outbound network egress allowlist in Claude Code on the web settings.
+- Docs: https://code.claude.com/docs/en/claude-code-on-the-web
+
+No data written to sheet or CSV for this run.
