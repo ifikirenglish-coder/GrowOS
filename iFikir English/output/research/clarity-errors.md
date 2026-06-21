@@ -144,3 +144,17 @@ All 4 Clarity API calls failed. Host not in allowlist:
 - Docs: https://code.claude.com/docs/en/claude-code-on-the-web
 
 No data written to sheet or CSV for this run.
+
+---
+
+## 2026-06-21 Sunday — Network Egress Block
+
+**Time:** 2026-06-21 ~09:00 KL (01:00 UTC)
+**Error:** All 4 Clarity API calls failed with:
+> Host not in allowlist: www.clarity.ms. Add this host to your network egress settings to allow access.
+
+**Cause:** Same persistent issue — remote execution environment (Claude Code on the web) does not allow outbound connections to `www.clarity.ms`.
+**Impact:** No data collected for 2026-06-21. CSV not updated. Google Sheet not written.
+**Days affected:** 12 consecutive days (2026-06-10 through 2026-06-21).
+**Action required:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code environment settings.
+- Docs: https://code.claude.com/docs/en/claude-code-on-the-web
