@@ -172,3 +172,13 @@ No data written to sheet or CSV for this run.
 **Days affected:** 13 consecutive days (2026-06-10 through 2026-06-22).
 **Action required:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code environment settings.
 - Docs: https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-06-23 — Network Egress Blocked
+
+**Date (KL):** 2026-06-23 Tuesday  
+**Error:** HTTP 403 on all 4 Clarity API calls  
+**Message:** `Host not in allowlist: www.clarity.ms. Add this host to your network egress settings to allow access.`  
+**Impact:** No data pulled. CSV not updated. Google Sheet not written.  
+**Action needed:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code remote environment settings.  
+**Reference:** https://code.claude.com/docs/en/claude-code-on-the-web
+
