@@ -182,3 +182,13 @@ No data written to sheet or CSV for this run.
 **Action needed:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code remote environment settings.  
 **Reference:** https://code.claude.com/docs/en/claude-code-on-the-web
 
+## 2026-06-24 — Network Egress Blocked
+
+**Date (KL):** 2026-06-24 Wednesday  
+**Error:** Proxy 403 on all 4 Clarity API calls — `connect_rejected` (policy denial)  
+**Message:** Gateway answered 403 to CONNECT for `www.clarity.ms:443`  
+**Days affected:** 15 consecutive days (2026-06-10 through 2026-06-24)  
+**Impact:** No data pulled. CSV not updated. Google Sheet not written.  
+**Action needed:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code remote environment settings.  
+**Reference:** https://code.claude.com/docs/en/claude-code-on-the-web
+
