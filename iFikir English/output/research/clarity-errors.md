@@ -211,3 +211,19 @@ No data written to sheet or CSV for this run.
 **Action needed:** Add `www.clarity.ms` to the network egress allowlist in the Claude Code remote environment settings.  
 **Reference:** https://code.claude.com/docs/en/claude-code-on-the-web
 
+
+## 2026-06-27 (Saturday KL) — Routine Run Failed
+
+**Error:** Clarity API unreachable — `www.clarity.ms:443` blocked by egress proxy policy (HTTP 403 CONNECT rejection)
+
+**All 4 API calls failed:**
+- `GET /project-live-insights?numOfDays=1` → proxy 403
+- `GET /project-live-insights?numOfDays=1&dimension1=Device` → proxy 403
+- `GET /project-live-insights?numOfDays=1&dimension1=Source` → proxy 403
+- `GET /project-live-insights?numOfDays=1&dimension1=OS` → proxy 403
+
+**Root cause:** The remote execution environment's network policy does not permit outbound connections to `www.clarity.ms`. This is an organization-level egress restriction — cannot be bypassed.
+
+**Action required:** Add `www.clarity.ms` to the allowed egress domains in the Claude Code on the web environment configuration, then re-run this routine. See: https://code.claude.com/docs
+
+**No data written to CSV or Google Sheet today.**
