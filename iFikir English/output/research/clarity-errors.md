@@ -1,5 +1,17 @@
 # Clarity API Errors
 
+## 2026-07-01 Wednesday (KL Time)
+
+**Error: Network policy blocking outbound connections**
+
+- Run time: 2026-07-01 ~09:00 KL (01:00 UTC)
+- All 4 Clarity API calls failed: `www.clarity.ms:443` — proxy returned 403 (policy denial)
+- Root cause: Remote execution environment network policy blocks outbound HTTPS to `www.clarity.ms`
+
+No data was written to the tracking CSV or Google Sheet for this date.
+
+---
+
 ## 2026-06-28 Sunday (KL Time)
 
 **Error: Network policy blocking outbound connections**
