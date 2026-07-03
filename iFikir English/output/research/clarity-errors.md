@@ -1,5 +1,25 @@
 # Clarity API Errors
 
+## 2026-07-03 Friday (KL Time)
+
+**Error: Network policy blocking outbound connections**
+
+- Run time: 2026-07-03 09:09 KL (01:09 UTC)
+- All 4 Clarity API calls failed: `www.clarity.ms:443` — proxy returned 403 (policy denial)
+- Root cause: Remote execution environment network policy blocks outbound HTTPS to `www.clarity.ms`
+- This is the **4th consecutive failure** (also failed 2026-07-02, 2026-07-01, 2026-06-28)
+
+No data was written to the tracking CSV or Google Sheet for this date.
+
+**Action required (urgent — 4 days of data missing):** Update the Claude Code on the Web environment's network policy to allow:
+- `www.clarity.ms` (Clarity analytics API)
+- `oauth2.googleapis.com` (Google OAuth token refresh)
+- `sheets.googleapis.com` (Google Sheets API)
+
+See: https://code.claude.com/docs/en/claude-code-on-the-web for environment network policy configuration.
+
+---
+
 ## 2026-07-02 Thursday (KL Time)
 
 **Error: Network policy blocking outbound connections**
