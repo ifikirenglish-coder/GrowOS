@@ -66,3 +66,16 @@ The Claude Code on the Web environment running this routine needs an updated net
 - `sheets.googleapis.com` (Google Sheets API)
 
 No data was written to the tracking CSV or Google Sheet for this date.
+
+## 2026-07-04 — Network policy block (KL: Saturday)
+
+**Error:** The remote execution environment's network proxy blocked all outbound HTTPS connections to `www.clarity.ms:443`.
+
+**Proxy response:** `HTTP/1.1 403 Forbidden` — gateway policy denial on CONNECT tunnel.
+
+**Impact:** All 4 Clarity API calls failed (HTTP_CODE:000). No metrics collected. Sheet row not written. CSV not updated.
+
+**Action needed:** The Claude Code on the web environment requires outbound access to `www.clarity.ms` to be allowed in the network policy. The user or admin needs to update the session's network policy to permit this domain.
+
+**Reference:** https://code.claude.com/docs/en/claude-code-on-the-web
+
