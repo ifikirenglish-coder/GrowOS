@@ -79,3 +79,18 @@ No data was written to the tracking CSV or Google Sheet for this date.
 
 **Reference:** https://code.claude.com/docs/en/claude-code-on-the-web
 
+
+---
+## Error: 2026-07-05 Sunday
+
+**Run time (UTC):** 2026-07-05T01:09:52Z
+**Stage:** Step 2 — Clarity API calls
+**Error:** Network policy blocked all 4 API calls to www.clarity.ms:443
+
+Proxy rejected CONNECT to www.clarity.ms:443 with 403 (policy denial).
+This is a firewall/allowlist restriction in the Claude Code remote execution environment.
+
+**Impact:** No metrics collected. Sheet not updated. CSV not appended.
+
+**Fix:** The network policy for this remote session needs to allow outbound HTTPS to www.clarity.ms.
+See: https://code.claude.com/docs/en/claude-code-on-the-web for environment configuration.
