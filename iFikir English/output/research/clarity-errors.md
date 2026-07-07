@@ -1,5 +1,20 @@
 # Clarity API Errors
 
+## 2026-07-07 Tuesday (KL Time) — FAILURE #8
+
+**Error: Network policy blocking outbound connections**
+
+- Run time: 2026-07-07 (weekly report routine)
+- Clarity API call failed: `www.clarity.ms:443` — proxy returned HTTP_CODE:000 (policy denial)
+- Root cause: Remote execution environment network policy blocks outbound HTTPS to `www.clarity.ms`
+- This is the **8th consecutive failure** (~27 days, since ~10 Jun 2026)
+
+No Clarity data collected for weekly report.
+
+**Action required:** Update the Claude Code on the Web environment's network policy to allow `www.clarity.ms`. See: https://code.claude.com/docs/en/claude-code-on-the-web
+
+---
+
 ## 2026-07-06 Monday (KL Time) — FAILURE #7
 
 **Error: Network policy blocking outbound connections**
