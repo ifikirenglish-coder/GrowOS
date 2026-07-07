@@ -129,3 +129,12 @@ This is a firewall/allowlist restriction in the Claude Code remote execution env
 
 **Fix:** The network policy for this remote session needs to allow outbound HTTPS to www.clarity.ms.
 See: https://code.claude.com/docs/en/claude-code-on-the-web for environment configuration.
+
+## 2026-07-07 Tuesday — API BLOCKED
+
+- **Time:** $(TZ=Asia/Kuala_Lumpur date +"%H:%M KL")
+- **Error:** All 4 Clarity API calls failed — `www.clarity.ms:443` blocked by egress proxy (403 policy denial)
+- **Exit code:** 56 (CONNECT tunnel rejected)
+- **Proxy status:** `recentRelayFailures` confirms `connect_rejected` for clarity.ms
+- **Action required:** Whitelist `www.clarity.ms` in the session's egress policy, OR switch to a network policy that permits the Clarity API endpoint.
+- **Impact:** No data written to sheet or CSV for this date.
