@@ -39,3 +39,25 @@
 2. Run routine from an environment with unrestricted HTTPS (local machine or different cloud config).
 
 **Impact:** No data written to Google Sheet or CSV for today (2026-07-09). Two days of data gaps (Jul 8–9).
+
+---
+
+## 2026-07-10 (KL time) — Policy Denial (3rd Consecutive Day)
+
+**Run time:** 2026-07-10 Friday (KL) / 2026-07-10T01:xx UTC
+
+**Error:** All 4 Clarity API calls to `www.clarity.ms:443` blocked again by egress proxy with HTTP 403 (connect_rejected — policy denial). This is the **third consecutive day** of failure.
+
+**Proxy status excerpt:**
+```
+"kind": "connect_rejected",
+"detail": "gateway answered 403 to CONNECT (policy denial or upstream failure)",
+"host": "www.clarity.ms:443"
+```
+
+**Action required:** This routine has now missed 3 days (Jul 8, 9, 10). Urgent action needed:
+1. Update environment network policy to allowlist `www.clarity.ms` (port 443).
+2. Or run routine from an environment with unrestricted HTTPS (local machine or different cloud config).
+3. Historical backfill may be possible using Clarity's `numOfDays=3` parameter after the fix.
+
+**Impact:** No data written to Google Sheet or CSV for today (2026-07-10). Three days of data gaps (Jul 8–10).
