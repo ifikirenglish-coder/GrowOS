@@ -61,3 +61,22 @@
 3. Historical backfill may be possible using Clarity's `numOfDays=3` parameter after the fix.
 
 **Impact:** No data written to Google Sheet or CSV for today (2026-07-10). Three days of data gaps (Jul 8–10).
+
+---
+## 2026-07-11 (KL time) — Daily Run Failed
+
+**Error:** All 4 Clarity API calls blocked by environment network policy.
+
+- Host: `www.clarity.ms:443`
+- Proxy response: 403 `connect_rejected` — "gateway answered 403 to CONNECT (policy denial or upstream failure)"
+- All 4 calls (overall, device, source, OS) returned `HTTP_STATUS:000`
+
+**Impact:** No data written to Google Sheet or CSV for 2026-07-11.
+
+**Action required:** The remote execution environment's network policy does not allow outbound HTTPS to `www.clarity.ms`. This needs to be allowlisted in the environment's network policy settings for this routine to work.
+
+**Timestamps (UTC):**
+- 2026-07-11T01:08:59.230Z — overall
+- 2026-07-11T01:08:59.581Z — device
+- 2026-07-11T01:08:59.931Z — source
+- 2026-07-11T01:09:00.288Z — OS
