@@ -80,3 +80,18 @@
 - 2026-07-11T01:08:59.581Z — device
 - 2026-07-11T01:08:59.931Z — source
 - 2026-07-11T01:09:00.288Z — OS
+
+---
+## 2026-07-12 (KL time) — Daily Run Failed (5th consecutive day)
+
+**Error:** All 4 Clarity API calls blocked by environment network policy.
+
+- Host: `www.clarity.ms:443`
+- Proxy response: 403 `connect_rejected` — "gateway answered 403 to CONNECT (policy denial or upstream failure)"
+- All 4 calls (overall, device, source, OS) returned `HTTP_STATUS:000`
+
+**Impact:** No data written to Google Sheet or CSV for 2026-07-12.
+
+**Critical:** This routine has now failed for **5 consecutive days** (Jul 8–12). Data gap is growing.
+
+**Action required:** The remote execution environment's network policy does not allow outbound HTTPS to `www.clarity.ms`. Must be allowlisted for this routine to function. See options in earlier entries.
