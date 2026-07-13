@@ -95,3 +95,14 @@
 **Critical:** This routine has now failed for **5 consecutive days** (Jul 8–12). Data gap is growing.
 
 **Action required:** The remote execution environment's network policy does not allow outbound HTTPS to `www.clarity.ms`. Must be allowlisted for this routine to function. See options in earlier entries.
+
+---
+## 2026-07-13 Monday
+
+**Error:** Outbound network access to `www.clarity.ms:443` blocked by proxy policy (HTTP 403 CONNECT rejection).
+
+**Impact:** All 4 Clarity API calls failed. No metrics collected. Sheet write and CSV append skipped.
+
+**Action needed:** The Claude Code remote execution environment's network policy does not allow connections to `clarity.ms`. The operator needs to whitelist `www.clarity.ms` in the environment's network policy, or run this routine from an environment with unrestricted outbound HTTPS.
+
+**Run time:** 2026-07-13 09:09 KLT
