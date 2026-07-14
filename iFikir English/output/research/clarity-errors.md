@@ -106,3 +106,12 @@
 **Action needed:** The Claude Code remote execution environment's network policy does not allow connections to `clarity.ms`. The operator needs to whitelist `www.clarity.ms` in the environment's network policy, or run this routine from an environment with unrestricted outbound HTTPS.
 
 **Run time:** 2026-07-13 09:09 KLT
+
+## 2026-07-14 — Network Policy Denial
+
+**Date (KL):** 2026-07-14 Tuesday  
+**Time (UTC):** ~01:09  
+**Error:** `gateway answered 403 to CONNECT (policy denial or upstream failure)` for `www.clarity.ms:443`  
+**Cause:** The remote execution environment's egress proxy blocks outbound HTTPS to `www.clarity.ms`. This is a network policy restriction, not a Clarity API or token error.  
+**Impact:** All 4 Clarity API calls failed. No data collected. Google Sheet not updated. CSV not appended.  
+**Action needed:** To fix this, the remote environment's network policy needs to allowlist `www.clarity.ms:443`. This can be configured in the Claude Code on the Web environment settings.  
