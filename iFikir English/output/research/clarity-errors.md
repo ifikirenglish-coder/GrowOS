@@ -115,3 +115,13 @@
 **Cause:** The remote execution environment's egress proxy blocks outbound HTTPS to `www.clarity.ms`. This is a network policy restriction, not a Clarity API or token error.  
 **Impact:** All 4 Clarity API calls failed. No data collected. Google Sheet not updated. CSV not appended.  
 **Action needed:** To fix this, the remote environment's network policy needs to allowlist `www.clarity.ms:443`. This can be configured in the Claude Code on the Web environment settings.  
+
+## 2026-07-15 (KL) — Daily routine failed
+
+- **Time (UTC):** 2026-07-15T01:08 UTC
+- **Error:** All 4 Clarity API calls blocked by remote environment proxy
+- **Detail:** `www.clarity.ms:443` → 403 CONNECT rejected (gateway policy denial)
+- **Root cause:** The Claude Code remote execution environment's outbound HTTPS proxy blocks `clarity.ms`. This is a network policy restriction, not a Clarity auth issue.
+- **Impact:** No data written to tracking CSV or Google Sheet for today (2026-07-15 / Wed 15-Jul-26)
+- **Resolution needed:** Either (a) run this routine locally/on a VPS with open egress, or (b) request that `clarity.ms` be added to the proxy allowlist.
+
