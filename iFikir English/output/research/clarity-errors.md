@@ -125,3 +125,12 @@
 - **Impact:** No data written to tracking CSV or Google Sheet for today (2026-07-15 / Wed 15-Jul-26)
 - **Resolution needed:** Either (a) run this routine locally/on a VPS with open egress, or (b) request that `clarity.ms` be added to the proxy allowlist.
 
+
+---
+## 2026-07-16 (KL) — Network Policy Blocking clarity.ms
+
+**Run date:** 2026-07-16 Thursday (KL)
+**Error:** All 4 Clarity API calls failed — proxy returned HTTP 403 CONNECT rejected for `www.clarity.ms:443`
+**Proxy status:** `connect_rejected` — "gateway answered 403 to CONNECT (policy denial or upstream failure)"
+**Impact:** No metrics collected. Sheet write and CSV append skipped.
+**Action needed:** The remote execution environment's network policy does not allow outbound HTTPS to `www.clarity.ms`. To fix: whitelist `www.clarity.ms` in the environment's network policy settings, or run this routine from a less restricted environment.
