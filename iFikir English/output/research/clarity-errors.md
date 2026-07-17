@@ -134,3 +134,18 @@
 **Proxy status:** `connect_rejected` — "gateway answered 403 to CONNECT (policy denial or upstream failure)"
 **Impact:** No metrics collected. Sheet write and CSV append skipped.
 **Action needed:** The remote execution environment's network policy does not allow outbound HTTPS to `www.clarity.ms`. To fix: whitelist `www.clarity.ms` in the environment's network policy settings, or run this routine from a less restricted environment.
+
+---
+## 2026-07-17 (Friday) — Routine Run Failed
+
+**Time:** 2026-07-17T01:09 UTC (09:09 KL)
+**Error:** Clarity API unreachable — proxy blocked `www.clarity.ms:443` with 403 (policy denial).
+**Detail:** The Claude Code remote execution environment's egress policy does not permit outbound HTTPS to `www.clarity.ms`. This is an infrastructure-level block, not an API credential issue.
+**Action required:** The token is valid (expires 2126). The block is on the execution environment side, not Clarity's side.
+
+**Possible fix options:**
+1. Run the routine locally (not in the cloud agent environment) where egress to clarity.ms is allowed.
+2. Ask Anthropic/Claude Code to allowlist `clarity.ms` in the egress policy for this session.
+3. Use a self-hosted intermediary that fetches Clarity data and exposes it on an allowed host.
+
+**Steps completed:** Step 1 (read token) ✅ | Step 2 (API calls) ❌ | Steps 3–6 skipped.
