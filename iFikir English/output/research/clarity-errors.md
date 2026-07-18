@@ -149,3 +149,11 @@
 3. Use a self-hosted intermediary that fetches Clarity data and exposes it on an allowed host.
 
 **Steps completed:** Step 1 (read token) ✅ | Step 2 (API calls) ❌ | Steps 3–6 skipped.
+
+---
+## 2026-07-18 (Saturday) — Routine Run Failed (11th consecutive day)
+
+**Time:** 2026-07-18T01:09 UTC (09:09 KL)
+**Error:** Clarity API unreachable — proxy blocked `www.clarity.ms:443` with 403 (policy denial).
+**Consecutive failures:** Jul 8–18, 2026 (11 days). No data has been collected for any of these dates.
+**Steps completed:** Step 1 (read token) ✅ | Step 2 (API calls) ❌ | Steps 3–6 skipped.
