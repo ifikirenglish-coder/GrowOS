@@ -157,3 +157,13 @@
 **Error:** Clarity API unreachable — proxy blocked `www.clarity.ms:443` with 403 (policy denial).
 **Consecutive failures:** Jul 8–18, 2026 (11 days). No data has been collected for any of these dates.
 **Steps completed:** Step 1 (read token) ✅ | Step 2 (API calls) ❌ | Steps 3–6 skipped.
+
+---
+## 2026-07-19 (Sunday) — Proxy Policy Denial
+
+**Run time:** 2026-07-19 09:08 KL (01:08 UTC)
+**Error:** All 4 Clarity API calls blocked by egress proxy (HTTP 403 CONNECT rejected)
+**Host blocked:** `www.clarity.ms:443`
+**Cause:** Organization network policy for this session does not allow outbound connections to `www.clarity.ms`
+**Action required:** Contact session administrator or Anthropic support to whitelist `www.clarity.ms` in the egress policy, OR run this routine from a session/environment that has network access to Microsoft Clarity.
+**Data written:** None — no metrics collected for 2026-07-19. Sheet row and CSV row both skipped.
