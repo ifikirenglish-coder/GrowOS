@@ -167,3 +167,14 @@
 **Cause:** Organization network policy for this session does not allow outbound connections to `www.clarity.ms`
 **Action required:** Contact session administrator or Anthropic support to whitelist `www.clarity.ms` in the egress policy, OR run this routine from a session/environment that has network access to Microsoft Clarity.
 **Data written:** None — no metrics collected for 2026-07-19. Sheet row and CSV row both skipped.
+
+---
+## 2026-07-20 (Monday) — Proxy Policy Denial (13th consecutive day)
+
+**Run time:** 2026-07-20 09:09 KL (01:09 UTC)
+**Error:** All 4 Clarity API calls blocked by egress proxy (HTTP 403 CONNECT rejected)
+**Host blocked:** `www.clarity.ms:443`
+**Consecutive failures:** Jul 8–20, 2026 (13 days). No Clarity data has been collected for any of these dates.
+**Cause:** Organization network policy for this session does not allow outbound connections to `www.clarity.ms`
+**Action required:** Contact session administrator or whitelist `www.clarity.ms` in the egress policy, OR run this routine from a session/environment that has network access to Microsoft Clarity.
+**Data written:** None — no metrics collected for 2026-07-20. Sheet row and CSV row both skipped.
