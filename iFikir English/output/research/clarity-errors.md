@@ -81,3 +81,11 @@
 **Impact:** No data collected. Steps 3–5 skipped. No sheet row written. No CSV row appended.  
 **Resolution needed:** This environment (Claude Code on web) cannot reach Microsoft Clarity's servers due to outbound network policy. Consider: (1) running this routine from a local machine or server with unrestricted outbound HTTPS, (2) requesting that `www.clarity.ms` be allowlisted in the environment network policy, or (3) using a different scheduling mechanism (e.g., a VPS cron job, GitHub Actions with unrestricted egress).
 
+
+
+## 2026-07-26 — Routine Failure (Sunday)
+
+**Error:** Clarity API unreachable — proxy 403 Forbidden  
+**Detail:** The remote Claude Code environment's network policy blocks outbound HTTPS to `www.clarity.ms:443`. All 4 API calls failed with curl exit 56 (CONNECT tunnel failed, response 403).  
+**Steps completed:** Token read ✓ | API calls ✗ | Parse ✗ | Sheet write ✗ | CSV append ✗  
+**Action needed:** This routine cannot run from Claude Code on the web — it requires network access to clarity.ms which is blocked by the proxy. Consider running this script locally or from a VPS/GitHub Action with unrestricted outbound access.
