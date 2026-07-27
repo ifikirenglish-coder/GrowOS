@@ -89,3 +89,13 @@
 **Detail:** The remote Claude Code environment's network policy blocks outbound HTTPS to `www.clarity.ms:443`. All 4 API calls failed with curl exit 56 (CONNECT tunnel failed, response 403).  
 **Steps completed:** Token read ✓ | API calls ✗ | Parse ✗ | Sheet write ✗ | CSV append ✗  
 **Action needed:** This routine cannot run from Claude Code on the web — it requires network access to clarity.ms which is blocked by the proxy. Consider running this script locally or from a VPS/GitHub Action with unrestricted outbound access.
+
+---
+
+## 2026-07-27 — Routine Failure (Monday) — 7th consecutive day
+
+**Error:** Clarity API unreachable — proxy 403 Forbidden  
+**Detail:** Same persistent network policy block. `www.clarity.ms:443` is not reachable from this remote Claude Code environment. Proxy returns 403 CONNECT rejection for all 4 API calls.  
+**Steps completed:** Token read ✓ | API calls ✗ | Parse ✗ | Sheet write ✗ | CSV append ✗  
+**Streak:** Failing every day since 2026-07-21 (7 days). No Clarity data has been collected or written to the Google Sheet during this period.  
+**Action needed:** Move this routine off Claude Code on the web. Options: (1) local machine cron, (2) GitHub Actions with unrestricted egress, (3) a VPS cron job. The token and script logic are correct — only the network access is the problem.
