@@ -99,3 +99,13 @@
 **Steps completed:** Token read ✓ | API calls ✗ | Parse ✗ | Sheet write ✗ | CSV append ✗  
 **Streak:** Failing every day since 2026-07-21 (7 days). No Clarity data has been collected or written to the Google Sheet during this period.  
 **Action needed:** Move this routine off Claude Code on the web. Options: (1) local machine cron, (2) GitHub Actions with unrestricted egress, (3) a VPS cron job. The token and script logic are correct — only the network access is the problem.
+
+---
+
+## 2026-07-28 — Routine Failure (Tuesday) — 8th consecutive day
+
+**Error:** Clarity API unreachable — proxy 403 Forbidden  
+**Detail:** Same persistent network policy block. `www.clarity.ms:443` is not reachable from this remote Claude Code environment. Proxy returns 403 CONNECT rejection (policy denial at gateway level).  
+**Steps completed:** Token read ✓ | API calls ✗ | Parse ✗ | Sheet write ✗ | CSV append ✗  
+**Streak:** Failing every day since 2026-07-21 (8 days). No Clarity data has been collected or written to the Google Sheet.  
+**Action needed:** This routine cannot run from Claude Code on the web. The network policy blocks `www.clarity.ms`. Please migrate to: (1) a local machine cron job, (2) GitHub Actions with unrestricted egress, or (3) a VPS cron. The token, script logic, and Google Sheets credentials are all correct and ready to use.
