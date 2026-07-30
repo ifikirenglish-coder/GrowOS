@@ -118,3 +118,12 @@
 **Detail:** Same persistent network policy block. `www.clarity.ms:443` is not reachable from this remote Claude Code environment. Proxy returns 403 CONNECT rejection (policy denial at gateway level).  
 **Steps completed:** Token read ✓ | API calls ✗ | Parse ✗ | Sheet write ✗ | CSV append ✗  
 **Streak:** Failing every day since 2026-07-21 (9 days). No Clarity data has been collected or written to the Google Sheet during this period.
+
+## 2026-07-30 — API Blocked by Network Proxy
+
+- **Date:** 2026-07-30 Thursday (KL)
+- **Error:** HTTP 000 / 403 from proxy — `www.clarity.ms:443` is blocked by the remote execution environment's network policy
+- **Proxy detail:** `connect_rejected` — "gateway answered 403 to CONNECT (policy denial or upstream failure)"
+- **Impact:** All 4 Clarity API calls failed. No data was written to Google Sheet or CSV.
+- **Action required:** The network policy for this scheduled task's environment needs to allowlist `www.clarity.ms`. Contact the environment administrator or reconfigure the task to run from a different environment with wider network access.
+
