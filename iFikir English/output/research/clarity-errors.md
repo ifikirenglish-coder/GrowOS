@@ -127,3 +127,22 @@
 - **Impact:** All 4 Clarity API calls failed. No data was written to Google Sheet or CSV.
 - **Action required:** The network policy for this scheduled task's environment needs to allowlist `www.clarity.ms`. Contact the environment administrator or reconfigure the task to run from a different environment with wider network access.
 
+
+## 2026-07-31 — Network Policy Block
+
+**Date (KL):** 2026-07-31 Friday
+**Time (UTC):** 2026-07-31T01:08 UTC
+
+**Error:** All 4 Clarity API calls blocked by remote execution environment network policy.
+
+- `www.clarity.ms:443` → HTTP 403 connect_rejected (gateway policy denial)
+- All 4 calls (overall, device, source, OS) failed with status 000
+
+**Root cause:** The Claude Code on the Web remote environment does not allow outbound HTTPS to `www.clarity.ms`. This is a network-level block, not a token or API issue.
+
+**Impact:** No data written to Google Sheet or CSV today.
+
+**Resolution needed:** The user must either:
+1. Allow `www.clarity.ms` in the environment's network policy (if configurable), OR
+2. Run this routine from a local machine or environment with unrestricted outbound access.
+
