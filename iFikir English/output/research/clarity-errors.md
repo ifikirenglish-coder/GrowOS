@@ -146,3 +146,19 @@
 1. Allow `www.clarity.ms` in the environment's network policy (if configurable), OR
 2. Run this routine from a local machine or environment with unrestricted outbound access.
 
+
+## 2026-08-01 (Saturday) — 09:09 KL
+
+**Error:** Clarity API unreachable — proxy policy denial (403 CONNECT rejected for www.clarity.ms:443)
+
+All 4 API calls failed:
+- `/project-live-insights?numOfDays=1` → HTTP 000 (connection refused by proxy)
+- `/project-live-insights?numOfDays=1&dimension1=Device` → HTTP 000
+- `/project-live-insights?numOfDays=1&dimension1=Source` → HTTP 000
+- `/project-live-insights?numOfDays=1&dimension1=OS` → HTTP 000
+
+**Root cause:** The remote execution environment's network policy does not permit outbound HTTPS connections to `www.clarity.ms`. This is a proxy-level block, not a token or authentication issue.
+
+**Action required:** The user needs to open network access to `www.clarity.ms:443` in their Claude Code remote environment settings, or run this routine from an environment with unrestricted outbound HTTPS.
+
+**Impact:** No data written to LPTrx Google Sheet. CSV not updated. Git commit skipped.
