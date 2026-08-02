@@ -162,3 +162,13 @@ All 4 API calls failed:
 **Action required:** The user needs to open network access to `www.clarity.ms:443` in their Claude Code remote environment settings, or run this routine from an environment with unrestricted outbound HTTPS.
 
 **Impact:** No data written to LPTrx Google Sheet. CSV not updated. Git commit skipped.
+
+## 2026-08-02 Sunday — API Unreachable
+
+**Error:** Proxy returned 403 Forbidden on CONNECT tunnel to www.clarity.ms:443  
+**Calls attempted:** 4 (base, Device, Source, OS)  
+**HTTP status returned:** 000 (no response body)  
+**Root cause:** The managed execution environment's network policy does not permit outbound HTTPS to www.clarity.ms  
+**Impact:** No data written to Google Sheet or tracking CSV for this run  
+**Action needed:** Run this task from an environment with unrestricted outbound HTTPS, or whitelist clarity.ms in the network policy
+
