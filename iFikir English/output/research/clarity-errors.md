@@ -172,3 +172,15 @@ All 4 API calls failed:
 **Impact:** No data written to Google Sheet or tracking CSV for this run  
 **Action needed:** Run this task from an environment with unrestricted outbound HTTPS, or whitelist clarity.ms in the network policy
 
+---
+
+## 2026-08-03 Monday — 14th consecutive failure
+
+**Error:** Proxy returned 403 Forbidden on CONNECT tunnel to www.clarity.ms:443  
+**Calls attempted:** 4 (base, Device, Source, OS)  
+**HTTP status returned:** 000 (connection refused by proxy)  
+**Root cause:** Remote execution environment network policy blocks outbound HTTPS to www.clarity.ms:443. Not a token or API issue — the token is valid until 2126.  
+**Impact:** No data written to Google Sheet or tracking CSV. Git commit skipped.  
+**Streak:** Failing every day since 2026-07-21 — 14 consecutive days.  
+**Action needed:** This routine cannot run from Claude Code on the Web. Migrate to a local machine cron, GitHub Actions with unrestricted egress, or a VPS cron job.
+
