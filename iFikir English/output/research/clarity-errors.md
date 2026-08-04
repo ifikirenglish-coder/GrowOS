@@ -184,3 +184,13 @@ All 4 API calls failed:
 **Streak:** Failing every day since 2026-07-21 — 14 consecutive days.  
 **Action needed:** This routine cannot run from Claude Code on the Web. Migrate to a local machine cron, GitHub Actions with unrestricted egress, or a VPS cron job.
 
+
+## 2026-08-04 Tuesday — API Connection Blocked
+
+- Error: Gateway returned 403 to CONNECT (policy denial)
+- Host: www.clarity.ms:443
+- All 4 API calls failed (curl exit 56)
+- Root cause: Remote execution environment network policy does not allow outbound HTTPS to clarity.ms
+- Impact: No metrics written to Google Sheet or CSV for this run
+- Action needed: Run this routine from a local machine or an environment with unrestricted outbound HTTPS
+
