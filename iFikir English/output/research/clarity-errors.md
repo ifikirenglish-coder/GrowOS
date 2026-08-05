@@ -194,3 +194,15 @@ All 4 API calls failed:
 - Impact: No metrics written to Google Sheet or CSV for this run
 - Action needed: Run this routine from a local machine or an environment with unrestricted outbound HTTPS
 
+---
+
+## 2026-08-05 Wednesday — 15th consecutive failure
+
+- Error: Gateway returned 403 to CONNECT (policy denial)
+- Host: www.clarity.ms:443
+- All 4 API calls failed (curl exit 56)
+- Root cause: Remote execution environment network policy blocks outbound HTTPS to www.clarity.ms:443. Not a token or API issue.
+- Impact: No metrics written to Google Sheet or CSV for this run. Git commit skipped.
+- Streak: Failing every day since 2026-07-21 — 15 consecutive days.
+- Action needed: Migrate this routine to a local machine cron, GitHub Actions with unrestricted egress, or a VPS cron job.
+
