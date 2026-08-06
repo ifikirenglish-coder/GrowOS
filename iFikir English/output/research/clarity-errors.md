@@ -206,3 +206,18 @@ All 4 API calls failed:
 - Streak: Failing every day since 2026-07-21 — 15 consecutive days.
 - Action needed: Migrate this routine to a local machine cron, GitHub Actions with unrestricted egress, or a VPS cron job.
 
+
+## 2026-08-06 (KL time) — Network Policy Block
+
+**Run time:** 2026-08-06T01:12 UTC (09:12 KL)
+**Error:** All 4 Clarity API calls blocked by environment network policy
+**Detail:** The remote execution session's outbound proxy denied CONNECT to `www.clarity.ms:443` with HTTP 403 (policy denial). This is not an authentication error — the token is valid.
+**Calls attempted:**
+- `project-live-insights?numOfDays=1` (overall)
+- `...&dimension1=Device`
+- `...&dimension1=Source`
+- `...&dimension1=OS`
+
+**Action required:** The session environment needs `www.clarity.ms` added to the network allowlist, or the routine needs to be reconfigured to run in a session with broader network access (e.g., via a GitHub Action or local execution).
+
+**Result:** No data written to sheet or CSV today.
