@@ -221,3 +221,13 @@ All 4 API calls failed:
 **Action required:** The session environment needs `www.clarity.ms` added to the network allowlist, or the routine needs to be reconfigured to run in a session with broader network access (e.g., via a GitHub Action or local execution).
 
 **Result:** No data written to sheet or CSV today.
+
+---
+
+## 2026-08-07 (KL time) — Friday — 18th consecutive failure
+
+**Error:** All 4 Clarity API calls blocked by environment network policy
+**Detail:** Proxy returned 403 to CONNECT tunnel for `www.clarity.ms:443` — same persistent policy denial.
+**Impact:** No metrics collected. Google Sheet not updated. CSV not appended.
+**Streak:** Failing every day since 2026-07-21 — 18 consecutive days with zero data collected.
+**Action needed:** This routine cannot run from Claude Code on the Web. Please migrate to a local machine cron, GitHub Actions with unrestricted egress, or a VPS cron job.
