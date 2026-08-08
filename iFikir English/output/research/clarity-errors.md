@@ -231,3 +231,10 @@ All 4 API calls failed:
 **Impact:** No metrics collected. Google Sheet not updated. CSV not appended.
 **Streak:** Failing every day since 2026-07-21 — 18 consecutive days with zero data collected.
 **Action needed:** This routine cannot run from Claude Code on the Web. Please migrate to a local machine cron, GitHub Actions with unrestricted egress, or a VPS cron job.
+
+## 2026-08-08 01:10 UTC (09:10 KL)
+**Error:** Clarity API unreachable — network policy blocks `www.clarity.ms:443`
+- Proxy returned 403 (policy denial) on all 4 API calls
+- Curl exit code 56 (CONNECT tunnel failed)
+- Steps skipped: API calls, parse, Google Sheet write, CSV append
+- **Action required:** Enable `www.clarity.ms` in the session network policy, or run this routine from an environment with unrestricted HTTPS access.
