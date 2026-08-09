@@ -238,3 +238,12 @@ All 4 API calls failed:
 - Curl exit code 56 (CONNECT tunnel failed)
 - Steps skipped: API calls, parse, Google Sheet write, CSV append
 - **Action required:** Enable `www.clarity.ms` in the session network policy, or run this routine from an environment with unrestricted HTTPS access.
+
+## 2026-08-09 (KL time) — Sunday — 19th consecutive failure
+
+**Error:** Clarity API unreachable — network policy blocks `www.clarity.ms:443`
+- Proxy returned 403 (policy denial) on all 4 API calls
+- Curl exit code 56 (CONNECT tunnel failed)
+- Steps skipped: API calls, parse, Google Sheet write, CSV append
+- **Streak:** Failing every day since 2026-07-21 — 19 consecutive days with zero data collected.
+- **Action required:** Migrate this routine to a local machine cron, GitHub Actions with unrestricted egress, or a VPS cron job. The token and all scripts are ready — only network access is missing.
