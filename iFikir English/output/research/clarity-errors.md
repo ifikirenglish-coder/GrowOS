@@ -247,3 +247,12 @@ All 4 API calls failed:
 - Steps skipped: API calls, parse, Google Sheet write, CSV append
 - **Streak:** Failing every day since 2026-07-21 — 19 consecutive days with zero data collected.
 - **Action required:** Migrate this routine to a local machine cron, GitHub Actions with unrestricted egress, or a VPS cron job. The token and all scripts are ready — only network access is missing.
+
+## 2026-08-10 Monday
+
+**Error:** Clarity API blocked by proxy policy  
+**Detail:** gateway answered 403 to CONNECT (policy denial or upstream failure) for host www.clarity.ms:443  
+**Calls attempted:** 4 (baseline, Device, Source, OS)  
+**Result:** All 4 calls failed — no data collected  
+**Action needed:** The remote execution environment's network policy does not permit outbound HTTPS to www.clarity.ms. The user needs to allowlist this domain in their Claude Code on the Web environment settings.
+
