@@ -256,3 +256,12 @@ All 4 API calls failed:
 **Result:** All 4 calls failed — no data collected  
 **Action needed:** The remote execution environment's network policy does not permit outbound HTTPS to www.clarity.ms. The user needs to allowlist this domain in their Claude Code on the Web environment settings.
 
+
+---
+## 2026-08-11 Tuesday — Run failed
+
+**Error:** Proxy denied CONNECT to www.clarity.ms:443  
+**Detail:** gateway answered 403 (policy denial — outbound HTTPS to clarity.ms is blocked by this execution environment)  
+**Calls attempted:** 4 (overall, device, source, OS)  
+**Action:** All 4 API calls failed. No data written to sheet or CSV for this date.
+
