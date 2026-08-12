@@ -265,3 +265,12 @@ All 4 API calls failed:
 **Calls attempted:** 4 (overall, device, source, OS)  
 **Action:** All 4 API calls failed. No data written to sheet or CSV for this date.
 
+---
+## 2026-08-12 Wednesday — Run failed (23rd consecutive day)
+
+**Error:** Proxy denied CONNECT to www.clarity.ms:443  
+**Detail:** gateway answered 403 (policy denial — outbound HTTPS to clarity.ms is blocked by this execution environment)  
+**Calls attempted:** 4 (overall, device, source, OS)  
+**Streak:** Every day since 2026-07-21 — 23 consecutive days with zero data collected.  
+**Action:** All 4 API calls failed. No data written to sheet or CSV for this date.
+
