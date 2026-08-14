@@ -283,3 +283,14 @@ All 4 API calls failed:
 **Streak:** Every day since 2026-07-21 — 24 consecutive days with zero data collected.  
 **Action:** All 4 API calls failed. No data written to sheet or CSV for this date.
 
+
+## 2026-08-14 Friday — API Blocked by Network Policy
+
+- **Error:** Proxy returned 403 CONNECT to www.clarity.ms:443 (gateway policy denial)
+- **All 4 API calls failed** — no data collected
+- **Root cause:** The Claude Code web environment's network policy blocks outbound connections to clarity.ms
+- **Impact:** No data written to Google Sheet or CSV today
+- **Resolution needed:** The scheduled task requires network access to clarity.ms. Either:
+  1. Run this task from an environment with unrestricted outbound access, OR
+  2. Contact support to allowlist clarity.ms in the network policy
+
