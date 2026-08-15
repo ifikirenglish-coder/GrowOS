@@ -294,3 +294,15 @@ All 4 API calls failed:
   1. Run this task from an environment with unrestricted outbound access, OR
   2. Contact support to allowlist clarity.ms in the network policy
 
+
+---
+## 2026-08-15 — Network Policy Block (Saturday)
+
+**Run time:** 2026-08-15T01:11 UTC (09:11 KL)
+**Error:** Proxy rejected CONNECT to www.clarity.ms:443 with HTTP 403 (policy denial)
+**Calls attempted:** 4 (overall, device, source, OS)
+**Calls succeeded:** 0
+
+**Detail:** The remote execution environment's network policy does not permit outbound HTTPS to `www.clarity.ms`. All 4 Clarity API calls failed before any data could be retrieved.
+
+**Action required:** No data was written to the Google Sheet or tracking CSV for this date. Manual entry may be needed.
