@@ -306,3 +306,12 @@ All 4 API calls failed:
 **Detail:** The remote execution environment's network policy does not permit outbound HTTPS to `www.clarity.ms`. All 4 Clarity API calls failed before any data could be retrieved.
 
 **Action required:** No data was written to the Google Sheet or tracking CSV for this date. Manual entry may be needed.
+
+## 2026-08-16 (Sunday) — Network Blocked (27th consecutive day)
+
+**Error:** Proxy denied CONNECT to www.clarity.ms:443 with HTTP 403 (policy denial)
+**Calls attempted:** 4 (overall, device, source, OS)
+**Calls succeeded:** 0
+**Impact:** No data collected. Google Sheet not updated. CSV not appended.
+**Streak:** Failing every day since 2026-07-21 — 27 consecutive days with zero data collected.
+**Action required:** This routine cannot run from Claude Code on the Web. Please migrate to: (1) a local machine cron, (2) GitHub Actions with unrestricted egress, or (3) a VPS cron job.
