@@ -335,3 +335,20 @@ All 4 API calls failed:
 **API calls used today:** 0 (all blocked before reaching server)
 **Sheet write:** Skipped (no data)
 **CSV append:** Skipped (no data)
+
+## 2026-08-19 — Network Policy Block
+
+**KL Date:** 2026-08-19 Wednesday
+**Run Time (UTC):** 2026-08-19 01:10
+
+**Error:** All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the environment's outbound network proxy with HTTP 403 (policy denial).
+
+**Proxy status:** `connect_rejected — gateway answered 403 to CONNECT (policy denial or upstream failure)`
+
+**Impact:**
+- No metrics collected for today
+- Google Sheet (LPTrx) NOT updated
+- CSV tracking file NOT updated
+
+**Resolution needed:** The cloud session's network policy does not allow outbound connections to `www.clarity.ms`. The user needs to update the session's network policy to allow this domain, OR run this routine from a local Claude Code session where the network is unrestricted.
+
