@@ -352,3 +352,20 @@ All 4 API calls failed:
 
 **Resolution needed:** The cloud session's network policy does not allow outbound connections to `www.clarity.ms`. The user needs to update the session's network policy to allow this domain, OR run this routine from a local Claude Code session where the network is unrestricted.
 
+
+---
+## 2026-08-20 (Thursday) — Network policy block
+
+**Error:** All 4 Clarity API calls failed. `www.clarity.ms:443` is blocked by the remote execution environment's egress proxy policy (HTTP 403 on CONNECT tunnel).
+
+**Affected calls:**
+- `$BASE` (overall)
+- `$BASE&dimension1=Device`
+- `$BASE&dimension1=Source`
+- `$BASE&dimension1=OS`
+
+**Proxy status:** `connect_rejected` — gateway answered 403. This is an organisation-level network policy denial, not a token or API error.
+
+**Impact:** No data written to LPTrx sheet. No row appended to clarity-tracking.csv.
+
+**Resolution needed:** The domain `www.clarity.ms` must be allowed in the Claude Code remote session's network policy. The user can update this at https://code.claude.com/docs/en/claude-code-on-the-web under environment network policy settings.
