@@ -369,3 +369,11 @@ All 4 API calls failed:
 **Impact:** No data written to LPTrx sheet. No row appended to clarity-tracking.csv.
 
 **Resolution needed:** The domain `www.clarity.ms` must be allowed in the Claude Code remote session's network policy. The user can update this at https://code.claude.com/docs/en/claude-code-on-the-web under environment network policy settings.
+
+---
+## 2026-08-21 (Friday) — 32nd consecutive failure
+
+**Error:** All 4 Clarity API calls failed with HTTP 000 — `www.clarity.ms:443` blocked by remote execution environment network policy (gateway 403 CONNECT rejection).
+**Impact:** No data written to LPTrx Google Sheet. CSV not updated.
+**Streak:** Every day since 2026-07-21 — **32 consecutive days with zero data collected.**
+**Resolution needed:** Allowlist `www.clarity.ms` in the Claude Code environment network policy, or migrate this routine to a local machine cron or GitHub Actions with unrestricted egress.
