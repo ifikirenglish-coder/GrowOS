@@ -377,3 +377,14 @@ All 4 API calls failed:
 **Impact:** No data written to LPTrx Google Sheet. CSV not updated.
 **Streak:** Every day since 2026-07-21 — **32 consecutive days with zero data collected.**
 **Resolution needed:** Allowlist `www.clarity.ms` in the Claude Code environment network policy, or migrate this routine to a local machine cron or GitHub Actions with unrestricted egress.
+
+## 2026-08-22 Saturday — Run Failed
+
+**Error:** Network policy blocks outbound connection to `www.clarity.ms:443`
+
+- All 4 Clarity API calls failed with proxy 403 (connect_rejected / policy denial)
+- No data was written to the tracking CSV today
+- Google Sheet was NOT updated
+- This is an environment-level restriction — the scheduled task cannot reach the Clarity API from this remote session
+
+**Action needed:** Configure the remote execution environment's network policy to allow outbound HTTPS to `www.clarity.ms`. See the environment network policy docs at https://code.claude.com/docs/en/claude-code-on-the-web
