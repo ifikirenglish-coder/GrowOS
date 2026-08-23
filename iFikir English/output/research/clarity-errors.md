@@ -388,3 +388,11 @@ All 4 API calls failed:
 - This is an environment-level restriction — the scheduled task cannot reach the Clarity API from this remote session
 
 **Action needed:** Configure the remote execution environment's network policy to allow outbound HTTPS to `www.clarity.ms`. See the environment network policy docs at https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-08-23 09:09 KL — Network Policy Denial
+
+**Error:** Proxy blocked connection to www.clarity.ms:443  
+**Detail:** gateway answered 403 to CONNECT (policy denial)  
+**Impact:** All 4 API calls failed — no data collected for 2026-08-23  
+**Action needed:** The session's network policy does not permit outbound HTTPS to www.clarity.ms. The environment needs to be reconfigured to allow clarity.ms, or the scheduled task needs to run in an environment with broader network access.  
+**Workaround:** Run manually from a session with unrestricted network access, or update the environment's allowlist at https://code.claude.com/docs/en/claude-code-on-the-web  
