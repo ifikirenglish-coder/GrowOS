@@ -396,3 +396,15 @@ All 4 API calls failed:
 **Impact:** All 4 API calls failed — no data collected for 2026-08-23  
 **Action needed:** The session's network policy does not permit outbound HTTPS to www.clarity.ms. The environment needs to be reconfigured to allow clarity.ms, or the scheduled task needs to run in an environment with broader network access.  
 **Workaround:** Run manually from a session with unrestricted network access, or update the environment's allowlist at https://code.claude.com/docs/en/claude-code-on-the-web  
+
+---
+## 2026-08-24 Monday
+
+**Error:** Network policy denial — proxy blocked outbound CONNECT to www.clarity.ms:443 (HTTP 403)
+
+**Impact:** All 4 Clarity API calls failed. No metrics collected. Sheet not updated. CSV not appended.
+
+**Action needed:** The remote Claude Code environment's network policy does not allow outbound connections to www.clarity.ms. To fix:
+- Schedule this routine to run locally (where network access to clarity.ms is permitted), OR
+- Add clarity.ms to the allowlist if the network policy can be configured, OR
+- Run the routine manually from a local machine or a different environment.
