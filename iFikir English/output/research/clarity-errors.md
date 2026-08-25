@@ -408,3 +408,15 @@ All 4 API calls failed:
 - Schedule this routine to run locally (where network access to clarity.ms is permitted), OR
 - Add clarity.ms to the allowlist if the network policy can be configured, OR
 - Run the routine manually from a local machine or a different environment.
+
+---
+## 2026-08-25 (Tuesday) — Routine Run Failed
+
+**Error:** Proxy blocked all Clarity API calls to `www.clarity.ms:443`
+**Proxy status:** `connect_rejected` — gateway answered 403 (policy denial)
+**Time:** ~01:10 UTC (09:10 KL)
+**Calls attempted:** 4 (overall, device, source, OS)
+**Result:** 0 data points retrieved. No sheet write, no CSV row appended.
+
+**Action needed:** The outbound network policy for this Claude Code remote session does not allow connections to `www.clarity.ms`. An admin needs to whitelist this host in the session's network policy, or the routine needs to be run from an environment with unrestricted outbound HTTPS.
+
