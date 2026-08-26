@@ -420,3 +420,12 @@ All 4 API calls failed:
 
 **Action needed:** The outbound network policy for this Claude Code remote session does not allow connections to `www.clarity.ms`. An admin needs to whitelist this host in the session's network policy, or the routine needs to be run from an environment with unrestricted outbound HTTPS.
 
+
+## 2026-08-26 — Network Policy Block
+
+- **Time:** 2026-08-26 09:12 KL (01:12 UTC)
+- **Error:** Proxy returned 403 Forbidden on CONNECT to `www.clarity.ms:443`
+- **Cause:** Environment network policy denies outbound access to clarity.ms
+- **Impact:** All 4 Clarity API calls failed. No data written to sheet or CSV.
+- **Action needed:** User must enable clarity.ms in the environment network policy (claude.ai session settings), or run the routine from a session with broader network access.
+
