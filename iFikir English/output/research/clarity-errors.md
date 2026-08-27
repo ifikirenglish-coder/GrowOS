@@ -429,3 +429,11 @@ All 4 API calls failed:
 - **Impact:** All 4 Clarity API calls failed. No data written to sheet or CSV.
 - **Action needed:** User must enable clarity.ms in the environment network policy (claude.ai session settings), or run the routine from a session with broader network access.
 
+
+## 2026-08-27 Thursday — Network Policy Block
+
+- **Error:** Proxy blocked all 4 Clarity API calls to www.clarity.ms:443 with 403 (policy denial)
+- **Proxy status:** `selective: false` — clarity.ms is not on the allowed list
+- **Impact:** No data collected for today. CSV and Google Sheet not updated.
+- **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or switch to a policy that permits it.
+
