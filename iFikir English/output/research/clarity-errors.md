@@ -445,3 +445,11 @@ All 4 API calls failed:
 - **Impact:** No data collected. Google Sheet not updated. CSV not appended.
 - **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or run this routine from a session with unrestricted outbound HTTPS.
 
+
+---
+## Error — 2026-08-29 09:10 KL
+**Task:** Daily analytics routine (scheduled)
+**Error:** All 4 Clarity API calls blocked by egress proxy
+**Detail:** The Claude Code remote execution environment's outbound network policy (gateway 403 CONNECT) denies connections to `www.clarity.ms:443`.
+**Impact:** No data written to Google Sheet or CSV for 2026-08-29.
+**Action needed:** Enable `www.clarity.ms` in the egress allowlist, or run this routine from a local/unrestricted environment.
