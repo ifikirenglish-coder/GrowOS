@@ -462,3 +462,11 @@ All 4 API calls failed:
 - **Impact:** No data collected. Google Sheet not updated. CSV not appended.
 - **Streak:** Failing every day since 2026-07-21 — 41 consecutive days with zero data collected.
 - **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or run this routine from a session with unrestricted outbound HTTPS.
+
+---
+## 2026-08-31 (KL) — Network Block
+- All 4 Clarity API calls failed
+- Error: Proxy returned 403 Forbidden on CONNECT tunnel to www.clarity.ms:443
+- Root cause: The remote execution environment's network policy blocks outbound access to www.clarity.ms
+- Resolution needed: The user must switch to an environment with outbound access to www.clarity.ms, or whitelist the domain in the network policy
+- No data written to sheet or CSV this run
