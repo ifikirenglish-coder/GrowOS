@@ -479,3 +479,12 @@ All 4 API calls failed:
 - **Impact:** No data collected. Google Sheet not updated. CSV not appended.
 - **Streak:** Failing every day since 2026-07-21 — **43 consecutive days** with zero data collected.
 - **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or run this routine from a session with unrestricted outbound HTTPS.
+
+## 2026-09-02 (Wednesday) — Clarity API Blocked by Network Policy
+
+- **Time (UTC):** 2026-09-02T01:10 UTC
+- **Error:** Proxy returned 403 Forbidden on CONNECT to `www.clarity.ms:443`
+- **All 4 API calls failed** (HTTP status 000 / curl exit 56)
+- **Root cause:** Network policy in this remote execution environment does not allow outbound HTTPS to `clarity.ms`
+- **Action:** No data written to sheet or CSV today. Git commit skipped.
+- **Resolution needed:** User must either (a) add `www.clarity.ms` to the network allowlist for the cloud environment, or (b) run this routine from a local Claude Code session where network access is unrestricted.
