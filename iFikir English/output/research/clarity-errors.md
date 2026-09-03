@@ -488,3 +488,11 @@ All 4 API calls failed:
 - **Root cause:** Network policy in this remote execution environment does not allow outbound HTTPS to `clarity.ms`
 - **Action:** No data written to sheet or CSV today. Git commit skipped.
 - **Resolution needed:** User must either (a) add `www.clarity.ms` to the network allowlist for the cloud environment, or (b) run this routine from a local Claude Code session where network access is unrestricted.
+
+## 2026-09-03 Thursday — Network Policy Block
+
+**Error:** Clarity API unreachable from remote execution environment.
+**Detail:** Proxy answered 403 to CONNECT (policy denial) for host `www.clarity.ms:443`
+**Impact:** All 4 API calls failed (HTTP 000). No data collected for 2026-09-03.
+**Action needed:** Either re-run from a local machine, or whitelist `www.clarity.ms` in the remote environment's network policy.
+
