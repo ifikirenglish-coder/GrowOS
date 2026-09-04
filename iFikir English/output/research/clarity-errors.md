@@ -496,3 +496,15 @@ All 4 API calls failed:
 **Impact:** All 4 API calls failed (HTTP 000). No data collected for 2026-09-03.
 **Action needed:** Either re-run from a local machine, or whitelist `www.clarity.ms` in the remote environment's network policy.
 
+
+---
+## 2026-09-04 (Friday) — Network Policy Block
+
+**Run time:** 2026-09-04 ~09:10 KL time
+**Error:** All 4 Clarity API calls failed — `www.clarity.ms:443` blocked by proxy (HTTP 000, gateway 403 connect_rejected)
+**Root cause:** Remote execution environment network policy does not permit outbound HTTPS to `www.clarity.ms`. This is an environment-level restriction, not a token or credentials issue.
+**Impact:** No data collected. Sheet row NOT written. CSV NOT appended.
+**Action needed:** The user must either:
+  1. Change the network policy for this scheduled task to allow `www.clarity.ms`, OR
+  2. Run the analytics routine from a machine/environment where Clarity is accessible (e.g., local Claude Code, a different cloud env with permissive policy).
+**Token status:** Valid (long-lived JWT, expires 2126).
