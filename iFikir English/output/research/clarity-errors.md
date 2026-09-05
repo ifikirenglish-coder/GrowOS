@@ -508,3 +508,11 @@ All 4 API calls failed:
   1. Change the network policy for this scheduled task to allow `www.clarity.ms`, OR
   2. Run the analytics routine from a machine/environment where Clarity is accessible (e.g., local Claude Code, a different cloud env with permissive policy).
 **Token status:** Valid (long-lived JWT, expires 2126).
+
+---
+## 2026-09-05 Saturday — Network Policy Block (47th consecutive failure)
+
+- **Error:** Proxy blocked all 4 Clarity API calls to www.clarity.ms:443 with 403 (policy denial)
+- **Impact:** No data collected. Google Sheet not updated. CSV not appended.
+- **Streak:** Failing every day since 2026-07-21 — **47 consecutive days** with zero data collected.
+- **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or run this routine from a session with unrestricted outbound HTTPS.
