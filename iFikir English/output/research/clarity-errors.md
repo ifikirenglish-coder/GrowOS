@@ -516,3 +516,11 @@ All 4 API calls failed:
 - **Impact:** No data collected. Google Sheet not updated. CSV not appended.
 - **Streak:** Failing every day since 2026-07-21 — **47 consecutive days** with zero data collected.
 - **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or run this routine from a session with unrestricted outbound HTTPS.
+
+---
+## 2026-09-06 Sunday — Network Policy Block (48th consecutive failure)
+
+- **Error:** Proxy blocked all 4 Clarity API calls to www.clarity.ms:443 with 403 (policy denial)
+- **Impact:** No data collected. Google Sheet not updated. CSV not appended.
+- **Streak:** Failing every day since 2026-07-21 — **48 consecutive days** with zero data collected.
+- **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or run this routine from a session with unrestricted outbound HTTPS.
