@@ -524,3 +524,13 @@ All 4 API calls failed:
 - **Impact:** No data collected. Google Sheet not updated. CSV not appended.
 - **Streak:** Failing every day since 2026-07-21 — **48 consecutive days** with zero data collected.
 - **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or run this routine from a session with unrestricted outbound HTTPS.
+
+## 2026-09-07 (Monday) — Proxy Block
+
+**Error:** Clarity API unreachable. Proxy returned 403 CONNECT rejected for `www.clarity.ms:443`.
+
+**Detail:** The remote execution environment's network policy denies outbound HTTPS to `www.clarity.ms`. This is a policy-level block, not a token or API issue.
+
+**Steps skipped:** All 4 API calls (c1–c4), metrics parse, Google Sheet write, CSV append.
+
+**Resolution:** The Clarity domain needs to be whitelisted in the network policy for this remote session, or the routine needs to run from an environment with unrestricted outbound access (e.g., a local machine, VPS, or GitHub Action without proxy restrictions).
