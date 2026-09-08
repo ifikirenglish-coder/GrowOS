@@ -534,3 +534,12 @@ All 4 API calls failed:
 **Steps skipped:** All 4 API calls (c1–c4), metrics parse, Google Sheet write, CSV append.
 
 **Resolution:** The Clarity domain needs to be whitelisted in the network policy for this remote session, or the routine needs to run from an environment with unrestricted outbound access (e.g., a local machine, VPS, or GitHub Action without proxy restrictions).
+
+---
+## 2026-09-08 Tuesday — Network Policy Block (50th consecutive failure)
+
+- **Error:** Proxy blocked all 4 Clarity API calls to www.clarity.ms:443 with 403 (policy denial)
+- **Proxy status:** `connect_rejected` — gateway answered 403 (policy denial)
+- **Impact:** No data collected. Google Sheet not updated. CSV not appended.
+- **Streak:** Failing every day since 2026-07-21 — **50 consecutive days** with zero data collected.
+- **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or run this routine from a session with unrestricted outbound HTTPS.
