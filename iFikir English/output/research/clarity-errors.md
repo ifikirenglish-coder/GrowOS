@@ -543,3 +543,11 @@ All 4 API calls failed:
 - **Impact:** No data collected. Google Sheet not updated. CSV not appended.
 - **Streak:** Failing every day since 2026-07-21 — **50 consecutive days** with zero data collected.
 - **Fix needed:** Add `www.clarity.ms` to the allowed domain list in the remote environment's network policy, or run this routine from a session with unrestricted outbound HTTPS.
+
+## 2026-09-09 — Proxy Block (www.clarity.ms)
+
+**Run time:** 2026-09-09 09:10 KL (01:10 UTC)
+**Error:** All 4 Clarity API calls failed — proxy gateway returned 403 (connect_rejected) for `www.clarity.ms:443`
+**Cause:** The remote execution environment's network policy does not whitelist `www.clarity.ms`. This is an infrastructure-level block, not an auth issue.
+**Action needed:** The user must whitelist `www.clarity.ms` in the Claude Code remote environment's network policy, or run this routine from a machine with unrestricted outbound HTTPS.
+**Affected:** c1.json, c2.json, c3.json, c4.json — no data retrieved. Sheet write skipped. CSV row not appended.
