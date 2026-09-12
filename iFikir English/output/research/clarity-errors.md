@@ -22,3 +22,14 @@ Reference: https://code.claude.com/docs/en/claude-code-on-the-web
 
 **Recommendation:** The user needs to whitelist `www.clarity.ms` in the cloud environment's network policy, or run this routine from a local/self-hosted environment.
 
+
+## 2026-09-12 (Saturday) — Network Policy Denial
+
+**Error:** Proxy blocked outbound connection to `www.clarity.ms:443`
+**Detail:** `gateway answered 403 to CONNECT (policy denial or upstream failure)`
+**Affected calls:** All 4 Clarity API calls (c1–c4)
+**Result:** No data collected. Steps 3–6 skipped (no metrics to write).
+
+**Action needed:** The remote execution environment's network policy does not permit connections to `www.clarity.ms`. To fix this, the user must allow this host in the environment's network policy settings.
+
+See: https://code.claude.com/docs/en/claude-code-on-the-web for environment network configuration.
