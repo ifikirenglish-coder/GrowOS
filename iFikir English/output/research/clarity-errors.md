@@ -33,3 +33,16 @@ Reference: https://code.claude.com/docs/en/claude-code-on-the-web
 **Action needed:** The remote execution environment's network policy does not permit connections to `www.clarity.ms`. To fix this, the user must allow this host in the environment's network policy settings.
 
 See: https://code.claude.com/docs/en/claude-code-on-the-web for environment network configuration.
+
+## 2026-09-13 (Sunday) — Network Policy Denial (4th consecutive day)
+
+**Error:** Proxy blocked outbound connection to `www.clarity.ms:443`
+**Detail:** `gateway answered 403 to CONNECT (policy denial or upstream failure)`
+**Affected calls:** All 4 Clarity API calls (c1–c4)
+**Result:** No data collected. Steps 3–6 skipped (no metrics to write).
+
+**Action needed (urgent):** This is the 4th consecutive day the routine has failed due to the network egress policy blocking `www.clarity.ms`. The schedule is running successfully but cannot reach the Clarity API. No data has been logged to the sheet or CSV since the last successful run.
+
+To resolve: allow `www.clarity.ms` in the environment's network policy, or reschedule this routine to run from a local environment.
+
+See: https://code.claude.com/docs/en/claude-code-on-the-web
