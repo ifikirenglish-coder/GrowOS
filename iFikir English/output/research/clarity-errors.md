@@ -57,3 +57,14 @@ See: https://code.claude.com/docs/en/claude-code-on-the-web
 **Action needed (critical):** This is the 5th consecutive day this routine has failed. No Clarity data has been collected or logged since at least 2026-09-10. The schedule is firing correctly but the sandbox network policy blocks `www.clarity.ms`.
 
 To resolve: allow `www.clarity.ms` in the environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-09-15 (Tuesday) — Network Policy Denial (6th consecutive day)
+
+**Error:** Proxy blocked outbound connection to `www.clarity.ms:443`
+**Detail:** `gateway answered 403 to CONNECT (policy denial or upstream failure)`
+**Affected calls:** All 4 Clarity API calls (c1–c4)
+**Result:** No data collected. Steps 3–6 skipped (no metrics to write).
+
+**Action needed (critical):** This is the 6th consecutive day this routine has failed. No Clarity data has been collected or logged since at least 2026-09-10. The schedule is firing correctly but the sandbox network policy blocks `www.clarity.ms`.
+
+To resolve: allow `www.clarity.ms` in the environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
