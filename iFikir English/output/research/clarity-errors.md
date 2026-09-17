@@ -79,3 +79,12 @@ To resolve: allow `www.clarity.ms` in the environment's network policy at https:
 **Action needed (critical):** This is the 7th consecutive day this routine has failed. No Clarity data has been collected or logged since at least 2026-09-10. The schedule is firing correctly but the sandbox network policy blocks `www.clarity.ms`.
 
 To resolve: allow `www.clarity.ms` in the environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-09-17 — Egress Proxy Blocked (Network Policy)
+
+- **Time (KL):** 2026-09-17 Thursday ~09:00
+- **Error:** All 4 Clarity API calls failed with HTTP 000 — agent proxy denied CONNECT to `www.clarity.ms:443` (organization egress policy)
+- **Calls attempted:** Overall, Device, Source, OS (0 of 4 succeeded)
+- **Action:** No data written to sheet or CSV this run
+- **Fix needed:** Allow `www.clarity.ms:443` in the remote environment's network policy, or switch to a different network configuration that permits outbound HTTPS to clarity.ms
+
