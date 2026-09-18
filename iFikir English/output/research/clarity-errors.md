@@ -88,3 +88,12 @@ To resolve: allow `www.clarity.ms` in the environment's network policy at https:
 - **Action:** No data written to sheet or CSV this run
 - **Fix needed:** Allow `www.clarity.ms:443` in the remote environment's network policy, or switch to a different network configuration that permits outbound HTTPS to clarity.ms
 
+## 2026-09-18 — Egress Proxy Blocked (9th consecutive day)
+
+- **Time (KL):** 2026-09-18 Friday ~09:00
+- **Error:** All 4 Clarity API calls failed — agent proxy denied CONNECT to `www.clarity.ms:443` (403, organization egress policy)
+- **Calls attempted:** Overall, Device, Source, OS (0 of 4 succeeded)
+- **Action:** No data written to sheet or CSV this run
+- **Consecutive failures:** 9 days (since 2026-09-10)
+- **Fix needed:** Allow `www.clarity.ms:443` in the remote environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
