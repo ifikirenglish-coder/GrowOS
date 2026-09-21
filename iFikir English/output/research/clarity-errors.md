@@ -50,3 +50,12 @@ ts: 2026-09-20T01:09:13.849Z
 Configure at: https://code.claude.com/docs/en/claude-code-on-the-web
 
 ---
+
+## 2026-09-21 09:10 KL — BLOCKED: Network Policy
+
+**Status:** All 4 Clarity API calls failed  
+**Error:** `www.clarity.ms:443` — `connect_rejected` (gateway answered 403 to CONNECT — policy denial)  
+**Root cause:** The Claude Code remote execution environment's egress proxy does not allow outbound HTTPS to `www.clarity.ms`.  
+**Impact:** No data collected. Sheet not updated. CSV not appended.  
+**Fix required:** The network policy for this environment must allowlist `www.clarity.ms`. The user needs to reconfigure the environment to permit this domain, or run the routine from a different environment with unrestricted egress.
+
