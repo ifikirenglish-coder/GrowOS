@@ -59,3 +59,20 @@ Configure at: https://code.claude.com/docs/en/claude-code-on-the-web
 **Impact:** No data collected. Sheet not updated. CSV not appended.  
 **Fix required:** The network policy for this environment must allowlist `www.clarity.ms`. The user needs to reconfigure the environment to permit this domain, or run the routine from a different environment with unrestricted egress.
 
+
+## 2026-09-22 (Tuesday) — Network Policy Denial
+
+**Error:** All 4 Clarity API calls failed with curl exit code 56 (connection failure).
+
+**Cause:** The remote execution environment's outbound network proxy is blocking connections to `www.clarity.ms:443` with a 403 policy denial ("gateway answered 403 to CONNECT — policy denial or upstream failure").
+
+**Affected calls:**
+- `$BASE` (overall)
+- `$BASE&dimension1=Device`
+- `$BASE&dimension1=Source`
+- `$BASE&dimension1=OS`
+
+**Impact:** No data was collected for 22-Sep-26. Sheet row NOT written. CSV NOT updated.
+
+**Fix required:** The Claude Code on the web session needs network access to `www.clarity.ms` enabled in the environment's network policy. The user must update the environment configuration at https://code.claude.com/docs/en/claude-code-on-the-web to allow outbound HTTPS to `www.clarity.ms`.
+
