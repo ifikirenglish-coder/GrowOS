@@ -76,3 +76,18 @@ Configure at: https://code.claude.com/docs/en/claude-code-on-the-web
 
 **Fix required:** The Claude Code on the web session needs network access to `www.clarity.ms` enabled in the environment's network policy. The user must update the environment configuration at https://code.claude.com/docs/en/claude-code-on-the-web to allow outbound HTTPS to `www.clarity.ms`.
 
+
+## 2026-09-23 — Network Policy Block
+
+**Date:** 2026-09-23 Wednesday (KL)
+**Error:** All 4 Clarity API calls failed with HTTP 000
+**Root cause:** Proxy gateway rejected CONNECT to `www.clarity.ms:443` (403 policy denial)
+**Detail from proxy:** `gateway answered 403 to CONNECT (policy denial or upstream failure)`
+
+The remote execution environment's outbound network policy does not allow connections to `www.clarity.ms`.
+
+**Action needed:** The user must either:
+1. Enable access to `clarity.ms` in the environment's network policy (at https://code.claude.com/docs/en/claude-code-on-the-web), OR
+2. Run this analytics routine from a local Claude Code session instead of the cloud remote environment.
+
+**Steps skipped:** API calls, metrics parse, sheet write, CSV append, git commit.
