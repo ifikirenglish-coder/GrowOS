@@ -91,3 +91,12 @@ The remote execution environment's outbound network policy does not allow connec
 2. Run this analytics routine from a local Claude Code session instead of the cloud remote environment.
 
 **Steps skipped:** API calls, metrics parse, sheet write, CSV append, git commit.
+
+---
+## 2026-09-24 — Policy Denial (All 4 API calls blocked)
+
+**Run time:** 2026-09-24 09:08 KL (01:08 UTC)
+**Error:** Gateway 403 — CONNECT to www.clarity.ms:443 rejected by proxy policy
+**Affected calls:** All 4 (overall, device, source, OS)
+**Action:** No data written to sheet or CSV. No metrics available.
+**Resolution needed:** The network policy for this cloud environment does not allow outbound HTTPS to www.clarity.ms. The session's egress policy needs to include clarity.ms to run this routine. Contact ifikirenglish@gmail.com to adjust the environment's outbound allow-list.
