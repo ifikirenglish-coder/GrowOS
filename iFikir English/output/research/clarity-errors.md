@@ -100,3 +100,12 @@ The remote execution environment's outbound network policy does not allow connec
 **Affected calls:** All 4 (overall, device, source, OS)
 **Action:** No data written to sheet or CSV. No metrics available.
 **Resolution needed:** The network policy for this cloud environment does not allow outbound HTTPS to www.clarity.ms. The session's egress policy needs to include clarity.ms to run this routine. Contact ifikirenglish@gmail.com to adjust the environment's outbound allow-list.
+
+## 2026-09-25 (KL) — Network Policy Block
+
+**Error:** `connect_rejected` for `www.clarity.ms:443`
+**Time:** 2026-09-25T01:08:04Z (UTC) / 09:08 KL
+**All 4 API calls failed** — curl exit code 56, HTTP status 000
+**Root cause:** The agent proxy is blocking outbound connections to `www.clarity.ms` under the current session's network egress policy.
+**Action taken:** Routine halted at Step 2. No data was written to sheet or CSV.
+**Resolution needed:** The session network policy must be updated to allow `www.clarity.ms:443` outbound HTTPS. Contact the session administrator to whitelist this host.
