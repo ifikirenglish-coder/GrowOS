@@ -131,3 +131,11 @@ The remote execution environment's outbound network policy does not allow connec
 - **Impact:** All 4 Clarity API calls failed. No metrics written to sheet or CSV.
 - **Consecutive failures:** 10 days in a row (Sep 19–28)
 - **Action needed:** Allowlist `www.clarity.ms` in the environment's outbound network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-09-29 Tuesday — Network Policy Denial (Day 11)
+
+- **Error:** Gateway 403 to CONNECT — www.clarity.ms:443 blocked by proxy policy
+- **Time:** 2026-09-29T01:08 UTC / 09:08 KL
+- **Impact:** All 4 Clarity API calls failed. No metrics written to sheet or CSV.
+- **Consecutive failures:** 11 days in a row (Sep 19–29)
+- **Action needed:** Allowlist `www.clarity.ms` in the environment's outbound network policy at https://code.claude.com/docs/en/claude-code-on-the-web
