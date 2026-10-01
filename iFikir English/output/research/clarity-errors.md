@@ -147,3 +147,8 @@ The remote execution environment's outbound network policy does not allow connec
 - **Impact:** All 4 Clarity API calls failed. No metrics written to sheet or CSV.
 - **Consecutive failures:** 12 days in a row (Sep 19–30)
 - **Action needed:** Allowlist `www.clarity.ms` in the environment's outbound network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-10-01 01:08 UTC (09:08 KLT)
+- ERROR: All 4 Clarity API calls failed — www.clarity.ms:443 blocked by egress policy (403 connect_rejected)
+- No metrics written to sheet or CSV for this date
+- Action required: Request www.clarity.ms be added to the egress allowlist for this cloud session
