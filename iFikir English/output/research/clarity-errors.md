@@ -152,3 +152,14 @@ The remote execution environment's outbound network policy does not allow connec
 - ERROR: All 4 Clarity API calls failed — www.clarity.ms:443 blocked by egress policy (403 connect_rejected)
 - No metrics written to sheet or CSV for this date
 - Action required: Request www.clarity.ms be added to the egress allowlist for this cloud session
+
+---
+## 2026-10-02 (KL) — Proxy block on www.clarity.ms
+
+**Time (UTC):** 2026-10-02T01:08 UTC  
+**Error:** Network proxy returned HTTP 403 Forbidden on CONNECT tunnel to `www.clarity.ms:443`  
+**Cause:** Cloud environment network policy does not allow outbound connections to `www.clarity.ms`  
+**All 4 API calls failed.** No data was written to the sheet or CSV for today.  
+**Action needed:** The user must either:
+1. Add `www.clarity.ms` to the environment's network allowlist, OR
+2. Run this routine locally where the Clarity API is accessible.
