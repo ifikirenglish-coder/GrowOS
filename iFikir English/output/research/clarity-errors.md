@@ -171,3 +171,9 @@ The remote execution environment's outbound network policy does not allow connec
 - **Impact:** All 4 Clarity API calls failed. No metrics written to sheet or CSV.
 - **Consecutive failures:** 15 days in a row (Sep 19 – Oct 3)
 - **Action needed:** Allowlist `www.clarity.ms` in the environment's outbound network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-10-04 (KL) — Proxy Block
+- **Error:** `www.clarity.ms:443` blocked by egress proxy (403 CONNECT rejection — organization policy)
+- **Impact:** All 4 API calls failed. No data collected. Sheet not updated. CSV not appended.
+- **Root cause:** Claude Code remote environment's network policy does not permit outbound HTTPS to `www.clarity.ms`. This is not a token/auth issue.
+- **Action needed:** The environment's network policy must be updated to allowlist `www.clarity.ms`, OR this routine must run in an environment with unrestricted outbound HTTPS (e.g., a local Claude Code session or a self-hosted runner).
