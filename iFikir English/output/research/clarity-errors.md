@@ -177,3 +177,12 @@ The remote execution environment's outbound network policy does not allow connec
 - **Impact:** All 4 API calls failed. No data collected. Sheet not updated. CSV not appended.
 - **Root cause:** Claude Code remote environment's network policy does not permit outbound HTTPS to `www.clarity.ms`. This is not a token/auth issue.
 - **Action needed:** The environment's network policy must be updated to allowlist `www.clarity.ms`, OR this routine must run in an environment with unrestricted outbound HTTPS (e.g., a local Claude Code session or a self-hosted runner).
+
+## 2026-10-05 — Proxy policy denial
+
+**Error:** All 4 Clarity API calls blocked by egress proxy policy  
+**Host:** www.clarity.ms:443  
+**Reason:** Gateway answered 403 to CONNECT (policy denial)  
+**Time:** 2026-10-05T01:08 UTC (09:08 KLT)  
+**Action Required:** The remote execution environment's egress policy does not allow outbound connections to `www.clarity.ms`. The daily analytics routine cannot run until this host is whitelisted.  
+**Impact:** No data written to Google Sheet or CSV for today (2026-10-05 Mon).
