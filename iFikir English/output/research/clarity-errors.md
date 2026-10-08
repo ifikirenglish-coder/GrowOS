@@ -20,3 +20,14 @@
 - Contact Anthropic support or the environment administrator to whitelist `www.clarity.ms:443`
 
 ---
+
+---
+## 2026-10-08 (Thu) — API Call Failed
+
+**Time:** 2026-10-08T01:07 UTC (09:07 KL)
+**Error:** All 4 Clarity API calls rejected by egress proxy (policy denial)
+**Detail:** `www.clarity.ms:443` — gateway answered 403 to CONNECT
+**Cause:** The remote Claude Code environment's network policy does not allow outbound connections to `www.clarity.ms`
+**Action required:** User must allow `www.clarity.ms` in the environment's network policy, or run this routine from a session with unrestricted egress.
+
+No data written to sheet or CSV today.
