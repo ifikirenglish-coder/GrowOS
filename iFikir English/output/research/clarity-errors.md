@@ -31,3 +31,16 @@
 **Action required:** User must allow `www.clarity.ms` in the environment's network policy, or run this routine from a session with unrestricted egress.
 
 No data written to sheet or CSV today.
+
+## 2026-10-09 (Friday) — Daily Run Failed
+
+**Error:** All 4 Clarity API calls blocked by egress proxy policy.
+
+- Host blocked: `www.clarity.ms:443`
+- Proxy response: `403 connect_rejected` — gateway denied CONNECT (policy denial)
+- All 4 calls failed: overall, device, source, OS
+- No data written to LPTrx sheet or CSV this date
+
+**Action required:** The session's network egress policy does not allow outbound HTTPS to `www.clarity.ms`. The scheduled routine cannot fetch Clarity data until this host is allowlisted in the Claude Code remote session network policy.
+
+To fix: In the session settings at https://code.claude.com, add `www.clarity.ms` to the allowed outbound hosts for this environment.
