@@ -61,3 +61,21 @@ To fix: In the session settings at https://code.claude.com, add `www.clarity.ms`
 - Step 6: Git commit — SKIPPED
 
 **Action required:** The clarity.ms domain needs to be allowlisted in the environment's network policy. Contact environment admin or recreate the environment with clarity.ms access permitted.
+
+---
+## 2026-10-11 Sunday — Run Failed: Proxy Blocked (5th consecutive failure)
+
+**Error:** All 4 Clarity API calls failed.
+**Cause:** Remote execution environment's network proxy denied CONNECT to `www.clarity.ms:443` (HTTP 403 — policy denial).
+**Proxy host:** 127.0.0.1:45427
+
+**Steps not completed:**
+- Step 2: Clarity API calls (all 4) — FAILED
+- Step 3: Parse metrics — SKIPPED (no data)
+- Step 4: Write to Google Sheet — SKIPPED
+- Step 5: Append to CSV — SKIPPED
+- Step 6: Git commit — SKIPPED
+
+**This is the 5th consecutive day (Oct 7–11) that this routine has failed due to the same proxy block.**
+
+**Action required:** Recreate the Claude Code remote session environment with `www.clarity.ms` added to the allowed outbound hosts. See https://code.claude.com/docs for environment configuration.
