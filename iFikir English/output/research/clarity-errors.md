@@ -79,3 +79,12 @@ To fix: In the session settings at https://code.claude.com, add `www.clarity.ms`
 **This is the 5th consecutive day (Oct 7–11) that this routine has failed due to the same proxy block.**
 
 **Action required:** Recreate the Claude Code remote session environment with `www.clarity.ms` added to the allowed outbound hosts. See https://code.claude.com/docs for environment configuration.
+
+## 2026-10-12 01:08 UTC — Egress Policy Blocking clarity.ms
+
+- **Date (KL):** 2026-10-12 Monday
+- **Error:** `connect_rejected` — gateway answered 403 to CONNECT
+- **Host:** www.clarity.ms:443
+- **Cause:** Organization egress proxy policy is blocking outbound HTTPS to clarity.ms
+- **Action needed:** Whitelist `www.clarity.ms` in the Claude Code remote environment's network policy, or switch to an environment that allows this domain.
+- **Impact:** No data written to sheet or CSV today. Routine stopped at Step 2.
