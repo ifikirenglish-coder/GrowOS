@@ -88,3 +88,13 @@ To fix: In the session settings at https://code.claude.com, add `www.clarity.ms`
 - **Cause:** Organization egress proxy policy is blocking outbound HTTPS to clarity.ms
 - **Action needed:** Whitelist `www.clarity.ms` in the Claude Code remote environment's network policy, or switch to an environment that allows this domain.
 - **Impact:** No data written to sheet or CSV today. Routine stopped at Step 2.
+
+## 2026-10-13 (Run at ~09:08 KL time)
+
+**Error:** Proxy policy denial — all 4 Clarity API calls blocked.
+- Host `www.clarity.ms:443` returns `HTTP/1.1 403 Forbidden` at the CONNECT tunnel level.
+- This is an environment-level network policy restriction, not a Clarity API issue.
+- No data was collected. Sheet not written. CSV not appended.
+
+**Action required:** The cloud execution environment's network policy does not allow outbound HTTPS to `www.clarity.ms`. This needs to be whitelisted for the daily routine to function. The user should check their Claude Code remote environment network policy settings at https://code.claude.com/docs/en/claude-code-on-the-web and add `www.clarity.ms` to the allowed hosts list.
+
