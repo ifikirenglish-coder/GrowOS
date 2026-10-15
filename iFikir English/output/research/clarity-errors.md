@@ -107,3 +107,11 @@ To fix: In the session settings at https://code.claude.com, add `www.clarity.ms`
 - No data collected. Sheet not written. CSV not appended.
 
 **Action required:** Whitelist `www.clarity.ms` in the Claude Code remote environment's network policy. See https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-10-15 — Clarity API blocked by network policy
+
+- **Date:** 2026-10-15 Thursday (KL)
+- **Error:** www.clarity.ms:443 connect_rejected — gateway answered 403 (policy denial)
+- **Cause:** The remote execution environment's egress proxy does not permit outbound connections to clarity.ms. This is a network-level block, not a token issue.
+- **Impact:** No data fetched. Sheet not updated. CSV not appended.
+- **Resolution needed:** Re-run this routine in an environment with clarity.ms access allowed, or whitelist clarity.ms in the session's network policy.
