@@ -115,3 +115,12 @@ To fix: In the session settings at https://code.claude.com, add `www.clarity.ms`
 - **Cause:** The remote execution environment's egress proxy does not permit outbound connections to clarity.ms. This is a network-level block, not a token issue.
 - **Impact:** No data fetched. Sheet not updated. CSV not appended.
 - **Resolution needed:** Re-run this routine in an environment with clarity.ms access allowed, or whitelist clarity.ms in the session's network policy.
+
+## 2026-10-16 — Clarity API blocked by network policy (10th consecutive failure)
+
+- **Date:** 2026-10-16 Friday (KL)
+- **Error:** www.clarity.ms:443 connect_rejected — gateway answered 403 (policy denial)
+- **Cause:** The remote execution environment's egress proxy does not permit outbound connections to clarity.ms. This is a network-level block, not a token issue.
+- **Impact:** No data fetched. Sheet not updated. CSV not appended.
+- **Consecutive failures:** Oct 7–16 (10 days in a row)
+- **Resolution needed:** Whitelist `www.clarity.ms` in the Claude Code remote environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
