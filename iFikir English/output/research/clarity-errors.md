@@ -124,3 +124,18 @@ To fix: In the session settings at https://code.claude.com, add `www.clarity.ms`
 - **Impact:** No data fetched. Sheet not updated. CSV not appended.
 - **Consecutive failures:** Oct 7–16 (10 days in a row)
 - **Resolution needed:** Whitelist `www.clarity.ms` in the Claude Code remote environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+---
+## 2026-10-17 09:07 KL — Proxy Block (Policy Denial)
+
+**Status:** FAILED — All 4 Clarity API calls blocked
+**Error:** Proxy gateway returned 403 to CONNECT for `www.clarity.ms:443`
+**Detail:** `connect_rejected: gateway answered 403 to CONNECT (policy denial or upstream failure)`
+
+The outbound HTTPS proxy does not allow connections to `www.clarity.ms`. This is a network policy restriction in the remote execution environment, not an API token issue.
+
+**Impact:** No data collected for Sat 17-Oct-26. Sheet and CSV not updated.
+
+**Resolution needed:** The user must either:
+1. Allow `www.clarity.ms` in the remote environment's network policy, OR
+2. Run this routine from a local machine or environment without proxy restrictions.
