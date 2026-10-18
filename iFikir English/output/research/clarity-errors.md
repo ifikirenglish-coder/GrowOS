@@ -139,3 +139,12 @@ The outbound HTTPS proxy does not allow connections to `www.clarity.ms`. This is
 **Resolution needed:** The user must either:
 1. Allow `www.clarity.ms` in the remote environment's network policy, OR
 2. Run this routine from a local machine or environment without proxy restrictions.
+
+## 2026-10-18 Sunday — API Call Failed
+
+**Error:** Outbound proxy blocked connection to www.clarity.ms:443  
+**Detail:** gateway answered 403 to CONNECT (policy denial or upstream failure)  
+**Affected calls:** c1, c2, c3, c4 (all 4)  
+**Exit code:** 56 (curl connection reset)  
+**Action needed:** The remote execution environment's network policy does not permit outbound HTTPS to www.clarity.ms. No data was collected today.
+
