@@ -148,3 +148,15 @@ The outbound HTTPS proxy does not allow connections to `www.clarity.ms`. This is
 **Exit code:** 56 (curl connection reset)  
 **Action needed:** The remote execution environment's network policy does not permit outbound HTTPS to www.clarity.ms. No data was collected today.
 
+
+---
+## 2026-10-19 (Monday) — API Unreachable
+
+**Error:** Proxy blocked outbound connection to `www.clarity.ms:443` with HTTP 403 Forbidden.
+
+**Calls attempted:** 4 (overall, device, source, OS)
+**Result:** All failed — no data collected today.
+
+**Action:** No row written to LPTrx sheet or CSV. Git commit skipped (nothing to commit).
+
+**Note:** The remote execution environment's network policy does not permit connections to `clarity.ms`. This will block the routine every day until the policy is updated or the session is run from a network that allows it.
