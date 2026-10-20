@@ -160,3 +160,9 @@ The outbound HTTPS proxy does not allow connections to `www.clarity.ms`. This is
 **Action:** No row written to LPTrx sheet or CSV. Git commit skipped (nothing to commit).
 
 **Note:** The remote execution environment's network policy does not permit connections to `clarity.ms`. This will block the routine every day until the policy is updated or the session is run from a network that allows it.
+
+## 2026-10-20 09:03 +08
+- **Error:** Egress proxy blocked connection to www.clarity.ms:443
+- **Reason:** connect_rejected — host not allowed by session network policy
+- **Impact:** All 4 API calls failed (HTTP 000). No data collected for 2026-10-20.
+- **Action needed:** Add www.clarity.ms to the allowed egress hosts in the remote execution environment config.
