@@ -166,3 +166,13 @@ The outbound HTTPS proxy does not allow connections to `www.clarity.ms`. This is
 - **Reason:** connect_rejected — host not allowed by session network policy
 - **Impact:** All 4 API calls failed (HTTP 000). No data collected for 2026-10-20.
 - **Action needed:** Add www.clarity.ms to the allowed egress hosts in the remote execution environment config.
+
+## 2026-10-21 Wednesday — API Blocked by Proxy
+
+- **Time:** 2026-10-21 (KL)
+- **Error:** Proxy (127.0.0.1:43105) returned HTTP 403 Forbidden when attempting to CONNECT to `www.clarity.ms:443`
+- **All 4 API calls failed** — no data collected
+- **Root cause:** The remote execution environment's outbound proxy does not permit connections to `www.clarity.ms`
+- **Sheet write:** Skipped (no data)
+- **CSV append:** Skipped (no data)
+- **Action needed:** User must whitelist `www.clarity.ms` in the Claude Code remote environment network policy, or run this routine from a local environment with direct internet access.
