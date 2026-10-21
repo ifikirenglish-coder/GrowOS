@@ -1,0 +1,456 @@
+<title>iFikir Tap Quiz</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Familjen+Grotesk:wght@600;700&display=swap">
+<style>
+/* Layout: sticky tab strip, then one phone-width column. Chat and Page are two ways to answer the same three questions; the other two tabs are for testing and for staff. */
+:root{
+  --bg:#eef2f3; --surface:#ffffff; --fg:#14272b; --muted:#566a6f; --line:#d3dde0;
+  --accent:#0b6b6f; --accent-fg:#ffffff; --accent-soft:#dcecee;
+  --ok:#2f7d4f; --ok-soft:#e1f1e7; --warn:#a8570f; --warn-soft:#f8e9dd;
+  --chat-bg:#dfe9e6; --in:#ffffff; --out:#cfe9dc; --code:#e8eef0;
+  --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-head:"Familjen Grotesk","Figtree",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1c1f; --surface:#17292d; --fg:#e6eff0; --muted:#98b0b4; --line:#2a4348;
+  --accent:#4cc3c8; --accent-fg:#06282a; --accent-soft:#1d3a3e;
+  --ok:#6cc58d; --ok-soft:#1b3326; --warn:#f0a06a; --warn-soft:#3a2a1f;
+  --chat-bg:#0c1517; --in:#1c2f33; --out:#1f4a3a; --code:#0f2024; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1c1f; --surface:#17292d; --fg:#e6eff0; --muted:#98b0b4; --line:#2a4348;
+  --accent:#4cc3c8; --accent-fg:#06282a; --accent-soft:#1d3a3e;
+  --ok:#6cc58d; --ok-soft:#1b3326; --warn:#f0a06a; --warn-soft:#3a2a1f;
+  --chat-bg:#0c1517; --in:#1c2f33; --out:#1f4a3a; --code:#0f2024; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:460px;margin-inline:auto}
+header{padding-block:16px 4px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--font-head);font-size:26px;line-height:1.15;margin:4px 0 4px;text-wrap:balance}
+h2{font-family:var(--font-head);font-size:19px;line-height:1.25;margin:0 0 6px;text-wrap:balance}
+h3{font-size:15px;margin:14px 0 4px}
+p{margin:0 0 10px}
+.sub{color:var(--muted);margin:0}
+.note{font-size:13px;color:var(--muted)}
+.ctl{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.seg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+button{font:inherit;color:inherit}
+.seg button,.btn{font-size:14px;font-weight:600;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:6px 12px;min-height:40px;cursor:pointer;white-space:nowrap;flex:none}
+.seg button[aria-pressed="true"],.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.banner{background:var(--warn-soft);border-radius:8px;padding:8px 12px;font-size:14px;margin-block:0 12px}
+.banner b{color:var(--warn)}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;margin-block:12px}
+.toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px}
+
+/* chat */
+.phone{border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--chat-bg);position:relative}
+.chat-top{background:var(--surface);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;gap:10px;align-items:center}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font-family:var(--font-head);font-weight:700}
+.chat-top b{display:block;line-height:1.2}
+.chat-top span{font-size:12px;color:var(--muted)}
+#chat{height:min(560px,calc(100dvh - 250px));min-height:360px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px;scroll-behavior:smooth}
+.b{max-width:86%;padding:8px 11px;border-radius:12px;font-size:15.5px;line-height:1.4;overflow-wrap:anywhere;white-space:pre-wrap}
+.b.in{align-self:flex-start;background:var(--in);border-top-left-radius:3px}
+.b.out{align-self:flex-end;background:var(--out);border-top-right-radius:3px}
+.b.sys{align-self:center;background:var(--accent-soft);color:var(--fg);font-size:13px;text-align:center;max-width:94%}
+.b.ok{border-left:4px solid var(--ok)} .b.try{border-left:4px solid var(--warn)}
+.qr{align-self:flex-start;width:86%;display:grid;gap:4px}
+.qr button{background:var(--in);color:var(--accent);border:0;border-radius:10px;font-weight:600;font-size:15px;padding:10px 12px;min-height:44px;text-align:center;cursor:pointer}
+.qr button:disabled{opacity:.45;cursor:default}
+.qr button.picked{opacity:1;background:var(--accent);color:var(--accent-fg)}
+.typing{align-self:flex-start;background:var(--in);border-radius:12px;padding:10px 14px;display:flex;gap:4px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:dot 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{opacity:.3}30%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.typing i{animation:none}#chat{scroll-behavior:auto}}
+.sheet{position:absolute;inset:auto 0 0 0;background:var(--surface);border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:14px 14px 16px;box-shadow:0 -8px 24px rgb(0 0 0 / .18);max-height:80%;overflow-y:auto}
+.sheet h3{margin:0 0 8px;display:flex;justify-content:space-between;align-items:center}
+.row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:13px 4px;min-height:48px;font-size:16px;cursor:pointer}
+.dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.chat-foot{background:var(--surface);border-top:1px solid var(--line);padding:8px 14px;font-size:12px;color:var(--muted)}
+
+/* page quiz */
+.prog{display:flex;gap:6px;margin-bottom:12px}
+.prog span{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.prog span.on{background:var(--accent)} .prog span.done{background:var(--ok)}
+.qtext{font-family:var(--font-head);font-size:22px;line-height:1.3;margin:0 0 14px;text-wrap:balance}
+.opts{display:grid;gap:8px}
+.opt{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:14px;font-size:18px;font-weight:600;text-align:left;min-height:56px;cursor:pointer}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.nope{border-color:var(--warn);background:var(--warn-soft)}
+.fb{margin-top:12px;padding:12px;border-radius:10px;background:var(--accent-soft)}
+.ring{display:block;margin:0 auto 6px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-block:10px}
+.kpi{border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.kpi b{display:block;font-family:var(--font-head);font-size:22px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;color:var(--muted)}
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--ok-soft);color:var(--ok);font-weight:700;font-size:13px;margin:2px 4px 2px 0}
+.meter{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent)}
+
+/* test + staff */
+pre{background:var(--code);padding:10px 12px;border-radius:8px;overflow-x:auto;max-width:100%;font-size:12.5px;line-height:1.45;margin:6px 0}
+code{font-family:ui-monospace,Menlo,Consolas,monospace}
+.msgbox{background:var(--code);border-radius:8px;padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14.5px;margin:6px 0}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-block:6px 12px}
+a.btn{display:inline-flex;align-items:center;text-decoration:none}
+.scroll{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+ul{margin:0 0 10px;padding-left:20px} li{margin-bottom:5px}
+details{border:1px solid var(--line);border-radius:8px;background:var(--surface);margin-block:8px}
+details>summary{cursor:pointer;padding:10px 12px;font-weight:600}
+details>div{padding:0 12px 10px}
+.foot{margin-top:24px;color:var(--muted);font-size:13px}
+@media (max-width:480px){.phone{border-radius:14px}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Student Tracking v2 · prototype for testing, not deployed</div>
+  <h1>iFikir Tap Quiz</h1>
+  <p class="sub">Three questions, one tap each, about 45 seconds.</p>
+</header>
+<div class="ctl"><div class="seg" id="tabs" role="group" aria-label="View"></div></div>
+
+<main>
+<section id="tab-chat">
+  <div class="banner"><b>Sample questions.</b> They are drafts to show the format. They are not from the approved lesson bank.</div>
+  <div class="toolbar"><span class="note">Chat shows how it would look in WhatsApp.</span><button class="btn" id="restart">Restart chat</button></div>
+  <div class="phone" id="phone">
+    <div class="chat-top"><div class="avatar">iF</div><div><b>iFikir English</b><span>Practice with your coach</span></div></div>
+    <div id="chat" aria-live="polite"></div>
+    <div class="chat-foot">Buttons hold up to 3 choices. Four or more choices open a list.</div>
+  </div>
+</section>
+
+<section id="tab-page" hidden>
+  <div class="banner"><b>Sample questions.</b> Same three questions as a link-based page, for the case where WhatsApp buttons are not available.</div>
+  <div id="pageApp"></div>
+</section>
+
+<section id="tab-wa" hidden>
+  <div class="banner"><b>Nothing is sent from this page.</b> You send the test yourself, from your own WhatsApp, to yourself.</div>
+  <section class="card">
+    <h2>Test A: in your own WhatsApp now</h2>
+    <p>This tests the wording, length and rhythm. Tap "Open in WhatsApp", pick your own chat ("Message yourself"), send, then type A, B or C as the reply.</p>
+    <p class="note">Real buttons need the WhatsApp business connection, so here the student replies with a letter. Everything else feels the same.</p>
+    <div id="waMsgs"></div>
+    <div class="acts"><button class="btn primary" id="copyAll">Copy all three</button><a class="btn" id="waAll" target="_blank" rel="noopener">Open all in WhatsApp</a></div>
+    <p class="note" id="copyNote" role="status"></p>
+  </section>
+  <section class="card">
+    <h2>Test B: real buttons and lists</h2>
+    <p>This is what the business connection must send to get the tap experience. It follows the vendor's documented format for the WhatsApp Business Cloud API. It has not been run from here.</p>
+    <details><summary>Button message (3 choices)</summary><div><pre id="payBtn"></pre></div></details>
+    <details><summary>List message (4 or more choices)</summary><div><pre id="payList"></pre></div></details>
+    <h3>Before a real test, confirm</h3>
+    <ul>
+      <li>The GoHighLevel number is on the official WhatsApp API. Buttons and lists do not work on the plain app.</li>
+      <li>The first message to a student starts with an approved template. After the student taps, the next messages in that chat are free text.</li>
+      <li>Only your own number is the recipient. No students.</li>
+      <li>The existing GHL AI reply flow does not answer the taps.</li>
+    </ul>
+    <p class="note">Button titles stop at 20 characters and list rows at 24. The question bank follows those limits.</p>
+  </section>
+</section>
+
+<section id="tab-staff" hidden>
+  <div id="staffApp"></div>
+</section>
+</main>
+<p class="foot">Prototype. Answers are stored only in this browser. A real version would write each tap to the student record.</p>
+</div>
+
+<script>
+(function(){
+var DEMO="Aina";
+var BASE_WORDS=38, BASE_WEEKS=3;
+var Q=[
+ {id:"L4-pron-1",lesson:"Lesson 4",concept:"Pronouns: he, she, they",
+  prompt:"Fill the blank.\n\"Aina is my sister. ___ works in Shah Alam.\"",
+  options:["He","She","They"],answer:1,why:"Aina is a girl, so we say \"She\"."},
+ {id:"L4-pron-2",lesson:"Lesson 4",concept:"Pronouns: we, they, it",
+  prompt:"Fill the blank.\n\"My friends and I like coffee. ___ drink it every morning.\"",
+  options:["We","They","She","It"],answer:0,why:"\"My friends and I\" includes you, so we say \"We\"."},
+ {id:"L3-simple-1",lesson:"Earlier lesson, asked again",concept:"Present simple: he, she",
+  prompt:"Fill the blank.\n\"Every day, he ___ to work by bus.\"",
+  options:["go","goes","going"],answer:1,why:"With he or she we add -s: \"goes\"."}
+];
+var REASONS=["Busy with work","Did not understand","Feeling tired","Something else"];
+
+/* ---------- storage ---------- */
+var store={
+  get:function(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+var S={tab:"chat",log:store.get("tq_log",[]),rounds:store.get("tq_rounds",[]),reasons:store.get("tq_reasons",[]),badges:store.get("tq_badges",[])};
+function save(){store.set("tq_log",S.log);store.set("tq_rounds",S.rounds);store.set("tq_reasons",S.reasons);store.set("tq_badges",S.badges)}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function $(id){return document.getElementById(id)}
+function qById(id){return Q.filter(function(q){return q.id===id})[0]}
+function weekKey(t){return Math.floor((t-345600000)/604800000)}
+var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function sleep(ms){return new Promise(function(r){setTimeout(r,reduce?0:ms)})}
+
+/* ---------- shared logic ---------- */
+function record(q,pick,ms,mode){
+  S.log.push({t:Date.now(),qid:q.id,pick:pick,ok:pick===q.answer,ms:ms,mode:mode});save();
+}
+function wordsKnown(){
+  var seen={};S.log.forEach(function(l){if(l.ok)seen[l.qid]=1});
+  return BASE_WORDS+Object.keys(seen).length;
+}
+function weeksCount(){
+  var w={};S.rounds.forEach(function(r){w[weekKey(r.t)]=1});
+  return BASE_WEEKS+Object.keys(w).length;
+}
+function finishRound(mode,score){
+  var now=Date.now(),prev=S.rounds.length?S.rounds[S.rounds.length-1]:null;
+  var weekBefore=S.rounds.some(function(r){return weekKey(r.t)===weekKey(now)});
+  var earned=[];
+  if(score===Q.length&&S.badges.indexOf("First perfect round")<0){S.badges.push("First perfect round");earned.push("First perfect round")}
+  if(prev&&score>prev.score&&S.badges.indexOf("Better the second time")<0){S.badges.push("Better the second time");earned.push("Better the second time")}
+  S.rounds.push({t:now,score:score,mode:mode});save();
+  return {earned:earned,weekBefore:weekBefore};
+}
+function nextAskLine(){return "Anything not quite yet comes back on Thursday, in a different form."}
+function latestByQ(){
+  var m={};S.log.forEach(function(l){m[l.qid]=l});return m;
+}
+function fmtDate(t){try{return new Date(t).toLocaleDateString("en-MY",{weekday:"short",day:"numeric",month:"short"})}catch(e){return ""}}
+function waText(q,n){
+  var L="ABCD",s="Q"+n+". "+q.prompt.replace("Fill the blank.\n","Fill the blank: ");
+  q.options.forEach(function(o,i){s+="\n"+L[i]+") "+o});
+  return s+"\nReply with "+L.slice(0,q.options.length).split("").join(", ").replace(/, ([A-D])$/," or $1")+".";
+}
+
+/* ---------- chat ---------- */
+var chat=$("chat"),runId=0;
+function scrollDown(){chat.scrollTop=chat.scrollHeight}
+function add(cls,text){var d=document.createElement("div");d.className="b "+cls;d.textContent=text;chat.appendChild(d);scrollDown();return d}
+async function botSay(id,text,cls){
+  var t=document.createElement("div");t.className="typing";t.innerHTML="<i></i><i></i><i></i>";chat.appendChild(t);scrollDown();
+  await sleep(650);t.remove();
+  if(id!==runId)return null;
+  return add("in"+(cls?" "+cls:""),text);
+}
+function userSay(id,text){if(id!==runId)return;add("out",text)}
+function askButtons(id,options){
+  return new Promise(function(res){
+    var wrap=document.createElement("div");wrap.className="qr";
+    options.forEach(function(o,i){
+      var b=document.createElement("button");b.type="button";b.textContent=o;
+      b.onclick=function(){
+        Array.prototype.forEach.call(wrap.children,function(x){x.disabled=true});
+        b.classList.add("picked");res(i);
+      };
+      wrap.appendChild(b);
+    });
+    chat.appendChild(wrap);scrollDown();
+  });
+}
+function askList(id,options,title){
+  return new Promise(function(res){
+    var wrap=document.createElement("div");wrap.className="qr";
+    var open=document.createElement("button");open.type="button";open.textContent="☰  Choose answer";
+    wrap.appendChild(open);chat.appendChild(wrap);scrollDown();
+    function openSheet(){
+      var sh=document.createElement("div");sh.className="sheet";sh.setAttribute("role","dialog");sh.setAttribute("aria-label",title||"Choose");
+      var h=document.createElement("h3");h.innerHTML="<span>"+esc(title||"Choose one")+"</span>";
+      var x=document.createElement("button");x.type="button";x.className="btn";x.textContent="Close";x.onclick=function(){sh.remove()};
+      h.appendChild(x);sh.appendChild(h);
+      options.forEach(function(o,i){
+        var r=document.createElement("button");r.type="button";r.className="row";
+        r.innerHTML="<span class=\"dot\"></span><span>"+esc(o)+"</span>";
+        r.onclick=function(){sh.remove();open.disabled=true;open.classList.add("picked");open.textContent=o;res(i)};
+        sh.appendChild(r);
+      });
+      $("phone").appendChild(sh);
+    }
+    open.onclick=openSheet;
+  });
+}
+async function ask(id,options,kind,title){
+  var r=await (kind==="list"?askList(id,options,title):askButtons(id,options));
+  if(id!==runId)return null;
+  userSay(id,options[r]);return r;
+}
+async function flow(id){
+  chat.innerHTML="";
+  if(!await botSay(id,"Hi "+DEMO+". Here are 3 quick questions from this week's class. It takes about 45 seconds."))return;
+  var r=await ask(id,["Start now","Later tonight","Not this week"],"buttons");
+  if(r===null)return;
+  if(r===1){await botSay(id,"No problem. I will send them again at 8:30 pm tonight.");add("sys","Chat ends here. Tap Restart chat to try again.");return}
+  if(r===2){
+    if(!await botSay(id,"Thanks for telling me. What is the main reason this week?"))return;
+    var why=await ask(id,REASONS,"list","Main reason");if(why===null)return;
+    S.reasons.push({t:Date.now(),reason:REASONS[why]});save();
+    await botSay(id,"Got it, thank you. Your coach can see this. Your words and weeks stay as they are, and the next set is ready when you are.");
+    add("sys","Reason saved. Tap Restart chat to try again.");return;
+  }
+  var score=0;
+  for(var i=0;i<Q.length;i++){
+    var q=Q[i];
+    if(!await botSay(id,"Question "+(i+1)+" of "+Q.length+"\n"+q.prompt))return;
+    var t0=Date.now();
+    var pick=await ask(id,q.options,q.options.length>3?"list":"buttons","Question "+(i+1));
+    if(pick===null)return;
+    var ms=Date.now()-t0;record(q,pick,ms,"chat");
+    var ok=pick===q.answer;if(ok)score++;
+    if(!await botSay(id,ok?"Correct. "+q.why:"Not quite yet. "+q.why+(i<Q.length-1?"":""),ok?"ok":"try"))return;
+  }
+  var fin=finishRound("chat",score);
+  var msg=score+" of "+Q.length+" today.\nWords I know: "+wordsKnown()+"\nPractice weeks: "+weeksCount()+(fin.weekBefore?" (this week already counted)":"");
+  if(fin.earned.length)msg+="\nNew badge: "+fin.earned.join(", ");
+  if(score<Q.length)msg+="\n"+nextAskLine();
+  if(!await botSay(id,msg))return;
+  add("sys","Round saved. Tap Restart chat to try again.");
+}
+function restartChat(){runId++;var p=$("phone").querySelector(".sheet");if(p)p.remove();flow(runId)}
+$("restart").onclick=restartChat;
+
+/* ---------- page quiz ---------- */
+var P={i:0,score:0,locked:false,t0:0,picks:[],done:false,fin:null};
+function ring(score,total){
+  var c=276.46,off=c*(1-score/total);
+  return "<svg class=\"ring\" width=\"120\" height=\"120\" viewBox=\"0 0 120 120\" role=\"img\" aria-label=\""+score+" of "+total+"\">"+
+   "<circle cx=\"60\" cy=\"60\" r=\"44\" fill=\"none\" stroke-width=\"12\" style=\"stroke:var(--line)\"/>"+
+   "<circle cx=\"60\" cy=\"60\" r=\"44\" fill=\"none\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-dasharray=\""+c+"\" stroke-dashoffset=\""+off+"\" transform=\"rotate(-90 60 60)\" style=\"stroke:var(--accent)\"/>"+
+   "<text x=\"60\" y=\"68\" text-anchor=\"middle\" font-size=\"26\" font-weight=\"700\" style=\"fill:var(--fg)\">"+score+"/"+total+"</text></svg>";
+}
+function renderPage(){
+  var el=$("pageApp"),h="";
+  if(P.done){
+    h+="<section class=\"card\">"+ring(P.score,Q.length)+"<h2 style=\"text-align:center\">"+(P.score===Q.length?"All three right":"Good round, "+DEMO)+"</h2>";
+    h+="<div class=\"kpis\"><div class=\"kpi\"><b>"+wordsKnown()+"</b><span>Words I know</span></div><div class=\"kpi\"><b>"+weeksCount()+"</b><span>Practice weeks"+(P.fin&&P.fin.weekBefore?" (this week counted)":"")+"</span></div></div>";
+    if(P.fin&&P.fin.earned.length)h+="<p>New badge: "+P.fin.earned.map(function(b){return "<span class=\"badge\">"+esc(b)+"</span>"}).join("")+"</p>";
+    if(P.score<Q.length)h+="<p class=\"note\">"+nextAskLine()+"</p>";
+    h+="<p><button class=\"btn primary\" id=\"again\">Try again</button></p></section>";
+  }else{
+    var q=Q[P.i];
+    h+="<div class=\"prog\">"+Q.map(function(_,i){return "<span class=\""+(i<P.i?"done":i===P.i?"on":"")+"\"></span>"}).join("")+"</div>";
+    h+="<p class=\"note\">"+esc(q.lesson)+" · question "+(P.i+1)+" of "+Q.length+"</p>";
+    h+="<p class=\"qtext\">"+esc(q.prompt).replace(/\n/g,"<br>")+"</p><div class=\"opts\">";
+    q.options.forEach(function(o,i){
+      var cls="opt";if(P.locked){if(i===q.answer)cls+=" right";else if(i===P.picks[P.i])cls+=" nope"}
+      h+="<button class=\""+cls+"\" data-i=\""+i+"\""+(P.locked?" disabled":"")+">"+esc(o)+"</button>";
+    });
+    h+="</div>";
+    if(P.locked){
+      var ok=P.picks[P.i]===q.answer;
+      h+="<div class=\"fb\"><b>"+(ok?"Correct.":"Not quite yet.")+"</b> "+esc(q.why)+"</div><p style=\"margin-top:12px\"><button class=\"btn primary\" id=\"next\">"+(P.i<Q.length-1?"Next":"See my result")+"</button></p>";
+    }
+  }
+  el.innerHTML=h;
+  Array.prototype.forEach.call(el.querySelectorAll(".opt"),function(b){
+    b.onclick=function(){
+      if(P.locked)return;var i=+b.getAttribute("data-i"),q=Q[P.i];
+      P.picks[P.i]=i;P.locked=true;record(q,i,Date.now()-P.t0,"page");if(i===q.answer)P.score++;renderPage();
+    };
+  });
+  var nx=$("next");if(nx)nx.onclick=function(){
+    if(P.i<Q.length-1){P.i++;P.locked=false;P.t0=Date.now();renderPage()}
+    else{P.fin=finishRound("page",P.score);P.done=true;renderPage();window.scrollTo(0,0)}
+  };
+  var ag=$("again");if(ag)ag.onclick=function(){P={i:0,score:0,locked:false,t0:Date.now(),picks:[],done:false,fin:null};renderPage()};
+}
+P.t0=Date.now();
+
+/* ---------- WhatsApp test tab ---------- */
+function buildWa(){
+  var intro="Hi "+DEMO+". Here are 3 quick questions from this week's class. Reply with the letter.";
+  var all=intro+"\n\n"+Q.map(function(q,i){return waText(q,i+1)}).join("\n\n");
+  var box=$("waMsgs");box.innerHTML="";
+  Q.forEach(function(q,i){
+    var t=waText(q,i+1);
+    var d=document.createElement("div");
+    d.innerHTML="<div class=\"msgbox\">"+esc(t)+"</div><div class=\"acts\"><button class=\"btn\" data-copy=\""+i+"\">Copy</button><a class=\"btn\" target=\"_blank\" rel=\"noopener\" href=\"https://wa.me/?text="+encodeURIComponent(t)+"\">Open in WhatsApp</a></div>";
+    box.appendChild(d);
+  });
+  $("waAll").href="https://wa.me/?text="+encodeURIComponent(all);
+  function copy(text){
+    var note=$("copyNote");
+    function fallback(){
+      var ta=document.createElement("textarea");ta.value=text;ta.setAttribute("readonly","");ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();
+      var ok=false;try{ok=document.execCommand("copy")}catch(e){}ta.remove();
+      note.textContent=ok?"Copied.":"Copy was blocked. Press and hold the text above to select it.";
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){note.textContent="Copied."},fallback)}else fallback();
+  }
+  Array.prototype.forEach.call(box.querySelectorAll("[data-copy]"),function(b){b.onclick=function(){copy(waText(Q[+b.getAttribute("data-copy")],+b.getAttribute("data-copy")+1))}});
+  $("copyAll").onclick=function(){copy(all)};
+  var q1=Q[0],q2=Q[1];
+  var btn={messaging_product:"whatsapp",recipient_type:"individual",to:"<YOUR_OWN_TEST_NUMBER>",type:"interactive",
+    interactive:{type:"button",body:{text:"Question 1 of 3\n"+q1.prompt},
+      action:{buttons:q1.options.map(function(o,i){return {type:"reply",reply:{id:q1.id+":"+i,title:o}}})}}};
+  var list={messaging_product:"whatsapp",recipient_type:"individual",to:"<YOUR_OWN_TEST_NUMBER>",type:"interactive",
+    interactive:{type:"list",body:{text:"Question 2 of 3\n"+q2.prompt},
+      action:{button:"Choose answer",sections:[{title:"Answers",rows:q2.options.map(function(o,i){return {id:q2.id+":"+i,title:o}})}]}}};
+  $("payBtn").textContent=JSON.stringify(btn,null,2);
+  $("payList").textContent=JSON.stringify(list,null,2);
+}
+
+/* ---------- staff view ---------- */
+var EXAMPLE=[
+ {t:Date.now()-86400000*2,qid:"L4-pron-1",ok:true,ms:6200,mode:"chat",who:"Example A"},
+ {t:Date.now()-86400000*2,qid:"L4-pron-2",ok:false,ms:11800,mode:"chat",who:"Example A"},
+ {t:Date.now()-86400000*2,qid:"L3-simple-1",ok:true,ms:8100,mode:"chat",who:"Example A"},
+ {t:Date.now()-86400000,qid:"L4-pron-1",ok:true,ms:5400,mode:"chat",who:"Example B"},
+ {t:Date.now()-86400000,qid:"L4-pron-2",ok:true,ms:7300,mode:"chat",who:"Example B"},
+ {t:Date.now()-86400000,qid:"L3-simple-1",ok:false,ms:9900,mode:"chat",who:"Example B"}
+];
+function median(a){if(!a.length)return 0;var s=a.slice().sort(function(x,y){return x-y}),m=Math.floor(s.length/2);return s.length%2?s[m]:(s[m-1]+s[m])/2}
+function renderStaff(){
+  var real=S.log.length>0,rows=real?S.log:EXAMPLE,el=$("staffApp"),h="";
+  if(!real)h+="<div class=\"banner\"><b>Example rows.</b> Answer in the Chat or Page tab and your own taps replace these.</div>";
+  var okN=rows.filter(function(r){return r.ok}).length;
+  h+="<section class=\"card\"><h2>What each tap records</h2><p class=\"note\">One row per answer: student, question, choice, right or not, seconds taken, and where it was answered.</p>";
+  h+="<div class=\"kpis\"><div class=\"kpi\"><b>"+rows.length+"</b><span>Answers</span></div><div class=\"kpi\"><b>"+Math.round(okN/rows.length*100)+"%</b><span>Right first time</span></div><div class=\"kpi\"><b>"+(median(rows.map(function(r){return r.ms}))/1000).toFixed(1)+"s</b><span>Median per answer</span></div><div class=\"kpi\"><b>"+(real?S.rounds.length:2)+"</b><span>Rounds</span></div></div></section>";
+  var byC={};rows.forEach(function(r){var q=qById(r.qid);if(!q)return;var c=byC[q.concept]||(byC[q.concept]={n:0,ok:0});c.n++;if(r.ok)c.ok++});
+  h+="<section class=\"card\"><h2>What they know, by idea</h2>";
+  Object.keys(byC).forEach(function(k){var c=byC[k],p=Math.round(c.ok/c.n*100);
+    h+="<div style=\"margin-block:10px\"><div style=\"display:flex;justify-content:space-between;gap:8px\"><span>"+esc(k)+"</span><b>"+p+"%</b></div><div class=\"meter\"><i style=\"width:"+p+"%\"></i></div><div class=\"note\">"+c.ok+" of "+c.n+" answers</div></div>"});
+  h+="</section>";
+  var latest={};rows.forEach(function(r){latest[r.qid]=r});
+  var due=Object.keys(latest).filter(function(k){return !latest[k].ok});
+  h+="<section class=\"card\"><h2>Coming back</h2><p class=\"note\">Anything not right the last time is asked again, in a different form.</p>";
+  if(!due.length)h+="<p>Nothing waiting. Every question was right the last time.</p>";
+  else{h+="<div class=\"scroll\"><table><tr><th>Idea</th><th>Ask again</th><th>And again</th></tr>";
+    due.forEach(function(k){var q=qById(k),t=latest[k].t;h+="<tr><td>"+esc(q.concept)+"</td><td>"+fmtDate(t+2*86400000)+"</td><td>"+fmtDate(t+7*86400000)+"</td></tr>"});
+    h+="</table></div>"}
+  h+="</section>";
+  var rs=real?S.reasons:[{reason:"Busy with work",t:Date.now()-86400000}];
+  h+="<section class=\"card\"><h2>Why not today</h2><p class=\"note\">Students who tap \"Not this week\" give a reason with one more tap. This fills the unknown stop reasons.</p>";
+  if(!rs.length)h+="<p>No reasons yet.</p>";else{h+="<ul>";rs.slice(-8).forEach(function(r){h+="<li>"+esc(r.reason)+" <span class=\"note\">"+fmtDate(r.t)+"</span></li>"});h+="</ul>"}
+  h+="</section>";
+  h+="<section class=\"card\"><h2>Answer log</h2><div class=\"scroll\"><table><tr><th>When</th><th>Who</th><th>Question</th><th>Right</th><th>Sec</th><th>Via</th></tr>";
+  rows.slice(-20).reverse().forEach(function(r){h+="<tr><td>"+fmtDate(r.t)+"</td><td>"+esc(r.who||"You")+"</td><td>"+esc(r.qid)+"</td><td>"+(r.ok?"Yes":"Not yet")+"</td><td>"+(r.ms/1000).toFixed(1)+"</td><td>"+esc(r.mode)+"</td></tr>"});
+  h+="</table></div></section>";
+  if(real)h+="<p><button class=\"btn\" id=\"reset\">Clear my test data</button></p><p class=\"note\" id=\"resetNote\"></p>";
+  el.innerHTML=h;
+  var rb=$("reset");if(rb)rb.onclick=function(){
+    if(rb.getAttribute("data-armed")!=="1"){rb.setAttribute("data-armed","1");rb.textContent="Tap again to clear";return}
+    S.log=[];S.rounds=[];S.reasons=[];S.badges=[];save();renderStaff();
+  };
+}
+
+/* ---------- tabs ---------- */
+var TABS=[["chat","Chat"],["page","Page"],["wa","Test on WhatsApp"],["staff","Staff view"]];
+function showTab(t){
+  S.tab=t;
+  TABS.forEach(function(x){$("tab-"+x[0]).hidden=x[0]!==t});
+  var seg=$("tabs");seg.innerHTML="";
+  TABS.forEach(function(x){var b=document.createElement("button");b.type="button";b.textContent=x[1];b.setAttribute("aria-pressed",x[0]===t);b.onclick=function(){showTab(x[0]);window.scrollTo(0,0)};seg.appendChild(b)});
+  if(t==="staff")renderStaff();
+  if(t==="page")renderPage();
+}
+buildWa();showTab("chat");restartChat();
+})();
+</script>
