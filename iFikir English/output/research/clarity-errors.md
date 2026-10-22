@@ -176,3 +176,13 @@ The outbound HTTPS proxy does not allow connections to `www.clarity.ms`. This is
 - **Sheet write:** Skipped (no data)
 - **CSV append:** Skipped (no data)
 - **Action needed:** User must whitelist `www.clarity.ms` in the Claude Code remote environment network policy, or run this routine from a local environment with direct internet access.
+
+## 2026-10-22 Thursday — API Blocked by Proxy (16th consecutive failure)
+
+- **Time:** 2026-10-22 (KL)
+- **Error:** Proxy returned HTTP 403 Forbidden to CONNECT `www.clarity.ms:443`
+- **All 4 API calls failed** — no data collected
+- **Consecutive failures:** Oct 7–22 (16 days)
+- **Sheet write:** Skipped
+- **CSV append:** Skipped
+- **Action needed:** Whitelist `www.clarity.ms` in the Claude Code remote environment network policy at https://code.claude.com/docs/en/claude-code-on-the-web
