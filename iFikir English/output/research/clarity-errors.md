@@ -186,3 +186,9 @@ The outbound HTTPS proxy does not allow connections to `www.clarity.ms`. This is
 - **Sheet write:** Skipped
 - **CSV append:** Skipped
 - **Action needed:** Whitelist `www.clarity.ms` in the Claude Code remote environment network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-10-23 (Friday KL) — Network Policy Block
+- **Error:** All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the session proxy (gateway 403 — policy denial).
+- **Root cause:** This remote Claude Code session's network policy does not permit outbound HTTPS to `www.clarity.ms`.
+- **Impact:** No data collected today. Sheet write skipped. CSV not updated.
+- **Action needed:** User must enable `www.clarity.ms` in the session's network policy (outbound allowlist) for this routine to run. See: https://code.claude.com/docs/en/claude-code-on-the-web for environment configuration.
