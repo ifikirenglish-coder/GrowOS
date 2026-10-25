@@ -206,3 +206,16 @@ All 4 Clarity API calls failed with curl exit code 56 (connection failure).
 
 **Fix required:** The Claude Code remote environment network policy must allowlist `www.clarity.ms` for this scheduled routine to work. The user can update the environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web to allow outbound HTTPS to that host.
 
+
+## 2026-10-25 (Sunday) — 09:02 KL — ROUTINE FAILED
+
+**Error:** All 4 Clarity API calls blocked by environment network policy.
+
+- `www.clarity.ms:443` — `connect_rejected` (gateway 403, policy denial)
+- This is a proxy/firewall restriction in the Claude Code remote environment, not a token or API issue.
+- The Clarity token is valid (expires 2126).
+
+**Impact:** No data written to Google Sheet or CSV today.
+
+**Resolution needed:** The remote execution environment needs outbound access to `www.clarity.ms:443` to run this routine. This may require the user to configure network policy to allow this host, or run the routine from a different environment.
+
