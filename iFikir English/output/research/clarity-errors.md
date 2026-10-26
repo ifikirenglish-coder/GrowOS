@@ -219,3 +219,12 @@ All 4 Clarity API calls failed with curl exit code 56 (connection failure).
 
 **Resolution needed:** The remote execution environment needs outbound access to `www.clarity.ms:443` to run this routine. This may require the user to configure network policy to allow this host, or run the routine from a different environment.
 
+
+## 2026-10-26 (Monday) — Run failed: proxy blocked Clarity API
+
+- Date: 2026-10-26 09:xx KL time (01:xx UTC)
+- All 4 Clarity API calls failed with HTTP error 56 (connection reset)
+- Proxy status: `connect_rejected` — gateway returned 403 to CONNECT for `www.clarity.ms:443`
+- Reason: Network policy denies outbound HTTPS to clarity.ms from this remote execution environment
+- Action needed: No data written to Google Sheet or CSV today
+- Fix: The remote environment's network policy does not allow connections to clarity.ms. This may require changing the network policy setting when creating the session (choose a policy that allows external analytics APIs), or running this routine from a different environment.
