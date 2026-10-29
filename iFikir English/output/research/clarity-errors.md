@@ -13,3 +13,13 @@ All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the egress prox
 No data was written to the tracking CSV or Google Sheet for today's run.
 
 ---
+
+## 2026-10-29 — Proxy Network Policy Block
+
+- **Run time:** 2026-10-29 09:00 KL (01:00 UTC)
+- **Error:** All 4 Clarity API calls failed — proxy returned `403 Forbidden` (CONNECT tunnel rejected) for `www.clarity.ms:443`
+- **Root cause:** The cloud session's outbound network policy does not allow connections to `www.clarity.ms`. This is a proxy/environment restriction, not a Clarity API or token issue.
+- **Impact:** No data written to Google Sheet or CSV for today (2026-10-29).
+- **Action needed:** The user must enable `www.clarity.ms` in the allowed domains list for their cloud execution environment, or run this routine from an environment with unrestricted outbound access.
+- **Sheet row:** Not written
+- **CSV:** Not appended
