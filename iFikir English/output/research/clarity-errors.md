@@ -35,3 +35,13 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 - **Action needed:** User must allowlist `www.clarity.ms` in the cloud session network policy. See https://code.claude.com/docs/en/claude-code-on-the-web
 - **Sheet row:** Not written
 - **CSV:** Not appended
+
+---
+## 2026-10-31 (KL) — API Blocked by Proxy
+
+- Run time: 2026-10-31T01:02 UTC (09:02 KL)
+- Error: All 4 Clarity API calls failed — HTTP_STATUS:000
+- Cause: Proxy gateway returned 403 (policy denial) for CONNECT to www.clarity.ms:443
+- Detail: Network policy in the remote execution environment blocks outbound HTTPS to clarity.ms
+- Impact: No metrics collected. Sheet not updated. CSV row not appended.
+- Action needed: The scheduled routine cannot reach Clarity from this environment. Consider running from a machine/environment where clarity.ms is not blocked.
