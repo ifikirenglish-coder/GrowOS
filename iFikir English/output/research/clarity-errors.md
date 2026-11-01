@@ -45,3 +45,12 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 - Detail: Network policy in the remote execution environment blocks outbound HTTPS to clarity.ms
 - Impact: No metrics collected. Sheet not updated. CSV row not appended.
 - Action needed: The scheduled routine cannot reach Clarity from this environment. Consider running from a machine/environment where clarity.ms is not blocked.
+
+---
+## 2026-11-01 (KL) — API Blocked by Proxy (5th consecutive day)
+
+- Run time: 2026-11-01T01:XX UTC (09:XX KL)
+- Error: All 4 Clarity API calls failed — proxy returned `403 Forbidden` (CONNECT tunnel rejected) for `www.clarity.ms:443`
+- Cause: Cloud session outbound network policy does not allow connections to `www.clarity.ms`
+- Impact: No metrics collected. Sheet not updated. CSV row not appended. **5 consecutive missed days (Oct 28 – Nov 1).**
+- Action needed: Allowlist `www.clarity.ms` in the cloud session network policy at https://code.claude.com/docs/en/claude-code-on-the-web
