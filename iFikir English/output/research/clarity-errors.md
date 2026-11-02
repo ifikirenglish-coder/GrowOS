@@ -54,3 +54,12 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 - Cause: Cloud session outbound network policy does not allow connections to `www.clarity.ms`
 - Impact: No metrics collected. Sheet not updated. CSV row not appended. **5 consecutive missed days (Oct 28 – Nov 1).**
 - Action needed: Allowlist `www.clarity.ms` in the cloud session network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+---
+## 2026-11-02 (Monday) — Proxy Block (6th consecutive day)
+
+- **Run time:** 2026-11-02T01:03 UTC (09:03 KL)
+- **Error:** All 4 Clarity API calls failed — proxy returned `403 Forbidden` (CONNECT tunnel rejected) for `www.clarity.ms:443`
+- **Root cause:** Cloud session outbound network policy does not allow connections to `www.clarity.ms`
+- **Impact:** No metrics collected. Sheet not updated. CSV row not appended. **6 consecutive missed days (Oct 28 – Nov 2).**
+- **Action needed:** Allowlist `www.clarity.ms` in the cloud session network policy at https://code.claude.com/docs/en/claude-code-on-the-web
