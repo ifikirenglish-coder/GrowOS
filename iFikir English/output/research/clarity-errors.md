@@ -70,3 +70,16 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 - **Curl exit code:** 56 (failure in receiving network data)
 - **Impact:** All 4 API calls failed. No data collected. Sheet and CSV not updated.
 - **Action needed:** The remote execution environment's network policy does not allow outbound connections to `www.clarity.ms`. This must be enabled to run this routine.
+
+---
+## 2026-11-04 (KL) — Routine Failed: Network Policy Blocking Clarity API
+
+**Time:** 2026-11-04T01:02:55 UTC (09:02 KL)
+**Error:** `www.clarity.ms:443` blocked by proxy — gateway returned 403 (policy denial / upstream failure)
+**Calls attempted:** 4 (all failed)
+**Sheet write:** Skipped (no data)
+**CSV append:** Skipped (no data)
+
+**What happened:** The cloud execution environment's network policy does not permit outbound connections to `www.clarity.ms`. All 4 Clarity API calls returned curl exit code 56 (network receive failure).
+
+**Action needed:** The user must configure the execution environment to allow outbound HTTPS to `www.clarity.ms`. See environment network policy settings at https://code.claude.com/docs/en/claude-code-on-the-web.
