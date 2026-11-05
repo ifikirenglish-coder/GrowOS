@@ -83,3 +83,17 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 **What happened:** The cloud execution environment's network policy does not permit outbound connections to `www.clarity.ms`. All 4 Clarity API calls returned curl exit code 56 (network receive failure).
 
 **Action needed:** The user must configure the execution environment to allow outbound HTTPS to `www.clarity.ms`. See environment network policy settings at https://code.claude.com/docs/en/claude-code-on-the-web.
+
+## 2026-11-05 (Thu) — Scheduled routine failure
+
+**Error:** Proxy blocked outbound connection to `www.clarity.ms` (HTTP 403 Forbidden).
+
+**Cause:** The remote execution environment's network policy does not allow HTTPS connections to `www.clarity.ms`. This is a session-level network restriction — not a Clarity API issue.
+
+**Calls attempted:** 4 (overall, Device, Source, OS dimensions)
+**Data written:** None — no metrics recorded for this date.
+**Sheet row written:** No.
+**CSV appended:** No.
+
+**Resolution required:** The environment's network policy must be updated to allow outbound HTTPS to `www.clarity.ms`. The user (or environment admin) needs to whitelist this host in the Claude Code remote environment network settings.
+
