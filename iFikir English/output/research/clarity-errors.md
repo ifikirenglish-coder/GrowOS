@@ -97,3 +97,11 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 
 **Resolution required:** The environment's network policy must be updated to allow outbound HTTPS to `www.clarity.ms`. The user (or environment admin) needs to whitelist this host in the Claude Code remote environment network settings.
 
+
+## 2026-11-06 09:03 KL
+- **Error:** Proxy blocked connection to www.clarity.ms:443
+- **HTTP status:** 000 (connection rejected)
+- **Proxy reason:** gateway answered 403 to CONNECT (policy denial or upstream failure)
+- **Affected calls:** All 4 (baseline, Device, Source, OS)
+- **Result:** No data written to sheet or CSV for this date
+- **Action needed:** Whitelist www.clarity.ms in the cloud environment's network policy
