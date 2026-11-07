@@ -105,3 +105,4 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 - **Affected calls:** All 4 (baseline, Device, Source, OS)
 - **Result:** No data written to sheet or CSV for this date
 - **Action needed:** Whitelist www.clarity.ms in the cloud environment's network policy
+[2026-11-07 Saturday] ERROR: Clarity API unreachable. Proxy blocked www.clarity.ms:443 with 403 (policy denial). All 4 API calls failed (curl exit 56). No data collected.
