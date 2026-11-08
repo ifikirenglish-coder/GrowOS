@@ -106,3 +106,12 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 - **Result:** No data written to sheet or CSV for this date
 - **Action needed:** Whitelist www.clarity.ms in the cloud environment's network policy
 [2026-11-07 Saturday] ERROR: Clarity API unreachable. Proxy blocked www.clarity.ms:443 with 403 (policy denial). All 4 API calls failed (curl exit 56). No data collected.
+
+---
+## Error — 2026-11-08 Sunday (09:02 KL)
+
+**Step:** Step 2 — Clarity API call
+**Error:** All 4 API calls failed — proxy returned 403 (policy denial) on CONNECT to www.clarity.ms:443
+**Detail:** The outbound network policy for this Claude Code remote session does not permit connections to clarity.ms. This is a session-level network restriction, not a token or authentication issue.
+**Impact:** No data collected. No sheet row written. No CSV row appended.
+**Action required:** User must add www.clarity.ms to the allowed hosts in the Claude Code environment's network policy, or run this routine from a session/environment with broader network access.
