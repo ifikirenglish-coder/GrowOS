@@ -115,3 +115,12 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 **Detail:** The outbound network policy for this Claude Code remote session does not permit connections to clarity.ms. This is a session-level network restriction, not a token or authentication issue.
 **Impact:** No data collected. No sheet row written. No CSV row appended.
 **Action required:** User must add www.clarity.ms to the allowed hosts in the Claude Code environment's network policy, or run this routine from a session/environment with broader network access.
+
+---
+## Error — 2026-11-09 Monday (09:02 KL) — 13th consecutive missed day
+
+**Step:** Step 2 — Clarity API call
+**Error:** All 4 API calls failed — proxy returned 403 (policy denial) on CONNECT to www.clarity.ms:443
+**Consecutive misses:** Oct 28 – Nov 9 (13 days)
+**Impact:** No data collected. No sheet row written. No CSV row appended.
+**Action required:** User must add www.clarity.ms to the allowed hosts in the Claude Code environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
