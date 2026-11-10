@@ -133,3 +133,11 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 **Consecutive misses:** Oct 28 – Nov 10 (14 days)
 **Impact:** No data collected. No sheet row written. No CSV row appended.
 **Action required:** User must add www.clarity.ms to the allowed hosts in the Claude Code environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+---
+## Error — 2026-11-10 Tuesday weekly report run
+
+- **Error:** www.clarity.ms:443 blocked by outbound network policy (proxy returned 403 on CONNECT)
+- **Consecutive missed days:** ~156 (since ~Jun 7 2026)
+- **Impact:** Clarity section in weekly report marked [API ERROR]. No data for sessions, scroll depth, rage/dead clicks, active time.
+- **Action required:** Allowlist www.clarity.ms in Claude Code remote environment network policy at https://code.claude.com/docs/en/claude-code-on-the-web
