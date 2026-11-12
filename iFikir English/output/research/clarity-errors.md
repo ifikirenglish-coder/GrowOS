@@ -150,3 +150,16 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 **Consecutive misses:** Oct 28 – Nov 11 (15 days)
 **Impact:** No data collected. No sheet row written. No CSV row appended.
 **Action required:** User must add www.clarity.ms to the allowed hosts in the Claude Code environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
+
+## 2026-11-12 (KL) — Network Block
+
+**Error:** All 4 Clarity API calls failed with `connect_rejected` (HTTP 000).
+**Cause:** The egress proxy blocks `www.clarity.ms:443` in this session's network policy.
+**Calls attempted:**
+- `GET /project-live-insights?numOfDays=1` (overall)
+- `GET /project-live-insights?numOfDays=1&dimension1=Device`
+- `GET /project-live-insights?numOfDays=1&dimension1=Source`
+- `GET /project-live-insights?numOfDays=1&dimension1=OS`
+
+**Resolution needed:** Add `www.clarity.ms` to the allowed egress hosts for the scheduled session's network policy (via claude.ai/code environment settings).
+
