@@ -1,0 +1,154 @@
+/* settings.css — Settings & Data view. Owner: Settings & Data View Developer. Prefix: settings- */
+
+.settings-page { padding-bottom: var(--s-6); }
+
+.settings-card { display: flex; flex-direction: column; gap: var(--s-3); }
+
+.settings-card-title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: 0;
+}
+.settings-card-title svg { color: var(--brand); flex: none; }
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  min-height: var(--tap);
+}
+.settings-row-text { flex: 1 1 auto; min-width: 0; }
+.settings-row-control { flex: none; display: flex; align-items: center; }
+.settings-row-label { font-weight: 700; color: var(--text); }
+
+.settings-block { display: flex; flex-direction: column; gap: var(--s-2); }
+.settings-block > .segmented { width: 100%; }
+
+.settings-hint {
+  margin: 2px 0 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+.settings-hint svg { vertical-align: -2px; }
+
+.settings-explain {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.settings-greeting {
+  margin: 0;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--radius-sm);
+  background: var(--brand-50);
+  color: var(--ink);
+  font-weight: 700;
+}
+:root[data-theme="dark"] .settings-greeting { background: var(--surface-2); color: var(--text); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .settings-greeting { background: var(--surface-2); color: var(--text); }
+}
+
+/* action buttons */
+.settings-action { display: flex; flex-direction: column; gap: 2px; }
+.settings-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: var(--tap);
+}
+.settings-action > .settings-hint { text-align: center; margin-bottom: var(--s-2); }
+
+.settings-file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* reminders */
+.settings-perm { gap: var(--s-2); }
+
+.settings-rem-list { display: flex; flex-direction: column; }
+.settings-rem-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 56px;
+  padding: var(--s-2) 0;
+  border-top: 1px solid var(--border);
+}
+.settings-rem-row:first-child { border-top: 0; }
+.settings-rem-name { flex: 1 1 auto; min-width: 0; font-weight: 600; overflow-wrap: anywhere; }
+.settings-rem-controls { flex: none; display: flex; align-items: center; gap: var(--s-3); }
+
+.settings-habit-icon {
+  --hc: var(--brand);
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--hc);
+}
+
+.settings-time {
+  width: 7.5rem;
+  min-height: var(--tap);
+  font-size: 1rem; /* 16px avoids iOS zoom on focus */
+  font-variant-numeric: tabular-nums;
+}
+
+.settings-install-steps { display: flex; align-items: flex-start; gap: var(--s-2); }
+.settings-install-steps svg { flex: none; color: var(--brand); margin-top: 2px; }
+
+/* data */
+.settings-privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.settings-privacy svg { flex: none; color: var(--ok); margin-top: 2px; }
+
+.settings-kv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+  margin: 0;
+}
+.settings-kv dt { font-size: 0.875rem; color: var(--text-muted); }
+.settings-kv dd { margin: 2px 0 0; font-weight: 700; }
+
+.settings-danger {
+  padding: var(--s-3);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-sm);
+}
+
+/* about */
+.settings-about { display: flex; flex-direction: column; gap: 2px; }
+.settings-about-name { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; }
+.settings-about-tagline { color: var(--brand-600); font-weight: 700; font-style: italic; }
+:root[data-theme="dark"] .settings-about-tagline { color: var(--brand); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .settings-about-tagline { color: var(--brand); }
+}
+
+@media (max-width: 380px) {
+  .settings-time { width: 6.5rem; }
+  .settings-kv { grid-template-columns: 1fr; }
+}

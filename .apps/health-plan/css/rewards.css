@@ -142,7 +142,7 @@
 .rewards-count {
   font-weight: 800; font-size: .875rem;
   padding: 4px 10px; border-radius: 999px;
-  background: var(--brand-100, #FFE3D1); color: var(--ink, #151515);
+  background: var(--brand-100, #FFE3D1); color: var(--text);
 }
 
 /* ---------- Next up ---------- */
@@ -180,8 +180,8 @@
 }
 .rewards-badge:active { transform: scale(.98); }
 .rewards-badge:focus-visible { outline: 3px solid var(--brand, #FF6B1A); outline-offset: 2px; }
-.rewards-badge.is-unlocked { border-color: var(--brand, #FF6B1A); background: var(--brand-50, #FFF4EC); color: var(--ink, #151515); }
-.rewards-badge.is-unlocked .rewards-badge-desc { color: #4a4a4a; }
+.rewards-badge.is-unlocked { border-color: var(--brand, #FF6B1A); background: var(--brand-50, #FFF4EC); color: var(--text); }
+.rewards-badge.is-unlocked .rewards-badge-desc { color: var(--text-muted); }
 .rewards-badge.is-locked { border-style: dashed; }
 .rewards-badge-art { position: relative; width: 64px; height: 64px; display: grid; place-items: center; }
 .rewards-badge-emoji { font-size: 42px; line-height: 1; }
@@ -238,8 +238,8 @@
 .rewards-lvl-n { font-weight: 800; color: var(--text-muted); }
 .rewards-lvl-name { font-weight: 800; font-size: .9375rem; line-height: 1.2; overflow-wrap: anywhere; }
 .rewards-lvl-state { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; margin-top: 4px; }
-.rewards-lvl.is-past { background: var(--brand-50, #FFF4EC); border-color: var(--brand-100, #FFE3D1); color: var(--ink, #151515); }
-.rewards-lvl.is-past .rewards-lvl-n, .rewards-lvl.is-past .rewards-lvl-xp { color: #4a4a4a; }
+.rewards-lvl.is-past { background: var(--brand-50, #FFF4EC); border-color: var(--brand-100, #FFE3D1); color: var(--text); }
+.rewards-lvl.is-past .rewards-lvl-n, .rewards-lvl.is-past .rewards-lvl-xp { color: var(--text-muted); }
 .rewards-lvl.is-future .rewards-lvl-emoji { filter: grayscale(1); opacity: .5; }
 .rewards-lvl.is-current {
   background: var(--ink, #151515); color: #fff; border-color: var(--brand, #FF6B1A);
