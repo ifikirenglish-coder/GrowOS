@@ -94,14 +94,14 @@ S('1. First run: welcome sheet, name, language, persistence', async (s) => {
   await page.locator('.sheet[role="dialog"]').waitFor({ state: 'visible', timeout: 4000 });
   s.check(true, 'welcome sheet appears');
   s.check(/Selamat datang/.test(await page.locator('.sheet-title').innerText()), 'welcome title is Bahasa Malaysia by default');
-  await page.locator('#welcome-name').fill('Aisyah');
+  await page.locator('.sheet-backdrop.is-open #welcome-name').fill('Aisyah');
   await page.getByRole('radio', { name: 'English' }).click();
   await page.locator('.sheet-title', { hasText: 'Welcome' }).waitFor({ timeout: 3000 });
-  s.eq(await page.locator('#welcome-name').inputValue(), 'Aisyah', 'name kept after switching to English');
+  s.eq(await page.locator('.sheet-backdrop.is-open #welcome-name').inputValue(), 'Aisyah', 'name kept after switching to English');
   s.eq(await ev(page, () => document.documentElement.lang), 'en', 'html lang is en');
   await page.getByRole('radio', { name: 'Bahasa Malaysia' }).click();
   await page.locator('.sheet-title', { hasText: 'Selamat datang' }).waitFor({ timeout: 3000 });
-  s.eq(await page.locator('#welcome-name').inputValue(), 'Aisyah', 'name kept after switching back to BM');
+  s.eq(await page.locator('.sheet-backdrop.is-open #welcome-name').inputValue(), 'Aisyah', 'name kept after switching back to BM');
   s.eq(await page.locator('.sheet[role="dialog"]').count(), 1, 'exactly one welcome sheet (no stacking)');
   await page.getByRole('button', { name: 'Mula', exact: true }).click();
   await page.waitForTimeout(500);
@@ -186,13 +186,27 @@ S('2. Today logging: full perfect day, XP, toasts, undo, reload', async (s) => {
   s.check(Number(await pctText()) < 100, 'progress below 100% after undo');
   s.eq(await ev(page, () => window.HP.scoring.dayScore(window.HP.dates.today()).perfect), false, 'no longer perfect after undo');
   s.check((await ev(page, () => window.HP.gamify.compute().xp)) < g.xp, 'XP drops after undo');
+  // focus stays on the tapped control after the re-render (keyboard / screen-reader users)
+  await page.locator('[data-fk="water-add-250"]').focus();
+  await page.keyboard.press('Enter'); await settle(page, 150);
+  s.eq(await ev(page, () => document.activeElement && document.activeElement.dataset && document.activeElement.dataset.fk), 'water-add-250', 'focus restored to the same control after re-render');
+  s.eq(await val('water'), 2, 'keyboard Enter on +250 ml logs (1.75 -> 2)');
+  // exact-value sheet: sleep fine-tune
+  await tap(page, 'sleep-fine');
+  await page.locator('.sheet-backdrop.is-open .stepper-plus').click();
+  await page.locator('.sheet-backdrop.is-open .sheet-actions .btn-primary').click(); await page.waitForTimeout(450);
+  s.eq(await val('sleep'), 7.5, 'fine-tune sheet: 7 -> 7.5 saved');
+  await tap(page, 'sleep-fine');
+  await page.locator('.sheet-backdrop.is-open .sheet-actions .btn-ghost').click(); await page.waitForTimeout(450);
+  s.eq(await val('sleep'), 0, 'fine-tune sheet: Clear empties sleep');
+  await tap(page, 'sleep-8');
   // persistence
   const before = await ev(page, () => JSON.stringify(window.HP.store.getLog(window.HP.dates.today())));
   await page.reload();
   await page.waitForFunction(() => window.HP && window.HP.app && window.HP.app.booted === true);
   await settle(page, 200);
   s.eq(await ev(page, () => JSON.stringify(window.HP.store.getLog(window.HP.dates.today()))), before, 'log survives reload');
-  s.check(/1[,.]75/.test(await page.locator('[data-habit="water"] .today-val').innerText()), 'UI shows 1.75 L after reload');
+  s.check(/^2\s*\/\s*2/.test(await page.locator('[data-habit="water"] .today-val').innerText()), 'UI shows 2 / 2 L after reload');
   s.eq(await ev(page, () => window.__toasts.filter((t) => /Hari sempurna!|Lencana/.test(t)).length), 0, 'no celebration/badge toasts replayed on reload');
 });
 
@@ -229,6 +243,23 @@ S('3. Date navigation', async (s) => {
   await page.locator('[data-fk="date-next"]').click({ force: true }).catch(() => {});
   await settle(page);
   s.eq(await ev(page, () => window.HP.app.getDate()), TODAY, 'clicking disabled next does nothing');
+  // midnight rollover while the app stays open
+  await ev(page, () => { window.__HP_TODAY__ = '2026-11-13'; window.dispatchEvent(new Event('focus')); });
+  await settle(page, 200);
+  s.eq(await label(), 'Hari ini', 'after rollover the date bar still says today');
+  s.eq(await ev(page, () => window.HP.app.getDate()), '2026-11-13', 'app follows the new day after rollover');
+  await ev(page, () => { window.__HP_TODAY__ = '2026-11-12'; window.dispatchEvent(new Event('focus')); });
+  await settle(page, 200);
+  // hash routing: deep link, back and forward
+  await page.goto(BASE + '/index.html#/rewards');
+  await page.waitForFunction(() => window.HP && window.HP.app && window.HP.app.booted === true); await settle(page);
+  s.eq(await ev(page, () => document.getElementById('view').dataset.view), 'rewards', 'deep link #/rewards opens Rewards');
+  await goView(page, 'plan');
+  await page.goBack(); await settle(page, 200);
+  s.eq(await ev(page, () => document.getElementById('view').dataset.view), 'rewards', 'browser Back returns to Rewards');
+  await page.goForward(); await settle(page, 200);
+  s.eq(await ev(page, () => document.getElementById('view').dataset.view), 'plan', 'browser Forward returns to Plan');
+  await goView(page, 'today');
   // week strip
   const strip = page.locator('.today-week button.ch-ws-item');
   s.eq(await strip.count(), 4, 'week strip: only Mon..Thu are tappable (Fri-Sun are future)');
@@ -299,12 +330,14 @@ S('5. Plan view and editing', async (s) => {
   await ev(page, () => { const st = window.HP.store, d = window.HP.dates.today(); st.completeHabit(d, 'water'); st.completeHabit('2026-11-11', 'sleep'); st.addAmount('2026-11-11', 'walk', 10); });
   await goView(page, 'plan');
   const lab = (fk) => page.locator('[data-fk="' + fk + '"]').getAttribute('aria-label');
-  s.check(/Selesai/.test(await lab('plan-cell-water-3')), 'Thursday water cell says Selesai: ' + await lab('plan-cell-water-3'));
-  s.check(/Selesai/.test(await lab('plan-cell-sleep-2')), 'Wednesday sleep cell says Selesai');
-  s.check(/Separuh jalan/.test(await lab('plan-cell-walk-2')), 'Wednesday walk cell is partial: ' + await lab('plan-cell-walk-2'));
-  s.check(/Terlepas/.test(await lab('plan-cell-water-1')), 'Tuesday water (no log) is missed');
-  s.check(/Rehat/.test(await lab('plan-cell-walk-5')), 'Saturday walk is rest: ' + await lab('plan-cell-walk-5'));
-  s.check(/Akan datang/.test(await lab('plan-cell-water-4')), 'Friday is upcoming');
+  const T = (k) => ev(page, (x) => window.HP.t(x), k); // wording of statuses may be tuned; assert on the live strings
+  const has = async (fk, key) => (await lab(fk)).includes(await T(key));
+  s.check(await has('plan-cell-water-3', 'status.done'), 'Thursday water cell says done: ' + await lab('plan-cell-water-3'));
+  s.check(await has('plan-cell-sleep-2', 'status.done'), 'Wednesday sleep cell says done');
+  s.check(await has('plan-cell-walk-2', 'status.partial'), 'Wednesday walk cell is partial: ' + await lab('plan-cell-walk-2'));
+  s.check(await has('plan-cell-water-1', 'status.missed'), 'Tuesday water (no log) is missed: ' + await lab('plan-cell-water-1'));
+  s.check(await has('plan-cell-walk-5', 'status.rest'), 'Saturday walk is rest: ' + await lab('plan-cell-walk-5'));
+  s.check(await has('plan-cell-water-4', 'status.upcoming'), 'Friday is upcoming');
   // edit mode
   await tap(page, 'plan-edit');
   s.eq(await page.locator('[data-fk="plan-edit"]').getAttribute('aria-pressed'), 'true', 'edit mode on');
@@ -442,8 +475,9 @@ S('7. Settings', async (s) => {
   s.eq(await ev(page, () => document.documentElement.getAttribute('data-theme')), 'dark', 'theme re-applied after reload');
   await goView(page, 'settings');
   s.eq(await page.locator('[data-fk="settings-sound"]').getAttribute('aria-checked'), 'false', 'sound switch shows off after reload');
-  // export / import round trip
+  // export / import round trip (logs, plan, profile)
   await seed(page, 14);
+  await ev(page, () => { window.HP.store.setPlan('water', { target: 3 }); window.HP.store.setPlan('walk', { days: [0, 2, 4] }); window.HP.store.setProfile({ name: 'Zainab' }); });
   const dl = page.waitForEvent('download');
   await page.locator('[data-fk="settings-export"]').click();
   const download = await dl;
@@ -462,6 +496,9 @@ S('7. Settings', async (s) => {
   await page.locator('.sheet-backdrop.is-open').waitFor({ timeout: 3000 });
   await confirmSheet(page);
   s.eq(await ev(page, () => JSON.stringify(window.HP.store.get().logs)), logsBefore, 'import restores identical logs');
+  s.eq(await ev(page, () => window.HP.store.getTarget('water')), 3, 'import restores plan target');
+  s.eq(await ev(page, () => window.HP.store.getScheduledDays('walk')), [0, 2, 4], 'import restores plan days');
+  s.eq(await ev(page, () => window.HP.store.getProfile().name), 'Zainab', 'import restores profile name');
   // import of garbage is rejected without crashing
   const bad = path.join(os.tmpdir(), 'hp-e2e-bad-' + process.pid + '.json');
   fs.writeFileSync(bad, '{"nope": true');
@@ -536,7 +573,7 @@ S('8. Persistence / corruption', async (s) => {
 });
 
 S('9. Layout: no horizontal overflow, nav never covers last control', async (s) => {
-  for (const vp of [{ width: 360, height: 640 }, { width: 390, height: 844 }]) {
+  for (const vp of [{ width: 320, height: 568 }, { width: 360, height: 640 }, { width: 390, height: 844 }]) {
     const page = await s.open(await s.page({ viewport: vp }));
     await seed(page, 28);
     for (const view of ['today', 'progress', 'plan', 'rewards', 'settings']) {
@@ -661,6 +698,37 @@ S('11. Language / i18n sweep', async (s) => {
     await w.getByRole('radio', { name: 'English' }).click(); await w.locator('.sheet-title', { hasText: 'Welcome' }).waitFor({ timeout: 3000 });
     await scan(w, 'welcome/en');
   }
+});
+
+S('12. Streak and XP arithmetic', async (s) => {
+  const page = await s.open(await s.page());
+  const full = (d) => ev(page, (x) => ['supplements', 'water', 'sleep', 'walk', 'fasting'].forEach((id) => window.HP.store.completeHabit(x, id)), d);
+  const snap = () => ev(page, () => { const c = window.HP.gamify.compute(); return { xp: c.xp, cur: c.streak.current, best: c.streak.best, level: c.level }; });
+  await full('2026-11-09'); await full('2026-11-10');
+  await ev(page, () => window.HP.store.setValue('2026-11-11', 'water', 0.25)); // Wed: 1 of 5 habits, ~4%: breaks the streak
+  await full('2026-11-12');
+  await settle(page, 200);
+  let c = await snap();
+  s.eq([c.cur, c.best], [1, 2], 'a missed scheduled day resets the streak (current 1, best 2)');
+  // Wed becomes 4 of 5 habits = ~80% >= 70% => keeps the streak alive
+  await ev(page, () => { const st = window.HP.store; ['supplements', 'sleep', 'walk'].forEach((id) => st.completeHabit('2026-11-11', id)); st.completeHabit('2026-11-11', 'water'); });
+  await ev(page, () => window.HP.store.clearHabit('2026-11-11', 'fasting'));
+  await settle(page, 200);
+  c = await snap();
+  s.eq([c.cur, c.best], [4, 4], 'a 80% day (>= 70%) keeps the streak: Mon-Thu = 4');
+  // XP: perfect day = 5 x 10 + 20 + min(10, streak length); 4/5 day = 4 x 10
+  const expected = (50 + 20 + 1) + (50 + 20 + 2) + 40 + (50 + 20 + 4);
+  s.eq(c.xp, expected, 'total XP arithmetic (71 + 72 + 40 + 74)');
+  s.eq(await hudNums(page), { streak: '4', level: String(c.level) }, 'HUD shows the same streak and level');
+  // levels are monotone in XP and the HUD bar never exceeds 100%
+  const lv = await ev(page, () => window.HP.gamify.levels.map((l) => l.min));
+  s.check(lv.every((v, i) => i === 0 || v > lv[i - 1]), 'level thresholds strictly increase: ' + lv.join(','));
+  s.check(lv.length >= 10, 'at least 10 levels');
+  const bd = await ev(page, () => window.HP.gamify.badgeDefs.length);
+  s.check(bd >= 14, 'at least 14 badges (' + bd + ')');
+  // a streak badge unlocks at 3 days
+  const b3 = await ev(page, () => window.HP.gamify.compute().badges.filter((b) => b.unlocked).map((b) => b.id));
+  s.check(b3.length >= 2, 'badges unlocked after this run: ' + b3.join(','));
 });
 
 /* ------------------------------------------------------------------- runner */

@@ -243,6 +243,11 @@
     if (hd.done) return 'done';
     if (hd.progress > 0) return 'partial';
     if (day.isFuture || day.isToday) return 'upcoming';
+    // Days before tracking began are neutral, never "missed" (same rule as Today and Progress).
+    try {
+      var sd = HP.scoring && HP.scoring.startDate && HP.scoring.startDate();
+      if (sd && day.date < sd) return 'upcoming';
+    } catch (e) { /* fall through */ }
     return 'missed';
   }
 

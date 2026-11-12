@@ -37,3 +37,15 @@ const out = path.join(root, 'dist');
 fs.mkdirSync(out, { recursive: true });
 fs.writeFileSync(path.join(out, 'health-plan.html'), html);
 console.log('wrote dist/health-plan.html', (html.length / 1024).toFixed(1) + ' KB');
+
+// ---- artifact build: the artifact host wraps content in its own <html><head><body> skeleton ----
+{
+  const full = fs.readFileSync(path.join(out, 'health-plan.html'), 'utf8');
+  const title = (full.match(/<title>[\s\S]*?<\/title>/i) || ['<title>My Health Plan</title>'])[0];
+  const head = (full.match(/<head>([\s\S]*?)<\/head>/i) || [, ''])[1];
+  const styles = (head.match(/<style>[\s\S]*?<\/style>/gi) || []).join('\n');
+  const body = (full.match(/<body[^>]*>([\s\S]*)<\/body>/i) || [, ''])[1];
+  const doc = [title, styles, body].join('\n');
+  fs.writeFileSync(path.join(out, 'health-plan.artifact.html'), doc);
+  console.log('wrote dist/health-plan.artifact.html', (doc.length / 1024).toFixed(1) + ' KB');
+}

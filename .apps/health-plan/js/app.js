@@ -450,7 +450,7 @@
         superseded = true;
         if (handle) handle.close();
         try { HP.store.setSettings({ lang: v }); } catch (e) { console.error(e); }
-        setTimeout(function () { openWelcome(state); }, 260);
+        setTimeout(function () { openWelcome(state); }, 340); // after the old sheet has left the DOM (300 ms), so ids never duplicate
       }
     }) : null;
 
