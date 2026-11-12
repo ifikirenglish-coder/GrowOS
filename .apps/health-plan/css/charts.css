@@ -28,7 +28,11 @@
   border-radius: 6px 6px 3px 3px; transform-origin: 50% 100%;
 }
 .ch-bar-val { position: absolute; left: -4px; right: -4px; bottom: 100%; margin-bottom: 3px; text-align: center; font-size: 11px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.ch-bar-label { display: block; text-align: center; font-size: 11px; line-height: 1.2; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-height: 13px; }
+.ch-bar-label { display: flex; justify-content: center; font-size: 11px; line-height: 1.2; color: var(--text-muted); white-space: nowrap; min-height: 13px; }
+.ch-bar-label > span { flex: none; }
+.ch-bars-dense { gap: 3px; }
+.ch-bars-dense .ch-bar-track { border-radius: 4px; }
+.ch-bars-dense .ch-bar-fill { border-radius: 3px 3px 2px 2px; }
 .ch-bar-col.ch-hl .ch-bar-label { color: var(--text); font-weight: 700; }
 
 /* ---------- line ---------- */
@@ -53,7 +57,7 @@
 .ch-heat-days { display: grid; grid-template-rows: repeat(7, var(--ch-cell)); row-gap: var(--ch-gap); margin-top: calc(14px + var(--ch-gap)); flex: none; }
 .ch-heat-days span { font-size: 10px; line-height: var(--ch-cell); color: var(--text-muted); }
 .ch-heat-scroll { min-width: 0; overflow-x: auto; padding: 2px; margin: -2px; scrollbar-width: thin; }
-.ch-heat-inner { display: grid; row-gap: var(--ch-gap); width: max-content; }
+.ch-heat-inner { display: flex; flex-direction: column; gap: var(--ch-gap); width: max-content; }
 .ch-heat-months { display: grid; column-gap: var(--ch-gap); height: 14px; }
 .ch-heat-months span { font-size: 10px; line-height: 14px; color: var(--text-muted); white-space: nowrap; overflow: visible; }
 .ch-heat-grid { display: grid; grid-template-rows: repeat(7, var(--ch-cell)); grid-auto-flow: column; grid-auto-columns: var(--ch-cell); gap: var(--ch-gap); }
@@ -114,7 +118,7 @@ button.ch-ws-item:focus-visible { outline: 2px solid var(--brand); outline-offse
 .ch-stars { display: inline-flex; gap: 2px; vertical-align: middle; line-height: 0; }
 .ch-star { position: relative; display: inline-block; width: var(--ch-star, 18px); height: var(--ch-star, 18px); }
 .ch-star svg { display: block; }
-.ch-star-empty polygon { fill: var(--surface-2); stroke: var(--border); stroke-width: 1.4; }
+.ch-star-empty polygon { fill: var(--surface-2); stroke: var(--text-muted); stroke-opacity: 0.4; stroke-width: 1.4; }
 .ch-star-fill { position: absolute; left: 0; top: 0; height: 100%; overflow: hidden; }
 .ch-star-on polygon { fill: var(--star, var(--c-fasting, #F5A524)); stroke: var(--star, var(--c-fasting, #F5A524)); stroke-width: 1.4; }
 

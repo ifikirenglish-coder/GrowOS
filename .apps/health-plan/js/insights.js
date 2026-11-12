@@ -420,7 +420,7 @@
     early: ['Minggu ini baru bermula. Belum ada apa-apa yang perlu dikejar.', 'This week is just starting. Nothing to catch up on yet.']
   };
   var HL = {
-    best: ['{name} paling konsisten: {done} daripada {total} hari.', '{name} was your most consistent habit: {done} of {total} days.'],
+    best: ['Paling konsisten: {name}, {done} daripada {total} hari.', 'Most consistent: {name}, {done} of {total} days.'],
     walk: ['Anda berjalan {n} minit minggu ini.', 'You walked {n} minutes this week.', 'You walked 1 minute this week.'],
     perfect: ['{n} hari sempurna minggu ini.', '{n} perfect days this week.', '1 perfect day this week.'],
     streak: ['Rentak semasa anda ialah {n} hari.', 'Your current streak is {n} days.'],

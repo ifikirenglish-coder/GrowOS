@@ -106,7 +106,7 @@
       var r = size / 2 - stroke / 2 - i * (stroke + gap);
       var v = unit(rg && rg.value);
       parts.push((rg && rg.label ? rg.label + ' ' : '') + Math.round(v * 100) + '%');
-      if (r < 1) return;
+      if (r < stroke * 0.9) return; // too small to draw legibly
       svg.appendChild(arc(cx, cx, r, stroke, v, rg && rg.color, i * 120));
     });
     var c = o.center;
@@ -141,11 +141,11 @@
       var showLabel = i % step === 0 || i === data.length - 1;
       return h('div', { class: 'ch-bar-col' + (d.highlight ? ' ch-hl' : (hasHl ? ' ch-dim' : '')) },
         h('div', { class: 'ch-bar-track' }, stack),
-        h('span', { class: 'ch-bar-label' }, showLabel ? d.label : ''));
+        h('span', { class: 'ch-bar-label' }, showLabel ? h('span', null, d.label) : null));
     });
     var summary = o.ariaLabel || (data.length ? data.map(function (d) { return d.label + ' ' + fmt(d.value); }).join(', ') : 'No data');
     return h('div', {
-      class: 'ch-bars' + anim(o) + (o.showValues ? ' ch-bars-vals' : ''), role: 'img', 'aria-label': summary,
+      class: 'ch-bars' + anim(o) + (o.showValues ? ' ch-bars-vals' : '') + (data.length > 14 ? ' ch-bars-dense' : ''), role: 'img', 'aria-label': summary,
       style: { '--ch-h': height + 'px' }
     }, cols.length ? cols : h('div', { class: 'ch-bar-track ch-bars-empty' }));
   }
@@ -227,7 +227,7 @@
       }
 
       // x labels: up to ~5, always first and last
-      var want = n <= 6 ? n : 5, shown = {};
+      var want = n <= 7 ? n : 5, shown = {};
       for (var k = 0; k < want; k++) shown[Math.round(k * (n - 1) / Math.max(1, want - 1))] = true;
       pts.forEach(function (p, i) {
         if (!shown[i] || !p.label) return;
@@ -403,7 +403,7 @@
     });
 
     var scroll = h('div', { class: 'ch-heat-scroll' },
-      h('div', { class: 'ch-heat-inner', style: { gridTemplateColumns: 'repeat(' + nW + ', var(--ch-cell))' } }, monthRow, grid));
+      h('div', { class: 'ch-heat-inner' }, monthRow, grid));
     monthRow.style.gridTemplateColumns = 'repeat(' + nW + ', var(--ch-cell))';
     wrap.appendChild(h('div', { class: 'ch-heat-body' }, dayCol, scroll));
 
