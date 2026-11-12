@@ -370,7 +370,8 @@
     }
     body.push(h('div', { class: 'divider' }));
     body.push(h('p', { class: 'settings-explain' }, HP.t('settings.reminders.explain')));
-    if (HP.reminders && typeof HP.reminders.downloadICS === 'function') {
+    // The page viewer only allows a few file types (no .ics), so the calendar file is for the standalone app.
+    if (!HP.isEmbedded() && HP.reminders && typeof HP.reminders.downloadICS === 'function') {
       body.push(h('button', {
         type: 'button', class: 'btn btn-ghost btn-block settings-action-btn', dataset: { fk: 'settings-ics' },
         onclick: function () {
@@ -415,14 +416,9 @@
   /* ---------- 5. Your data ---------- */
   function exportBackup() {
     try {
-      var json = HP.store.exportJSON();
-      var blob = new Blob([json], { type: 'application/json' });
-      var url = URL.createObjectURL(blob);
-      var a = h('a', { href: url, download: 'my-health-plan-backup-' + todayStr() + '.json', style: { display: 'none' } });
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); URL.revokeObjectURL(url); }, 1000);
-      toast(HP.t('settings.data.exported'), 'success');
+      HP.saveFile('my-health-plan-backup-' + todayStr() + '.json', HP.store.exportJSON(), 'application/json').then(function (r) {
+        if (r === 'saved') toast(HP.t('settings.data.exported'), 'success');
+      }, function () { toast(HP.t('settings.data.exportFail')); });
     } catch (e) {
       toast(HP.t('settings.data.exportFail'));
     }

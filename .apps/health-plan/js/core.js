@@ -25,6 +25,30 @@
   /** Placeholder until i18n.js replaces it. */
   HP.t = HP.t || function (key) { return key; };
 
+  /* ---------- file saving ----------
+     Normal browsers: a hidden <a download> click. Inside the claude.ai artifact viewer, plain downloads
+     are blocked, so the platform's `downloads` capability is used instead (it asks the viewer first).
+     Resolves 'saved' | 'declined'; rejects on real failures. */
+  HP.isEmbedded = function () { return !!(window.claude && typeof window.claude.use === 'function'); };
+  HP.saveFile = function (filename, text, mime) {
+    function viaAnchor() {
+      var url = URL.createObjectURL(new Blob([text], { type: mime || 'application/octet-stream' }));
+      var a = document.createElement('a');
+      a.href = url; a.download = filename; a.style.display = 'none';
+      document.body.appendChild(a); a.click();
+      setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); URL.revokeObjectURL(url); }, 1000);
+      return 'saved';
+    }
+    if (!HP.isEmbedded()) { try { return Promise.resolve(viaAnchor()); } catch (e) { return Promise.reject(e); } }
+    return window.claude.use('downloads').then(function (d) {
+      if (!d) return viaAnchor();
+      return d.save({ filename: filename, data: text }).then(
+        function () { return 'saved'; },
+        function (err) { if (err && err.code === 'declined') return 'declined'; throw err; }
+      );
+    });
+  };
+
   /* ---------- event bus ---------- */
   var handlers = {};
   HP.bus = {

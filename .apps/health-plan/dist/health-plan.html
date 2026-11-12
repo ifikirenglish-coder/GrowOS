@@ -2403,6 +2403,30 @@ button.ch-ws-item:focus-visible { outline: 3px solid var(--focus, var(--brand));
   /** Placeholder until i18n.js replaces it. */
   HP.t = HP.t || function (key) { return key; };
 
+  /* ---------- file saving ----------
+     Normal browsers: a hidden <a download> click. Inside the claude.ai artifact viewer, plain downloads
+     are blocked, so the platform's `downloads` capability is used instead (it asks the viewer first).
+     Resolves 'saved' | 'declined'; rejects on real failures. */
+  HP.isEmbedded = function () { return !!(window.claude && typeof window.claude.use === 'function'); };
+  HP.saveFile = function (filename, text, mime) {
+    function viaAnchor() {
+      var url = URL.createObjectURL(new Blob([text], { type: mime || 'application/octet-stream' }));
+      var a = document.createElement('a');
+      a.href = url; a.download = filename; a.style.display = 'none';
+      document.body.appendChild(a); a.click();
+      setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); URL.revokeObjectURL(url); }, 1000);
+      return 'saved';
+    }
+    if (!HP.isEmbedded()) { try { return Promise.resolve(viaAnchor()); } catch (e) { return Promise.reject(e); } }
+    return window.claude.use('downloads').then(function (d) {
+      if (!d) return viaAnchor();
+      return d.save({ filename: filename, data: text }).then(
+        function () { return 'saved'; },
+        function (err) { if (err && err.code === 'declined') return 'declined'; throw err; }
+      );
+    });
+  };
+
   /* ---------- event bus ---------- */
   var handlers = {};
   HP.bus = {
@@ -8769,7 +8793,8 @@ button.ch-ws-item:focus-visible { outline: 3px solid var(--focus, var(--brand));
     }
     body.push(h('div', { class: 'divider' }));
     body.push(h('p', { class: 'settings-explain' }, HP.t('settings.reminders.explain')));
-    if (HP.reminders && typeof HP.reminders.downloadICS === 'function') {
+    // The page viewer only allows a few file types (no .ics), so the calendar file is for the standalone app.
+    if (!HP.isEmbedded() && HP.reminders && typeof HP.reminders.downloadICS === 'function') {
       body.push(h('button', {
         type: 'button', class: 'btn btn-ghost btn-block settings-action-btn', dataset: { fk: 'settings-ics' },
         onclick: function () {
@@ -8814,14 +8839,9 @@ button.ch-ws-item:focus-visible { outline: 3px solid var(--focus, var(--brand));
   /* ---------- 5. Your data ---------- */
   function exportBackup() {
     try {
-      var json = HP.store.exportJSON();
-      var blob = new Blob([json], { type: 'application/json' });
-      var url = URL.createObjectURL(blob);
-      var a = h('a', { href: url, download: 'my-health-plan-backup-' + todayStr() + '.json', style: { display: 'none' } });
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); URL.revokeObjectURL(url); }, 1000);
-      toast(HP.t('settings.data.exported'), 'success');
+      HP.saveFile('my-health-plan-backup-' + todayStr() + '.json', HP.store.exportJSON(), 'application/json').then(function (r) {
+        if (r === 'saved') toast(HP.t('settings.data.exported'), 'success');
+      }, function () { toast(HP.t('settings.data.exportFail')); });
     } catch (e) {
       toast(HP.t('settings.data.exportFail'));
     }
