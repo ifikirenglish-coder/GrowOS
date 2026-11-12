@@ -1,0 +1,29 @@
+{
+  "name": "My Health Plan",
+  "short_name": "Health Plan",
+  "description": "Healthy Me, Happier Me! A simple daily habit tracker for supplements, water, sleep, walking and intermittent fasting.",
+  "lang": "ms",
+  "dir": "ltr",
+  "id": "./index.html",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF4EC",
+  "theme_color": "#FF6B1A",
+  "categories": ["health", "lifestyle", "fitness"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "maskable"
+    }
+  ]
+}
