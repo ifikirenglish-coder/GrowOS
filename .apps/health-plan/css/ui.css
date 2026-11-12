@@ -43,7 +43,6 @@ body.hp-scroll-lock { overflow: hidden; }
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
-  border-inline-start: 4px solid var(--tone);
   border-radius: var(--radius);
   box-shadow: var(--shadow-2);
   font-family: var(--font);
@@ -75,7 +74,7 @@ body.hp-scroll-lock { overflow: hidden; }
   line-height: 1;
 }
 @supports (background: color-mix(in srgb, red 10%, transparent)) {
-  .toast-icon { background: color-mix(in srgb, var(--tone) 16%, transparent); }
+  .toast-icon { background: color-mix(in srgb, var(--tone) 22%, transparent); }
 }
 .toast-emoji { font-size: 1.25rem; color: inherit; }
 .toast-text { min-width: 0; overflow-wrap: anywhere; }
@@ -257,7 +256,7 @@ body.hp-scroll-lock { overflow: hidden; }
 .stepper-btn[aria-disabled='true'] { opacity: 0.4; cursor: default; }
 .stepper-btn[aria-disabled='true']:active { transform: none; background: var(--surface); }
 .stepper-value {
-  min-width: 84px;
+  min-width: 96px;
   padding: var(--s-1) var(--s-2);
   border-radius: var(--radius-sm);
   text-align: center;

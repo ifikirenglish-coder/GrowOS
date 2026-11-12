@@ -138,7 +138,8 @@
       var stack = h('div', { class: 'ch-bar-stack', style: { height: (p * 100).toFixed(1) + '%', minHeight: d.value > 0 ? '4px' : '0' } },
         o.showValues && d.value > 0 ? h('span', { class: 'ch-bar-val' }, fmt(d.value)) : null,
         h('div', { class: 'ch-bar-fill', style: sv({ '--ch-color': cssColor(d.color), '--ch-delay': Math.min(i, 14) * 40 + 'ms' }) }));
-      var showLabel = i % step === 0 || i === data.length - 1;
+      var last = data.length - 1;
+      var showLabel = i === last || (i % step === 0 && last - i >= Math.ceil(step / 2));
       return h('div', { class: 'ch-bar-col' + (d.highlight ? ' ch-hl' : (hasHl ? ' ch-dim' : '')) },
         h('div', { class: 'ch-bar-track' }, stack),
         h('span', { class: 'ch-bar-label' }, showLabel ? h('span', null, d.label) : null));
