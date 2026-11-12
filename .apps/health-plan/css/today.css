@@ -1,0 +1,191 @@
+/* today.css — Today screen. Owner: Today Screen Developer. Prefix: today- */
+
+.today { padding-bottom: var(--s-5); }
+
+/* ---------- 1. date bar ---------- */
+.today-datebar-wrap { display: flex; flex-direction: column; align-items: center; gap: var(--s-1); }
+.today-datebar { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); width: 100%; }
+.today-nav { width: var(--tap); height: var(--tap); min-width: var(--tap); flex: none; }
+.today-nav[disabled] { opacity: .35; cursor: not-allowed; }
+.today-date { flex: 1; min-width: 0; text-align: center; }
+.today-date-main { margin: 0; font-family: var(--font-display); font-weight: 800; line-height: 1.15; }
+.today-date-sub { margin-top: 2px; }
+.today-back {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  min-height: var(--tap); padding: 0 var(--s-4);
+  background: none; border: 0; cursor: pointer; font: inherit; font-weight: 700;
+  color: var(--brand-600); text-decoration: underline; text-underline-offset: 3px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .today-back { color: var(--brand); } }
+:root[data-theme="dark"] .today-back { color: var(--brand); }
+
+/* ---------- 2. summary card ---------- */
+.today-summary { --accent: var(--brand); border-top: 4px solid var(--accent); display: flex; flex-direction: column; gap: var(--s-4); }
+.today-summary[data-tone="celebrate"] { --accent: var(--ok); }
+.today-summary[data-tone="nudge"] { --accent: var(--warn); }
+.today-summary[data-tone="calm"] { --accent: var(--info); }
+.today-summary[data-tone="cheer"] { --accent: var(--brand); }
+
+.today-summary-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s-4); }
+.today-ring { flex: none; line-height: 0; }
+.today-meta { flex: 1 1 140px; min-width: 140px; display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-2); }
+.today-ring-center { display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; color: var(--text); }
+.today-ring-center:has(.today-ring-pct) { flex-direction: row; align-items: baseline; }
+.today-ring-pct { font-family: var(--font-display); font-weight: 900; font-size: 24px; letter-spacing: -.02em; }
+.today-ring-sign { font-weight: 800; font-size: 12px; margin-left: 1px; color: var(--text-muted); }
+.today-ring-emoji { font-size: 22px; }
+.today-ring-sub { font-size: 11px; font-weight: 700; margin-top: 2px; color: var(--text-muted); }
+
+.today-rating { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
+.today-rating-text { font-weight: 700; color: var(--text); }
+.today-grade {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 24px; height: 24px; padding: 0 6px; border-radius: var(--radius-pill);
+  font-weight: 900; font-size: 13px; color: #151515;
+}
+.today-count { font-size: 1.05rem; font-weight: 800; color: var(--text); }
+
+.today-coach { display: flex; align-items: flex-start; gap: var(--s-3); padding: var(--s-3); border-radius: var(--radius-sm); background: var(--surface-2); border-left: 4px solid var(--accent); }
+.today-coach-emoji { font-size: 28px; line-height: 1; flex: none; }
+.today-coach-title { font-weight: 800; color: var(--text); }
+.today-coach-body { margin: 2px 0 0; color: var(--text-muted); font-size: .95rem; line-height: 1.4; }
+
+.today-next {
+  display: flex; align-items: center; gap: var(--s-2); width: 100%; min-height: var(--tap);
+  padding: var(--s-2) var(--s-3); border: 1.5px solid var(--accent); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--text); font: inherit; text-align: left; cursor: pointer;
+}
+.today-next:active { transform: scale(.99); }
+.today-next-label { flex: none; font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); }
+.today-next-text { flex: 1; min-width: 0; font-weight: 700; }
+
+/* ---------- 3. habit tiles ---------- */
+.today-tiles { display: flex; flex-direction: column; gap: var(--s-3); }
+.today-tile { --hc: var(--brand); display: flex; flex-direction: column; gap: var(--s-3); border: 1.5px solid var(--border); transition: border-color .2s ease, background-color .2s ease; }
+.today-tile.is-done { border-color: var(--hc); }
+
+.today-head { display: flex; align-items: center; gap: var(--s-3); }
+.today-head-text { flex: 1; min-width: 0; }
+.today-ico {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 50%; background: var(--hc); color: #fff;
+}
+[data-habit="fasting"] .today-ico { color: #151515; }
+.today-name { margin: 0; font-size: 1.05rem; font-weight: 800; line-height: 1.2; color: var(--text); }
+.today-status { margin-top: 2px; font-size: .92rem; color: var(--text-muted); }
+
+.today-val {
+  display: inline-flex; align-items: center; gap: 6px; margin: -10px -8px; padding: 10px 8px;
+  min-height: var(--tap); background: none; border: 0; cursor: pointer; font: inherit;
+  font-size: .92rem; color: var(--text-muted); text-decoration: underline dotted; text-underline-offset: 4px;
+}
+.today-val:hover { color: var(--text); }
+
+.today-check {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); color: transparent;
+}
+.today-check.is-on { background: var(--ok); border-color: var(--ok); color: #fff; }
+
+.today-body { display: flex; flex-direction: column; gap: var(--s-2); }
+
+/* supplements */
+.today-sups { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-2); }
+.today-sup {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  min-height: 84px; padding: var(--s-2); border: 2px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--text); font: inherit; cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease, transform .1s ease;
+}
+.today-sup:active { transform: scale(.96); }
+.today-sup-emoji { font-size: 28px; line-height: 1; }
+.today-sup-name { font-size: .82rem; font-weight: 700; text-align: center; line-height: 1.15; overflow-wrap: anywhere; }
+.today-sup-check { position: absolute; top: 6px; right: 6px; display: inline-flex; color: var(--ok); }
+.today-sup.is-on { border-color: var(--hc); background: var(--surface-2); background: color-mix(in srgb, var(--hc) 14%, var(--surface)); }
+.today-takeall { align-self: flex-start; }
+
+/* amount inputs */
+.today-actions { display: flex; align-items: stretch; gap: var(--s-2); }
+.today-act { flex: 1; min-height: var(--tap); font-weight: 800; white-space: nowrap; }
+.today-act-alt { background: var(--surface-2); color: var(--text); border: 1.5px solid var(--border); }
+.today-undo { flex: none; width: var(--tap); min-height: var(--tap); background: var(--surface-2); color: var(--text); border: 1.5px solid var(--border); }
+.today-undo[disabled] { opacity: .35; cursor: not-allowed; }
+.today-complete { min-height: var(--tap); }
+.today-fine { align-self: flex-start; }
+
+.today-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-2); }
+.today-pchip {
+  min-height: var(--tap); padding: 0 var(--s-2); border: 2px solid var(--border); border-radius: var(--radius-pill);
+  background: var(--surface); color: var(--text); font: inherit; font-weight: 800; cursor: pointer; white-space: nowrap;
+  transition: border-color .15s ease, background-color .15s ease, transform .1s ease;
+}
+.today-pchip:active { transform: scale(.96); }
+.today-pchip.is-on { border-color: var(--hc); background: var(--surface-2); background: color-mix(in srgb, var(--hc) 18%, var(--surface)); }
+
+/* fasting switch-like button */
+.today-fast {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); width: 100%;
+  min-height: 60px; padding: var(--s-3) var(--s-4); border: 2px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text); font: inherit; font-size: 1.05rem; font-weight: 800; text-align: left; cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.today-fast.is-on { border-color: var(--hc); background: var(--surface-2); background: color-mix(in srgb, var(--hc) 16%, var(--surface)); }
+.today-switch { flex: none; position: relative; width: 52px; height: 30px; border-radius: var(--radius-pill); background: var(--border); transition: background-color .2s ease; }
+.today-switch-thumb { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: var(--shadow-1); transition: transform .2s ease; }
+.today-fast.is-on .today-switch { background: var(--ok); }
+.today-fast.is-on .today-switch-thumb { transform: translateX(22px); }
+
+/* focus + highlight */
+.today button:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+.today-flash { animation: today-flash 1.2s ease; }
+@keyframes today-flash { 0%, 60% { box-shadow: 0 0 0 4px var(--brand-100); } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+/* completion pop (CSS only; delay is set inline so a quick re-render continues it) */
+.today-pop { animation: today-pop .6s cubic-bezier(.2, .9, .3, 1.2) var(--pop-delay, 0ms) both; }
+.today-pop .today-check.is-on { animation: today-check-in .5s cubic-bezier(.2, 1.7, .4, 1) var(--pop-delay, 0ms) both; }
+@keyframes today-pop { 0% { transform: scale(1); } 35% { transform: scale(1.035); } 100% { transform: scale(1); } }
+@keyframes today-check-in { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+/* ---------- 4. rest section ---------- */
+.today-rest { display: flex; flex-direction: column; gap: var(--s-3); }
+.today-section-head p { margin: 2px 0 0; }
+.today-section-head h2 { margin: 0; }
+.today-rest-list { display: flex; flex-direction: column; gap: var(--s-2); }
+.today-rest-item { --hc: var(--text-muted); border: 1.5px dashed var(--border); border-radius: var(--radius); background: var(--surface-2); overflow: hidden; }
+.today-rest-item.is-open { border-style: solid; background: var(--surface); padding-bottom: var(--s-3); }
+.today-rest-item.is-open > .today-body { padding: 0 var(--s-3); }
+.today-rest-item.is-done { border-color: var(--ok); }
+.today-rest-head {
+  display: flex; align-items: center; gap: var(--s-3); width: 100%; min-height: 56px; padding: var(--s-2) var(--s-3);
+  background: none; border: 0; font: inherit; color: var(--text); text-align: left; cursor: pointer;
+}
+.today-rest-item:not(.is-open) .today-ico { opacity: .6; width: 36px; height: 36px; }
+.today-rest-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.today-rest-hint { color: var(--text-muted); font-weight: 600; }
+.today-rest-chev { flex: none; display: inline-flex; color: var(--text-muted); }
+.today-rest-head .today-check { width: 24px; height: 24px; }
+
+/* ---------- 5. week ---------- */
+.today-week { display: flex; flex-direction: column; gap: var(--s-3); }
+.today-week-title { margin: 0; }
+
+/* ---------- 6. tip ---------- */
+.today-tip { display: flex; align-items: flex-start; gap: var(--s-3); padding: var(--s-3) var(--s-4); border-radius: var(--radius); background: var(--surface-2); border: 1px solid var(--border); }
+.today-tip .today-ico { width: 36px; height: 36px; }
+.today-tip-title { font-weight: 800; color: var(--text-muted); }
+.today-tip-body { margin: 2px 0 0; line-height: 1.45; color: var(--text); font-size: .95rem; }
+
+/* ---------- value sheet ---------- */
+.today-sheet { display: flex; flex-direction: column; align-items: center; gap: var(--s-4); padding: var(--s-2) 0; }
+.today-sheet-hint { margin: 0; text-align: center; }
+
+/* ---------- small phones ---------- */
+@media (max-width: 380px) {
+  .today-act { font-size: .9rem; padding-left: var(--s-2); padding-right: var(--s-2); }
+  .today-sup-name { font-size: .76rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .today-pop, .today-pop .today-check.is-on, .today-flash { animation: none; }
+  .today-tile, .today-sup, .today-pchip, .today-fast, .today-switch, .today-switch-thumb { transition: none; }
+}
