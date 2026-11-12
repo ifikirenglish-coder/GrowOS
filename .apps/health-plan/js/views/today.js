@@ -136,7 +136,7 @@
           onclick: function () { HP.app.setDate(HP.dates.addDays(c.date, -1)); HP.app.renderActive(); }
         }, icon('chevron-left')),
         h('div', { class: 'today-date', 'aria-live': 'polite' },
-          h('div', { class: 'today-date-main h2' }, rel),
+          h('h1', { class: 'today-date-main h2' }, rel),
           sub ? h('div', { class: 'today-date-sub small muted' }, sub) : null),
         h('button', {
           class: 'btn btn-icon today-nav', type: 'button', 'aria-label': t('today.nextDay'), dataset: { fk: 'date-next' }, disabled: isToday,
@@ -379,7 +379,7 @@
       h('div', { class: 'today-head' },
         iconCircle(id),
         h('div', { class: 'today-head-text' },
-          h('h3', { class: 'today-name' }, HP.config.name(id)),
+          h('h2', { class: 'today-name' }, HP.config.name(id)),
           statusNode(c, hab, target)),
         h('span', { class: 'today-check' + (hab.done ? ' is-on' : '') },
           hab.done ? [icon('check', 18), h('span', { class: 'sr-only' }, t('status.done'))] : null)),
@@ -419,9 +419,10 @@
   /* ---------- 5. week strip ---------- */
   function weekState(d) {
     if (d.isFuture) return 'future';
+    if (!d.logged && !d.isToday && d.date < HP.scoring.startDate()) return 'future'; // before tracking began: neutral, not a miss
     if (d.isRest) return 'rest';
     if (d.perfect) return 'done';
-    if (d.isToday && !d.logged) return 'future';
+    if (d.isToday && !d.started) return 'future';
     return d.pct > 0 ? 'partial' : 'miss';
   }
   function weekCard(c) {
@@ -436,8 +437,8 @@
     return h('section', { class: 'card today-week' },
       h('div', { class: 'row row-between today-week-head' },
         h('h2', { class: 'card-title today-week-title' }, t(same ? 'today.week.this' : 'today.week.other')),
-        h('span', { class: 'small muted num' }, t('today.week.summary', { done: ws.doneTotal, total: ws.scheduledTotal }))),
-      HP.charts.weekStrip({ days: days }));
+        ws.scheduledTotal > 0 ? h('span', { class: 'small muted num' }, t('today.week.summary', { done: ws.doneTotal, total: ws.scheduledTotal })) : null),
+      HP.charts.weekStrip({ days: days, label: t(same ? 'today.week.this' : 'today.week.other') }));
   }
 
   /* ---------- 6. tip ---------- */

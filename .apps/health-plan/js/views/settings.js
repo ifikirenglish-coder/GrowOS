@@ -51,6 +51,7 @@
 
       'settings.data.title': 'Data anda',
       'settings.data.privacy': 'Data kekal pada peranti ini. Tiada apa dihantar ke mana-mana pelayan.',
+      'settings.data.noStorage': 'Pelayar ini tidak membenarkan simpanan. Data anda hanya kekal sementara halaman ini dibuka. Eksport sandaran untuk simpan.',
       'settings.data.daysLogged': 'Hari direkodkan',
       'settings.data.firstLog': 'Rekod pertama',
       'settings.data.none': 'Belum ada',
@@ -109,7 +110,7 @@
       'settings.reminders.perm.granted': 'Notifications allowed',
       'settings.reminders.perm.denied': 'Notifications are blocked. Change this in your browser settings.',
       'settings.reminders.perm.default': 'Notifications not allowed yet',
-      'settings.reminders.perm.unsupported': 'Notifications are not supported on this browser',
+      'settings.reminders.perm.unsupported': 'This browser cannot show notifications',
       'settings.reminders.allow': 'Allow notifications',
       'settings.reminders.offHint': 'Turn reminders on to pick a time for each habit.',
       'settings.reminders.timeFor': 'Reminder time for {habit}',
@@ -129,6 +130,7 @@
 
       'settings.data.title': 'Your data',
       'settings.data.privacy': 'Data stays on this device. Nothing is sent to any server.',
+      'settings.data.noStorage': 'This browser is blocking storage. Your data only lasts while this page is open. Export a backup to keep it.',
       'settings.data.daysLogged': 'Days logged',
       'settings.data.firstLog': 'First log',
       'settings.data.none': 'None yet',
@@ -495,6 +497,7 @@
 
     return section('shield', HP.t('settings.data.title'), [
       h('p', { class: 'settings-privacy' }, icon('lock', 16), h('span', null, HP.t('settings.data.privacy'))),
+      (HP.store.isPersistent && !HP.store.isPersistent()) ? h('p', { class: 'settings-privacy settings-nostorage', role: 'status' }, icon('info', 16), h('span', null, HP.t('settings.data.noStorage'))) : null,
       h('dl', { class: 'settings-kv' },
         h('div', null, h('dt', null, HP.t('settings.data.daysLogged')), h('dd', { class: 'num' }, String(dates.length))),
         h('div', null, h('dt', null, HP.t('settings.data.firstLog')), h('dd', null, first ? dateLabel(first) : HP.t('settings.data.none')))

@@ -36,7 +36,7 @@
 .ch-bar-col.ch-hl .ch-bar-label { color: var(--text); font-weight: 700; }
 
 /* ---------- line ---------- */
-.ch-line { display: block; width: 100%; color: var(--ch-color, var(--brand)); }
+.ch-line { display: block; width: 100%; color: var(--ch-color, var(--brand-text)); }
 .ch-line svg { display: block; overflow: visible; }
 .ch-grid { stroke: var(--border); stroke-width: 1; stroke-dasharray: 3 4; }
 .ch-axis-base { stroke: var(--border); stroke-width: 1; }
@@ -96,7 +96,7 @@ button.ch-heat-cell:focus-visible { outline: 2px solid var(--text); outline-offs
   padding: 6px 0; border: 1.5px solid transparent; border-radius: 14px; background: var(--surface-2); color: var(--text); font: inherit;
 }
 button.ch-ws-item { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-button.ch-ws-item:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+button.ch-ws-item:focus-visible { outline: 3px solid var(--focus, var(--brand)); outline-offset: 2px; }
 .ch-ws-day { font-size: 11px; font-weight: 600; line-height: 1; color: var(--text-muted); }
 .ch-ws-today { border-color: var(--brand); background: var(--brand-50, var(--surface-2)); }
 @supports (color: color-mix(in srgb, red 50%, blue)) {
@@ -120,7 +120,7 @@ button.ch-ws-item:focus-visible { outline: 2px solid var(--brand); outline-offse
 .ch-star svg { display: block; }
 .ch-star-empty polygon { fill: var(--surface-2); stroke: var(--text-muted); stroke-opacity: 0.4; stroke-width: 1.4; }
 .ch-star-fill { position: absolute; left: 0; top: 0; height: 100%; overflow: hidden; }
-.ch-star-on polygon { fill: var(--star, var(--c-fasting, #F5A524)); stroke: var(--star, var(--c-fasting, #F5A524)); stroke-width: 1.4; }
+.ch-star-on polygon { fill: var(--star, var(--warn, #C77700)); stroke: var(--star, var(--warn, #C77700)); stroke-width: 1.4; }
 
 /* ---------- meter ---------- */
 .ch-meter { width: 100%; height: var(--ch-h, 8px); background: var(--surface-2); border-radius: 999px; overflow: hidden; }
@@ -144,6 +144,13 @@ button.ch-ws-item:focus-visible { outline: 2px solid var(--brand); outline-offse
 .ch-anim.ch-spark .ch-spark-line { animation: ch-draw 0.8s ease-out both; }
 .ch-anim.ch-spark .ch-spark-dot { animation: ch-fade-in 0.3s ease-out 0.6s both; }
 .ch-anim .ch-heat-cell { animation: ch-fade-in 0.4s ease-out both; }
+
+/* Change-driven re-renders (app.js sets data-rerender on #view): never replay intro animations. */
+[data-rerender] .ch-anim .ch-ring-arc, [data-rerender] .ch-anim .ch-bar-fill, [data-rerender] .ch-anim .ch-bar-val,
+[data-rerender] .ch-anim .ch-meter-fill, [data-rerender] .ch-anim .ch-line-anim, [data-rerender] .ch-anim.ch-spark .ch-spark-line,
+[data-rerender] .ch-anim.ch-spark .ch-spark-dot, [data-rerender] .ch-anim .ch-heat-cell {
+  animation: none !important;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .ch-anim .ch-ring-arc, .ch-anim .ch-bar-fill, .ch-anim .ch-bar-val, .ch-anim .ch-meter-fill,

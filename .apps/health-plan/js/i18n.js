@@ -166,7 +166,7 @@
 
       'status.done': 'Selesai',
       'status.partial': 'Separuh jalan',
-      'status.missed': 'Terlepas',
+      'status.missed': 'Belum siap',
       'status.rest': 'Rehat',
       'status.upcoming': 'Akan datang',
       'status.bonus': 'Bonus',
@@ -221,7 +221,7 @@
 
       'status.done': 'Done',
       'status.partial': 'Halfway',
-      'status.missed': 'Missed',
+      'status.missed': 'Not done',
       'status.rest': 'Rest',
       'status.upcoming': 'Upcoming',
       'status.bonus': 'Bonus',

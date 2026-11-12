@@ -36,10 +36,13 @@
       'progress.trendCard.title': 'Trend harian',
       'progress.trendCard.sub': 'Peratus komitmen setiap hari',
       'progress.trendCard.few': 'Log beberapa hari lagi untuk lihat trend anda.',
+      'progress.trendCard.aria': 'Trend harian: terkini {last}%, purata {avg}%',
+      'progress.trendCard.empty': 'Belum ada data',
       'progress.heat.title': 'Kalendar 12 minggu',
       'progress.heat.hint': 'Ketik satu hari untuk melihat butirannya.',
       'progress.heat.less': 'Kurang',
       'progress.heat.more': 'Lebih',
+      'progress.heat.none': 'tiada data',
       'progress.nums.title': 'Angka tabiat',
       'progress.nums.water': 'Purata air',
       'progress.nums.waterSub': 'setiap hari dilog',
@@ -85,10 +88,13 @@
       'progress.trendCard.title': 'Daily trend',
       'progress.trendCard.sub': 'Commitment percent for each day',
       'progress.trendCard.few': 'Log a few more days to see your trend.',
+      'progress.trendCard.aria': 'Daily trend: latest {last}%, average {avg}%',
+      'progress.trendCard.empty': 'No data yet',
       'progress.heat.title': '12-week calendar',
       'progress.heat.hint': 'Tap a day to see its details.',
       'progress.heat.less': 'Less',
       'progress.heat.more': 'More',
+      'progress.heat.none': 'no data',
       'progress.nums.title': 'Habit numbers',
       'progress.nums.water': 'Avg water',
       'progress.nums.waterSub': 'per logged day',
@@ -219,7 +225,7 @@
     var ring = HP.charts.ring({
       value: hasData ? HP.clamp(cur.pct / 100, 0, 1) : 0,
       size: 132, stroke: 13, color: rating.color,
-      label: hasData ? pct + '%' : '–',
+      label: hasData ? pct + '%' : '-',
       sublabel: HP.t('progress.commitment')
     });
 
@@ -259,10 +265,11 @@
 
   function dayState(d) {
     if (d.isFuture) return 'future';
+    if (!d.logged && !d.isToday && d.date < HP.scoring.startDate()) return 'future'; // before tracking began: neutral, not a miss
     if (d.isRest) return 'rest';
     if (d.perfect) return 'done';
     if (d.pct > 0) return 'partial';
-    if (d.isToday && !d.logged) return 'future';
+    if (d.isToday && !d.started) return 'future';
     return 'miss';
   }
 
@@ -272,6 +279,7 @@
     var hasData = week.scheduledTotal > 0 && week.daysElapsed > 0;
 
     var strip = HP.charts.weekStrip({
+      label: HP.t('common.week'),
       days: week.days.map(function (d) {
         var st = dayState(d);
         return {
@@ -290,7 +298,7 @@
       HP.h('div', { class: 'progress-week-top' },
         HP.h('div', { class: 'progress-week-strip' }, strip),
         HP.h('div', { class: 'progress-week-pct' },
-          HP.h('span', { class: 'progress-week-num num' }, hasData ? Math.round(week.pct) + '%' : '–'),
+          HP.h('span', { class: 'progress-week-num num' }, hasData ? Math.round(week.pct) + '%' : '-'),
           HP.h('span', { class: 'small muted' }, HP.t('progress.week.pct')))),
       hasData && review.headline
         ? HP.h('p', { class: 'progress-week-headline h3' }, review.headline)
@@ -352,6 +360,10 @@
       return true;
     });
     var body;
+    var trendAria = pts.length ? HP.t('progress.trendCard.aria', {
+      last: Math.round(pts[pts.length - 1].pct),
+      avg: Math.round(pts.reduce(function (a, p) { return a + p.pct; }, 0) / pts.length)
+    }) : HP.t('progress.trendCard.empty');
     if (pts.length < 2) {
       body = HP.h('p', { class: 'small muted progress-note' }, HP.t('progress.trendCard.few'));
     } else if (range === 7) {
@@ -363,12 +375,13 @@
             highlight: p.date === today
           };
         }),
-        max: 100, height: 140, showValues: true
+        max: 100, height: 140, showValues: true, ariaLabel: trendAria
       });
     } else {
       body = HP.charts.line({
         points: pts.map(function (p) { return { label: HP.dates.label(p.date, { style: 'short' }), value: Math.round(p.pct) }; }),
-        min: 0, max: 100, height: 140, area: true, showDots: pts.length <= 14
+        min: 0, max: 100, height: 140, area: true, showDots: pts.length <= 14,
+        ariaLabel: trendAria, emptyLabel: HP.t('progress.trendCard.empty')
       });
     }
     return card(HP.t('progress.trendCard.title'), HP.h('div', { class: 'progress-chart' }, body),
@@ -384,12 +397,12 @@
       if (first && d < first) return { date: d, value: null }; // before tracking began: neutral, not a miss
       var ds = HP.scoring.dayScore(d);
       if (ds.isRest) return { date: d, value: null, state: 'rest' };
-      if (ds.isToday && !ds.logged) return { date: d, value: null };
+      if (ds.isToday && !ds.started) return { date: d, value: null };
       return { date: d, value: HP.clamp(ds.pct / 100, 0, 1) };
     });
     var heat = HP.charts.heatmap({
-      days: days,
-      cell: 16, gap: 3, weekStartsMonday: true,
+      days: days, label: HP.t('progress.heat.title'), labels: { none: HP.t('progress.heat.none') },
+      cell: 20, gap: 4, weekStartsMonday: true,
       onSelect: function (date) { goToday(date); }
     });
     var legend = HP.h('div', { class: 'progress-legend small muted', 'aria-hidden': 'true' },
@@ -410,7 +423,7 @@
       HP.h('div', { class: 'progress-num-head' },
         HP.h('span', { class: 'progress-num-ico', 'aria-hidden': 'true' }, HP.icons.svg(h.icon, { size: 16 })),
         HP.h('span', { class: 'small muted' }, label)),
-      HP.h('div', { class: 'progress-num-value num' }, has ? valueText : '–'),
+      HP.h('div', { class: 'progress-num-value num' }, has ? valueText : '-'),
       HP.h('div', { class: 'progress-num-foot' },
         HP.h('span', { class: 'small muted' }, has ? sub : ''),
         has && series && series.length >= 3

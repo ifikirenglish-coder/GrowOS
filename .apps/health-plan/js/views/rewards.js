@@ -26,14 +26,15 @@
       'rewards.howRest': '+{n} XP bonus bila anda siapkan tabiat pada hari rehat',
       'rewards.howStreak': 'Sehingga +{n} XP bonus rentetan pada hari sempurna (+{per} untuk setiap hari rentetan)',
       'rewards.ratingTitle': 'Rating Komitmen',
+      'rewards.noRating': 'Belum cukup data lagi',
       'rewards.thisWeek': 'Minggu ini',
       'rewards.last30': '30 hari lepas',
       'rewards.grade': 'Gred {g}',
       'rewards.badgesTitle': 'Koleksi lencana',
       'rewards.badgeCount': '{n} / {total} lencana',
       'rewards.locked': 'Terkunci',
-      'rewards.unlockedOn': 'Dibuka {date}',
-      'rewards.unlocked': 'Sudah dibuka',
+      'rewards.unlockedOn': 'Diperoleh {date}',
+      'rewards.unlocked': 'Sudah diperoleh',
       'rewards.new': 'Baharu',
       'rewards.howToEarn': 'Cara mendapatnya',
       'rewards.progress': 'Kemajuan',
@@ -67,14 +68,15 @@
       'rewards.howRest': '+{n} XP bonus when you finish a habit on a rest day',
       'rewards.howStreak': 'Up to +{n} XP streak bonus on perfect days (+{per} for each streak day)',
       'rewards.ratingTitle': 'Commitment Rating',
+      'rewards.noRating': 'Not enough data yet',
       'rewards.thisWeek': 'This week',
       'rewards.last30': 'Last 30 days',
       'rewards.grade': 'Grade {g}',
       'rewards.badgesTitle': 'Badge collection',
       'rewards.badgeCount': '{n} / {total} badges',
       'rewards.locked': 'Locked',
-      'rewards.unlockedOn': 'Unlocked {date}',
-      'rewards.unlocked': 'Unlocked',
+      'rewards.unlockedOn': 'Earned {date}',
+      'rewards.unlocked': 'Earned',
       'rewards.new': 'New',
       'rewards.howToEarn': 'How to earn it',
       'rewards.progress': 'Progress',
@@ -219,7 +221,14 @@
     ];
   }
 
-  function ratingCol(label, rating, pct) {
+  function ratingCol(label, rating, pct, hasData) {
+    if (hasData === false) { // brand-new user: no grade yet, so nothing can look like a failure
+      return h('div', { class: 'rewards-rate-col' },
+        h('div', { class: 'rewards-rate-label small muted' }, label),
+        h('div', { class: 'rewards-rate-main' },
+          h('div', { class: 'rewards-grade', style: { '--grade': 'var(--border)' }, 'aria-hidden': 'true' }, h('span', { 'aria-hidden': 'true' }, '-')),
+          h('div', { class: 'rewards-rate-info' }, stars(0), h('div', { class: 'rewards-rate-text muted' }, t('rewards.noRating')))));
+    }
     rating = rating || { stars: 0, grade: 'D', key: 'restart', color: '#9AA0A6' };
     return h('div', { class: 'rewards-rate-col' },
       h('div', { class: 'rewards-rate-label small muted' }, label),
@@ -240,8 +249,8 @@
     return h('section', { class: 'card rewards-rating' },
       h('h3', { class: 'card-title' }, t('rewards.ratingTitle')),
       h('div', { class: 'rewards-rate-grid' },
-        ratingCol(t('rewards.thisWeek'), wk && wk.rating, wk ? wk.pct : null),
-        ratingCol(t('rewards.last30'), mo && mo.rating, mo ? mo.pct : null)));
+        ratingCol(t('rewards.thisWeek'), wk && wk.rating, wk ? wk.pct : null, !!(wk && wk.scheduledTotal > 0 && wk.daysElapsed > 0)),
+        ratingCol(t('rewards.last30'), mo && mo.rating, mo ? mo.pct : null, !!(mo && mo.scheduledTotal > 0))));
   }
 
   function isNewBadge(b) {

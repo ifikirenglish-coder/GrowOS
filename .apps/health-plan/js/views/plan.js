@@ -38,13 +38,13 @@
       'plan.t.except': '(kecuali {days})',
       'plan.t.water': '≥ {v} Liter sehari',
       'plan.t.waterSome': '≥ {v} Liter, {n}× seminggu',
-      'plan.t.sleep': '{v}–9 Jam sehari',
-      'plan.t.sleepSome': '{v}–9 Jam, {n}× seminggu',
+      'plan.t.sleep': '{v}-9 Jam sehari',
+      'plan.t.sleepSome': '{v}-9 Jam, {n}× seminggu',
       'plan.t.sleepMax': '9 Jam sehari',
       'plan.t.walk': '{v} Minit × {n} hari (seminggu)',
       'plan.t.none': 'Tiada hari dipilih',
       'plan.g.water': '≥ {v} Liter / hari',
-      'plan.g.sleep': '{v}–9 Jam / hari',
+      'plan.g.sleep': '{v}-9 Jam / hari',
       'plan.g.sleepMax': '9 Jam / hari',
       'plan.g.walk': '{v} Minit × {n} Hari (= {total} Minit / minggu)',
       'plan.u.days': 'hari',
@@ -93,13 +93,13 @@
       'plan.t.except': '(except {days})',
       'plan.t.water': '≥ {v} L a day',
       'plan.t.waterSome': '≥ {v} L, {n}× a week',
-      'plan.t.sleep': '{v}–9 hours a day',
-      'plan.t.sleepSome': '{v}–9 hours, {n}× a week',
+      'plan.t.sleep': '{v}-9 hours a day',
+      'plan.t.sleepSome': '{v}-9 hours, {n}× a week',
       'plan.t.sleepMax': '9 hours a day',
       'plan.t.walk': '{v} min × {n} days (a week)',
       'plan.t.none': 'No days selected',
       'plan.g.water': '≥ {v} L / day',
-      'plan.g.sleep': '{v}–9 hours / day',
+      'plan.g.sleep': '{v}-9 hours / day',
       'plan.g.sleepMax': '9 hours / day',
       'plan.g.walk': '{v} min × {n} days (= {total} min / week)',
       'plan.u.days': 'days',
@@ -154,7 +154,7 @@
     var right = HP.config.dayName(6, 'short') + ' ' + b.getDate() + ' ' + HP.config.monthName(b.getMonth(), 'short');
     var yearNow = HP.dates.parse(HP.dates.today()).getFullYear();
     if (b.getFullYear() !== yearNow) right += ' ' + b.getFullYear();
-    return left + ' – ' + right;
+    return left + ' - ' + right;
   }
 
   /* Days the habit is NOT scheduled, as "Sabtu" or "Sabtu, Ahad" (only when 1-2 days are missing). */
@@ -295,8 +295,8 @@
     var mid = el('div', { class: 'plan-nav-mid', role: 'group', 'aria-label': t('plan.weekNav') },
       el('div', { class: 'plan-nav-label num', 'aria-live': 'polite' }, weekLabel(week)),
       el('div', { class: 'plan-nav-sub small muted' },
-        isCurrent ? t('plan.thisWeek') + ' · ' : '',
-        t('plan.weekDone', { done: ws.doneTotal, total: ws.scheduledTotal })));
+        isCurrent ? t('plan.thisWeek') + (ws.scheduledTotal > 0 ? ' · ' : '') : '',
+        ws.scheduledTotal > 0 ? t('plan.weekDone', { done: ws.doneTotal, total: ws.scheduledTotal }) : ''));
     var nodes = [prev, mid, next];
     var card = el('div', { class: 'card plan-nav' }, nodes);
     if (!isCurrent) {

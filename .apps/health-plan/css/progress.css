@@ -42,9 +42,10 @@
 .progress-stat-label { line-height: 1.25; }
 
 /* this week */
-.progress-week-top { display: flex; align-items: center; gap: var(--s-3); margin-top: var(--s-2); }
+.progress-week-top { display: flex; flex-direction: column; align-items: stretch; gap: var(--s-3); margin-top: var(--s-2); }
 .progress-week-strip { flex: 1 1 auto; min-width: 0; }
-.progress-week-pct { display: flex; flex-direction: column; align-items: flex-end; text-align: right; flex: 0 0 auto; max-width: 96px; }
+.progress-week-strip .ch-weekstrip { gap: 4px; }
+.progress-week-pct { display: flex; flex-direction: row; align-items: baseline; gap: var(--s-2); flex: 0 0 auto; }
 .progress-week-num { font-family: var(--font-display); font-weight: 900; font-size: 1.6rem; line-height: 1; color: var(--text); }
 .progress-week-headline { margin: var(--s-3) 0 0; }
 .progress-bullets { margin: var(--s-2) 0 0; padding-left: var(--s-5); display: flex; flex-direction: column; gap: var(--s-1); }
@@ -63,7 +64,7 @@
 .progress-habit-ico {
   flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
-  color: var(--hc, var(--brand));
+  color: color-mix(in srgb, var(--hc, var(--brand)) 62%, var(--text));
   background: var(--surface-2);
   background: color-mix(in srgb, var(--hc, var(--brand)) 16%, transparent);
 }
@@ -73,7 +74,7 @@
 .progress-best-tag {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 2px 8px; border-radius: var(--radius-pill);
-  background: var(--brand-50); color: var(--brand-600);
+  background: var(--brand-50); color: var(--brand-text);
   border: 1px solid var(--brand-100);
   font-size: 0.75rem; font-weight: 700;
 }
@@ -110,11 +111,11 @@
 }
 .progress-num-head { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .progress-num-head .small { line-height: 1.2; }
-.progress-num-ico { display: inline-flex; flex: 0 0 auto; color: var(--hc, var(--brand)); }
+.progress-num-ico { display: inline-flex; flex: 0 0 auto; color: color-mix(in srgb, var(--hc, var(--brand)) 62%, var(--text)); }
 .progress-num-value { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; line-height: 1.15; overflow-wrap: anywhere; }
 .progress-num-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-2); min-height: 22px; }
 .progress-num-foot .small { line-height: 1.2; min-width: 0; }
-.progress-spark { flex: 0 0 auto; display: inline-flex; color: var(--hc, var(--brand)); }
+.progress-spark { flex: 0 0 auto; display: inline-flex; color: color-mix(in srgb, var(--hc, var(--brand)) 62%, var(--text)); }
 
 @media (min-width: 420px) {
   .progress-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }

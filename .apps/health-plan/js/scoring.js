@@ -53,7 +53,7 @@
     var isFuture = !!HP.dates.isFuture(date);
     var isToday = !!HP.dates.isToday(date);
     var habits = [];
-    var scheduledCount = 0, doneCount = 0, sum = 0;
+    var scheduledCount = 0, doneCount = 0, sum = 0, started = false;
 
     habitIds().forEach(function (id) {
       var scheduled = safeScheduled(id, date);
@@ -64,6 +64,7 @@
       if (scheduled) {
         scheduledCount++;
         sum += progress;
+        if (progress > 0) started = true;
         if (done) doneCount++;
       }
       habits.push({ id: id, scheduled: scheduled, value: value, progress: progress, done: done, bonus: !scheduled && done });
@@ -76,6 +77,7 @@
       isToday: isToday,
       isFuture: isFuture,
       logged: safeHasLog(date),
+      started: started, // at least one SCHEDULED habit has progress (a rest-day bonus alone never counts against today)
       habits: habits,
       scheduledCount: scheduledCount,
       doneCount: doneCount,
@@ -101,7 +103,7 @@
   function counts(ds, start) {
     if (ds.isFuture || ds.isRest) return false;
     if (ds.date < start) return false;
-    if (ds.isToday && !ds.logged) return false;
+    if (ds.isToday && !ds.started) return false;
     return true;
   }
 
@@ -242,7 +244,7 @@
     var agg = aggregate(list, start);
     var activeDays = list.filter(function (d) { return !d.isFuture && d.logged; }).length;
     var trend = list.map(function (d) {
-      var notYet = d.isFuture || (d.isToday && !d.logged && !d.isRest);
+      var notYet = d.isFuture || (d.isToday && !d.started && !d.isRest);
       return { date: d.date, pct: notYet ? 0 : d.pct, isRest: d.isRest, isFuture: notYet };
     });
     return {

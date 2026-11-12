@@ -118,7 +118,7 @@
     format: function (id, value) {
       var h = C.habit(id); var v = C.normalize(id, value);
       if (h.kind === 'multi') return v.length + '/' + h.items.length;
-      if (h.kind === 'toggle') return v ? '✓' : '–';
+      if (h.kind === 'toggle') return v ? '✓' : '-';
       var s = (Math.round(v * 100) / 100).toString();
       return s + ' ' + HP.tr(h.unit);
     },

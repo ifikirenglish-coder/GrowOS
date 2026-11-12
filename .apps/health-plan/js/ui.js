@@ -294,6 +294,9 @@
   };
 
   /* ================= STEPPER ================= */
+  // Stepper hold state: app.js postpones background re-renders while a +/- button is pressed, so press-and-hold is never cut off.
+  var heldCount = 0, heldSince = 0;
+  ui.isHolding = function () { return heldCount > 0 && Date.now() - heldSince < 20000; };
   ui.stepper = function (o) {
     o = o || {};
     var min = o.min == null ? 0 : +o.min;
@@ -343,8 +346,8 @@
         type: 'button', class: 'stepper-btn stepper-' + (dir > 0 ? 'plus' : 'minus'),
         'aria-label': T(dir > 0 ? 'ui.increase' : 'ui.decrease', { label: label }).trim()
       }, icon(dir > 0 ? 'plus' : 'minus', 24));
-      var timer = null, reps = 0, byPointer = false;
-      function stop() { clearTimeout(timer); timer = null; }
+      var timer = null, reps = 0, byPointer = false, down = false;
+      function stop() { clearTimeout(timer); timer = null; if (down) { down = false; heldCount = Math.max(0, heldCount - 1); heldSince = 0; } }
       function tick() {
         if (!setValue(value + dir * step)) { stop(); return; }
         reps++;
@@ -356,6 +359,7 @@
         try { b.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
         setValue(value + dir * step);
         stop();
+        down = true; heldCount++; heldSince = Date.now();
         timer = setTimeout(tick, 420);
       });
       ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (ev) {
@@ -539,6 +543,8 @@
   /* ================= HAPTIC / SOUND ================= */
   ui.haptic = function (pattern) {
     if (settings().haptics === false) return false;
+    var ua = navigator.userActivation; // Chrome logs a console error when vibrating before the first tap
+    if (ua && !ua.hasBeenActive) return false;
     try { return !!(navigator.vibrate && navigator.vibrate(pattern == null ? 10 : pattern)); } catch (e) { return false; }
   };
 

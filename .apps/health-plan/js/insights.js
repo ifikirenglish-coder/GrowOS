@@ -456,7 +456,7 @@
     (ws.days || []).forEach(function (d) {
       if (!d || d.isFuture || d.isRest) return;
       if (d.pct >= min) { run++; if (run > best) best = run; }
-      else if (!(d.isToday && !d.logged)) run = 0;
+      else if (!(d.isToday && !d.started)) run = 0;
     });
     return best;
   }

@@ -27,9 +27,9 @@
 .plan-reset { align-self: flex-start; min-height: var(--tap, 44px); }
 
 /* ---- grid ---- */
-.plan-grid { padding: 0 var(--s-2, 8px) var(--s-2, 8px); position: relative; }
+.plan-grid { padding: 0 var(--s-1, 4px) var(--s-2, 8px); position: relative; }
 .plan-days {
-  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px;
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px;
 }
 .plan-headrow {
   position: sticky; top: var(--header-h, 56px); z-index: 2;
@@ -54,7 +54,7 @@
 .plan-hicon {
   flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
-  background: var(--hc, var(--brand, #FF6B1A)); color: #fff;
+  background: var(--hc, var(--brand, #FF6B1A)); color: #151515;
 }
 .plan-hicon-sm { width: 28px; height: 28px; }
 .plan-habit-text { min-width: 0; }
@@ -80,7 +80,7 @@
 }
 .plan-cell:active { transform: scale(.94); }
 .plan-cell:focus-visible, .plan-nav-btn:focus-visible, .plan-toolbar .btn:focus-visible {
-  outline: 3px solid var(--brand, #FF6B1A); outline-offset: 2px;
+  outline: 3px solid var(--focus, #1673C9); outline-offset: 2px;
 }
 .plan-cell.plan-today { background: var(--brand-50, #FFF4EC); border-color: var(--brand, #FF6B1A); }
 .plan-state-rest, .plan-cell-edit.plan-state-rest { background: var(--surface-2, #F6F2EE); }
@@ -92,9 +92,9 @@
   box-sizing: border-box;
 }
 .plan-badge-ic { display: block; }
-.plan-badge-done { background: var(--brand-600, #E5530A); color: #fff; }
-.plan-badge-sched { background: var(--brand-100, #FFE3D1); color: var(--brand-600, #E5530A); border: 2px solid var(--brand-600, #E5530A); }
-.plan-badge-missed { background: rgba(217, 48, 37, .14); color: var(--danger, #D93025); }
+.plan-badge-done { background: var(--brand-strong, #CE4609); color: var(--on-strong, #fff); }
+.plan-badge-sched { background: var(--brand-100, #FFE3D1); color: var(--brand-text, #B93C06); border: 2px solid var(--brand-600, #E5530A); }
+.plan-badge-missed { background: var(--surface-2); color: var(--text-muted); } /* neutral on purpose: missed days are never shown in alarm red */
 .plan-badge-upcoming { border: 2px solid var(--border, #cfc7bf); background: transparent; }
 .plan-badge-rest { background: var(--border, #E0DAD3); color: var(--text-muted, #5f5750); }
 .plan-badge-bonus { background: rgba(245, 165, 36, .2); color: var(--warn, #C77700); }

@@ -80,7 +80,7 @@
 .rewards-streak-num {
   font-family: var(--font-display, inherit);
   font-weight: 900; font-style: italic; font-size: 2.75rem; line-height: 1;
-  color: var(--brand-600, #E5530A);
+  color: var(--brand-text, #B93C06);
 }
 .rewards-streak-unit { font-weight: 800; font-size: 1.0625rem; color: var(--text); }
 .rewards-best { display: flex; align-items: center; gap: 6px; }
@@ -103,7 +103,7 @@
   font-family: var(--font-display, inherit);
   font-weight: 900; font-size: 1.75rem; line-height: 1.1; color: var(--text);
 }
-.rewards-tile-unit { font-size: .9375rem; font-weight: 800; color: var(--brand-600, #E5530A); }
+.rewards-tile-unit { font-size: .9375rem; font-weight: 800; color: var(--brand-text, #B93C06); }
 .rewards-how { padding: 0; }
 .rewards-how-summary {
   list-style: none;
@@ -116,7 +116,7 @@
 .rewards-how-summary::-webkit-details-marker { display: none; }
 .rewards-how-summary svg { transition: transform .2s ease; }
 .rewards-how[open] .rewards-how-summary svg { transform: rotate(180deg); }
-.rewards-how-summary:focus-visible { outline: 3px solid var(--brand, #FF6B1A); outline-offset: 2px; }
+.rewards-how-summary:focus-visible { outline: 3px solid var(--focus, #1673C9); outline-offset: 2px; }
 .rewards-how-list { margin: 0; padding: 0 var(--s-4, 16px) var(--s-4, 16px) calc(var(--s-4, 16px) + 18px); display: flex; flex-direction: column; gap: var(--s-2, 8px); font-size: .9375rem; }
 
 /* ---------- Rating ---------- */
@@ -155,11 +155,11 @@
   border-radius: var(--radius-sm, 12px);
   cursor: pointer;
 }
-.rewards-next-item:focus-visible { outline: 3px solid var(--brand, #FF6B1A); outline-offset: 2px; }
+.rewards-next-item:focus-visible { outline: 3px solid var(--focus, #1673C9); outline-offset: 2px; }
 .rewards-next-emoji { flex: none; font-size: 32px; line-height: 1; filter: grayscale(1); opacity: .8; }
 .rewards-next-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .rewards-next-top { gap: var(--s-2, 8px); }
-.rewards-togo { font-weight: 800; color: var(--brand-600, #E5530A); white-space: nowrap; }
+.rewards-togo { font-weight: 800; color: var(--brand-text, #B93C06); white-space: nowrap; }
 .rewards-next-hint { overflow-wrap: anywhere; }
 
 /* ---------- Badge grid ---------- */
@@ -179,7 +179,7 @@
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .rewards-badge:active { transform: scale(.98); }
-.rewards-badge:focus-visible { outline: 3px solid var(--brand, #FF6B1A); outline-offset: 2px; }
+.rewards-badge:focus-visible { outline: 3px solid var(--focus, #1673C9); outline-offset: 2px; }
 .rewards-badge.is-unlocked { border-color: var(--brand, #FF6B1A); background: var(--brand-50, #FFF4EC); color: var(--text); }
 .rewards-badge.is-unlocked .rewards-badge-desc { color: var(--text-muted); }
 .rewards-badge.is-locked { border-style: dashed; }
@@ -224,7 +224,7 @@
   overflow-x: auto; overscroll-behavior-x: contain;
   scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
 }
-.rewards-roadmap-scroll:focus-visible { outline: 3px solid var(--brand, #FF6B1A); outline-offset: -3px; border-radius: var(--radius-sm, 12px); }
+.rewards-roadmap-scroll:focus-visible { outline: 3px solid var(--focus, #1673C9); outline-offset: -3px; border-radius: var(--radius-sm, 12px); }
 .rewards-lvl {
   flex: none; width: 112px; scroll-snap-align: center;
   display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px;

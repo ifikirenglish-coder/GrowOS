@@ -368,7 +368,7 @@ input, select, textarea { -webkit-appearance: none; appearance: none; }
   gap: var(--s-2);
   min-width: 0;
   font-family: var(--font-display);
-  font-size: 1.125rem;
+  font-size: min(1.125rem, 5vw); /* capped: the header is fixed-height, so text zoom must not squeeze the brand out */
   font-weight: 900;
   font-style: italic;
   letter-spacing: -.02em;
@@ -379,8 +379,14 @@ input, select, textarea { -webkit-appearance: none; appearance: none; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.app-brand svg, .app-brand img { color: var(--brand); }
+.app-brand svg, .app-brand img { color: var(--brand-text); }
 .app-brand em, .app-brand b, .app-brand .accent { font-style: inherit; color: var(--brand-text); }
+.app-brand-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 400px) { /* keep the brand whole next to 2-digit streak and level chips on 360px phones */
+  .app-brand { font-size: min(1rem, 4.6vw); gap: 6px; }
+  .app-brand svg { width: 20px; height: 20px; flex: none; }
+  .hud-chip { padding: 0 9px; gap: 4px; }
+}
 
 .hud {
   display: flex;
@@ -487,7 +493,7 @@ button.hud-chip, a.hud-chip { min-height: var(--tap); }
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: .6875rem;
+  font-size: min(.6875rem, 3.2vw); /* capped so 200% text zoom never clips the tab labels */
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: .01em;
@@ -608,7 +614,7 @@ button.card:active, a.card:active { transform: scale(.985); }
   color: var(--on-danger);
 }
 .btn-sm {
-  min-height: 36px;
+  min-height: var(--tap);
   padding: 0 var(--s-4);
   font-size: .875rem;
 }
@@ -723,5 +729,5 @@ textarea.input { padding-top: var(--s-3); padding-bottom: var(--s-3); min-height
   .app-header { padding-inline: var(--s-3); }
   .app-brand { font-size: 1rem; }
   .page { padding-inline: var(--s-3); }
-  .nav-label { font-size: .625rem; }
+  .nav-label { font-size: min(.625rem, 3vw); }
 }

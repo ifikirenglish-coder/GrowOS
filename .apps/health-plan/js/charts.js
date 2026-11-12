@@ -228,7 +228,9 @@
       }
 
       // x labels: up to ~5, always first and last
-      var want = n <= 7 ? n : 5, shown = {};
+      var maxLen = pts.reduce(function (m, p) { return Math.max(m, String(p.label || '').length); }, 1);
+      var fit = Math.max(2, Math.floor(iw / (maxLen * 5.6 + 16))); // keeps wide labels like "Kha, 15 Okt" from colliding
+      var want = Math.min(n <= 7 ? n : 5, fit), shown = {};
       for (var k = 0; k < want; k++) shown[Math.round(k * (n - 1) / Math.max(1, want - 1))] = true;
       pts.forEach(function (p, i) {
         if (!shown[i] || !p.label) return;

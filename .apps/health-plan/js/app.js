@@ -254,6 +254,8 @@
     }
     var view = HP.views[currentId];
     container.setAttribute('data-view', currentId);
+    // Intro animations (rings, bars, lines) play on navigation only. Change-driven re-renders set data-rerender so charts.css keeps them still.
+    if (fresh) container.removeAttribute('data-rerender'); else container.setAttribute('data-rerender', '');
     try {
       if (!view || typeof view.render !== 'function') throw new Error('View "' + currentId + '" is not registered');
       view.render(container);
@@ -279,7 +281,16 @@
       }
     }
   }
-  var scheduleRender = HP.debounce(function () { renderActive(); }, 30);
+  var renderTimer = null;
+  function scheduleRender() {
+    clearTimeout(renderTimer);
+    renderTimer = setTimeout(function runScheduled() {
+      // A stepper +/- is being held: wait for release so its DOM is not replaced mid-press.
+      if (HP.ui && HP.ui.isHolding && HP.ui.isHolding()) { renderTimer = setTimeout(runScheduled, 120); return; }
+      renderTimer = null;
+      renderActive();
+    }, 30);
+  }
 
   /* ---------- routing ---------- */
   function parseHash() {

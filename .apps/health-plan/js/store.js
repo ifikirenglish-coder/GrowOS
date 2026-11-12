@@ -33,7 +33,15 @@
     if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
     return dt;
   }
-  function isValidDate(str) { return rawParse(str) !== null; }
+  // Perf: validity and weekday of a calendar date never change, so memoize them (bounded). Scoring calls these thousands of times per render.
+  var validMemo = {}, dowMemo = {}, memoCount = 0;
+  function memoOk() { if (++memoCount > 20000) { validMemo = {}; dowMemo = {}; memoCount = 0; } }
+  function isValidDate(str) {
+    if (typeof str === 'string' && validMemo[str] === true) return true;
+    var ok = rawParse(str) !== null;
+    if (ok) { memoOk(); validMemo[str] = true; }
+    return ok;
+  }
   function today() {
     var o = window.__HP_TODAY__;
     if (typeof o === 'string' && isValidDate(o)) return o;
@@ -47,7 +55,15 @@
     d.setDate(d.getDate() + Math.round(+n || 0));
     return fmt(d);
   }
-  function dow(str) { return (parse(str).getDay() + 6) % 7; }
+  function dow(str) {
+    var c = typeof str === 'string' ? dowMemo[str] : undefined;
+    if (c !== undefined) return c;
+    var dt = rawParse(str);
+    if (!dt) return (parse(str).getDay() + 6) % 7; // invalid input falls back to today (not cached: today can change)
+    c = (dt.getDay() + 6) % 7;
+    memoOk(); dowMemo[str] = c;
+    return c;
+  }
   function weekStart(str) { return addDays(str, -dow(str)); }
   function weekDates(str) {
     var s = weekStart(str), out = [];
