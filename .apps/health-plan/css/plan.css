@@ -23,7 +23,7 @@
 .plan-editpanel { border: 1px dashed var(--brand, #FF6B1A); background: var(--brand-50, #FFF4EC); }
 .plan-editpanel p { margin: 0; }
 .plan-edit-note { font-weight: 700; color: var(--text, #151515); }
-.plan-edit-note svg, .plan-warn svg { vertical-align: -2px; }
+.plan-edit-note svg, .plan-warn svg { display: inline-block; vertical-align: -2px; }
 .plan-reset { align-self: flex-start; min-height: var(--tap, 44px); }
 
 /* ---- grid ---- */
@@ -72,7 +72,7 @@
 .plan-cell {
   appearance: none; font: inherit; color: var(--text, #151515); cursor: pointer;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-  min-width: 0; min-height: var(--tap, 44px); height: 50px; padding: 2px 0;
+  min-width: 0; min-height: 50px; padding: 2px 0;
   border: 1px solid var(--border, #E6E0DA); border-radius: 10px;
   background: var(--surface, #fff);
   transition: transform .12s ease, background-color .12s ease;
@@ -101,7 +101,7 @@
 .plan-badge-bonus svg { fill: currentColor; }
 .plan-ring { display: block; flex: 0 0 auto; }
 .plan-val {
-  font-size: .625rem; line-height: 1; font-weight: 700; white-space: nowrap;
+  font-size: min(.625rem, 2.9vw); line-height: 1.15; font-weight: 700; white-space: nowrap;
   color: var(--text-muted, #5f5750); max-width: 100%; overflow: hidden; text-overflow: clip;
 }
 .plan-state-done .plan-badge-done { box-shadow: 0 1px 4px rgba(229, 83, 10, .35); }
@@ -118,7 +118,7 @@
 /* ---- weekly summary ---- */
 .plan-summary-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-2, 8px); flex-wrap: wrap; }
 .plan-summary-head h2 { margin: 0; }
-.plan-summary-head svg { vertical-align: -3px; color: var(--brand-600, #E5530A); }
+.plan-summary-head svg { display: inline-block; vertical-align: -3px; color: var(--brand-600, #E5530A); }
 .plan-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3, 12px); }
 .plan-tile {
   display: flex; flex-direction: column; gap: var(--s-2, 8px); min-width: 0;
@@ -137,7 +137,7 @@
 /* ---- footer ---- */
 .plan-footer { text-align: center; display: flex; flex-direction: column; gap: var(--s-3, 12px); align-items: center; }
 .plan-tagline { margin: 0; font-style: italic; }
-.plan-tagline svg { vertical-align: -3px; color: var(--brand-600, #E5530A); }
+.plan-tagline svg { display: inline-block; vertical-align: -3px; color: var(--brand-600, #E5530A); }
 .plan-goals { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-2, 8px); }
 
 /* ---- wider screens: a little more room ---- */

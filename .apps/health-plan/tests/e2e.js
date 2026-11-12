@@ -612,6 +612,7 @@ S('11. Language / i18n sweep', async (s) => {
   const RAW = /\b(today|progress|plan|rewards|settings|shell|app|common|status|rating|nav)\.[a-z]+/;
   const BAD = /undefined|NaN|\[object/;
   const scan = async (page, tag) => {
+    if (process.env.VERBOSE) console.log('    scan ' + tag);
     const r = await ev(page, () => {
       const out = { text: document.body.innerText, attrs: [] };
       document.querySelectorAll('[aria-label],[title],[placeholder]').forEach((el) => {
@@ -636,13 +637,13 @@ S('11. Language / i18n sweep', async (s) => {
       s.eq(await ev(page, () => window.HP.lang), lang, mode + '/' + lang + ': language applied');
       for (const view of ['today', 'progress', 'plan', 'rewards', 'settings']) {
         await goView(page, view);
-        await page.waitForTimeout(800);
+        await page.waitForTimeout(400);
         await scan(page, mode + '/' + lang + '/' + view);
       }
       // extra states: plan edit mode, a bonus/rest item, open sheets and toasts
       await goView(page, 'plan'); await tap(page, 'plan-edit'); await scan(page, mode + '/' + lang + '/plan-edit'); await tap(page, 'plan-edit');
       await goView(page, 'today');
-      await ev(page, () => window.HP.ui.confirm({ title: window.HP.t('common.confirm'), message: window.HP.t('common.loading') }));
+      await ev(page, () => { window.HP.ui.confirm({ title: window.HP.t('common.confirm'), message: window.HP.t('common.loading') }); });
       await page.waitForTimeout(400); await scan(page, mode + '/' + lang + '/sheet');
       await ev(page, () => window.HP.ui.closeSheets()); await page.waitForTimeout(400);
     }

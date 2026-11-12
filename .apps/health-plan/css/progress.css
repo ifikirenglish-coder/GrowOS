@@ -48,8 +48,9 @@
 .progress-week-pct { display: flex; flex-direction: row; align-items: baseline; gap: var(--s-2); flex: 0 0 auto; }
 .progress-week-num { font-family: var(--font-display); font-weight: 900; font-size: 1.6rem; line-height: 1; color: var(--text); }
 .progress-week-headline { margin: var(--s-3) 0 0; }
-.progress-bullets { margin: var(--s-2) 0 0; padding-left: var(--s-5); display: flex; flex-direction: column; gap: var(--s-1); }
-.progress-bullets li::marker { color: var(--brand); }
+.progress-bullets { margin: var(--s-2) 0 0; padding-left: var(--s-5); list-style: disc; display: flex; flex-direction: column; gap: var(--s-1); }
+.progress-bullets li { display: list-item; }
+.progress-bullets li::marker { color: var(--brand-text); }
 .progress-focus {
   display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
   margin-top: var(--s-4); padding: var(--s-3); border-radius: var(--radius-sm);
@@ -103,6 +104,7 @@
 
 /* habit numbers */
 .progress-nums { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-2); margin-top: var(--s-2); }
+.progress-nums > :last-child:nth-child(odd) { grid-column: 1 / -1; }
 .progress-num {
   display: flex; flex-direction: column; gap: 4px; min-width: 0;
   padding: var(--s-3); border-radius: var(--radius-sm);
@@ -128,6 +130,7 @@
 }
 @media (min-width: 560px) {
   .progress-nums { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .progress-nums > :last-child:nth-child(odd) { grid-column: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .progress * { animation: none !important; transition: none !important; }

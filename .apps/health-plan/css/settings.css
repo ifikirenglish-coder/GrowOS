@@ -32,7 +32,7 @@
   line-height: 1.4;
   color: var(--text-muted);
 }
-.settings-hint svg { vertical-align: -2px; }
+.settings-hint svg { display: inline-block; vertical-align: -2px; }
 
 .settings-explain {
   margin: 0;

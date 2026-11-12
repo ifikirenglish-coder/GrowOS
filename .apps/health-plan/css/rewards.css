@@ -226,7 +226,7 @@
 }
 .rewards-roadmap-scroll:focus-visible { outline: 3px solid var(--focus, #1673C9); outline-offset: -3px; border-radius: var(--radius-sm, 12px); }
 .rewards-lvl {
-  flex: none; width: 112px; scroll-snap-align: center;
+  flex: none; width: 128px; scroll-snap-align: center;
   display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px;
   padding: var(--s-3, 12px) var(--s-2, 8px);
   background: var(--surface, #fff);
@@ -236,7 +236,7 @@
 }
 .rewards-lvl-emoji { font-size: 32px; line-height: 1.1; }
 .rewards-lvl-n { font-weight: 800; color: var(--text-muted); }
-.rewards-lvl-name { font-weight: 800; font-size: .9375rem; line-height: 1.2; overflow-wrap: anywhere; }
+.rewards-lvl-name { font-weight: 800; font-size: .875rem; line-height: 1.2; overflow-wrap: break-word; }
 .rewards-lvl-state { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; margin-top: 4px; }
 .rewards-lvl.is-past { background: var(--brand-50, #FFF4EC); border-color: var(--brand-100, #FFE3D1); color: var(--text); }
 .rewards-lvl.is-past .rewards-lvl-n, .rewards-lvl.is-past .rewards-lvl-xp { color: var(--text-muted); }
