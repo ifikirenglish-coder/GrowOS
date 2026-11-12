@@ -327,7 +327,7 @@ S('4. Rest-day behaviour (Saturday)', async (s) => {
 
 S('5. Plan view and editing', async (s) => {
   const page = await s.open(await s.page());
-  await ev(page, () => { const st = window.HP.store, d = window.HP.dates.today(); st.completeHabit(d, 'water'); st.completeHabit('2026-11-11', 'sleep'); st.addAmount('2026-11-11', 'walk', 10); });
+  await ev(page, () => { const st = window.HP.store, d = window.HP.dates.today(); st.completeHabit(d, 'water'); st.completeHabit('2026-11-11', 'sleep'); st.addAmount('2026-11-11', 'walk', 10); st.addAmount('2026-11-09', 'water', 0.25); /* Monday: tracking starts here, so Tuesday is a real miss */ });
   await goView(page, 'plan');
   const lab = (fk) => page.locator('[data-fk="' + fk + '"]').getAttribute('aria-label');
   const T = (k) => ev(page, (x) => window.HP.t(x), k); // wording of statuses may be tuned; assert on the live strings
@@ -336,6 +336,7 @@ S('5. Plan view and editing', async (s) => {
   s.check(await has('plan-cell-sleep-2', 'status.done'), 'Wednesday sleep cell says done');
   s.check(await has('plan-cell-walk-2', 'status.partial'), 'Wednesday walk cell is partial: ' + await lab('plan-cell-walk-2'));
   s.check(await has('plan-cell-water-1', 'status.missed'), 'Tuesday water (no log) is missed: ' + await lab('plan-cell-water-1'));
+  s.check(await has('plan-cell-sleep-0', 'status.missed'), 'Monday sleep (tracking began Monday, nothing logged) is missed: ' + await lab('plan-cell-sleep-0'));
   s.check(await has('plan-cell-walk-5', 'status.rest'), 'Saturday walk is rest: ' + await lab('plan-cell-walk-5'));
   s.check(await has('plan-cell-water-4', 'status.upcoming'), 'Friday is upcoming');
   // edit mode
