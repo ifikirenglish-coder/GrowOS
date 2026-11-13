@@ -163,3 +163,11 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 
 **Resolution needed:** Add `www.clarity.ms` to the allowed egress hosts for the scheduled session's network policy (via claude.ai/code environment settings).
 
+
+## 2026-11-13 Friday — API Block
+
+**Error:** Clarity API (www.clarity.ms:443) blocked by network policy (HTTP 403 from proxy gateway).
+**Calls attempted:** 4 (overall, Device, Source, OS dimensions)
+**Result:** No data collected for today.
+**Action required:** User must whitelist www.clarity.ms in the Claude Code remote environment network policy, or run this routine from an environment with unrestricted outbound HTTPS.
+
