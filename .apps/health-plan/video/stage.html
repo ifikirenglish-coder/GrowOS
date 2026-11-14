@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<title>My Health Plan video stage</title>
+<style>
+  /* 1080x1920 vertical stage. The real app runs inside the phone iframe. Brand: orange / near-black / warm cream. */
+  :root { --orange:#FF6B1A; --orange-d:#CE4609; --cream:#FFF4EC; --cream-2:#FFE3D1; --ink:#151515; --muted:#5B4A3F; --green:#1F9D63; --amber:#F5A524; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--cream); color: var(--ink);
+    font-family: "Noto Sans", "DejaVu Sans", system-ui, sans-serif; }
+  body::before { content:""; position:absolute; inset:0; background:
+    radial-gradient(900px 700px at 105% -5%, rgba(255,107,26,.28), transparent 60%),
+    radial-gradient(800px 700px at -10% 105%, rgba(255,107,26,.22), transparent 60%); }
+
+  /* ---------- caption zone ---------- */
+  #cap { position:absolute; left:0; right:0; top:0; height:360px; padding:40px 64px 0; }
+  .row { display:flex; align-items:center; justify-content:space-between; gap:20px; height:58px; }
+  #chip { background:var(--ink); color:#fff; font-weight:800; font-size:28px; letter-spacing:.08em; padding:10px 24px; border-radius:99px;
+    transition: transform .35s cubic-bezier(.3,1.6,.5,1); }
+  #chip.pop { transform: scale(1.12); }
+  #track { display:flex; gap:10px; }
+  #track i { width:46px; height:46px; border-radius:50%; border:3px solid rgba(21,21,21,.25); display:grid; place-items:center;
+    font-style:normal; font-weight:800; font-size:20px; color:var(--muted); transition: all .35s; }
+  #track i.cur { border-color:var(--orange); color:var(--orange-d); box-shadow:0 0 0 6px rgba(255,107,26,.22); }
+  #track i.done { background:var(--orange); border-color:var(--orange); color:#151515; }
+  #track i.partial { background:var(--amber); border-color:var(--amber); color:#151515; }
+  #track i.rest { background:#fff; border-color:var(--orange); color:var(--orange-d); }
+  #title { font-size:66px; line-height:1.04; font-weight:900; font-style:italic; letter-spacing:-.01em; margin-top:22px; min-height:72px; }
+  #title em { color:var(--orange-d); font-style:italic; }
+  #sub { font-size:32px; line-height:1.3; font-weight:500; color:var(--muted); margin-top:14px; max-width:960px; }
+  .swap { animation: swap .45s ease both; }
+  @keyframes swap { from { opacity:0; transform: translateY(14px); } to { opacity:1; transform:none; } }
+
+  /* ---------- phone ---------- */
+  #phone { position:absolute; left:185px; top:372px; width:710px; height:1505px; border-radius:76px; background:#151515; padding:14px;
+    box-shadow: 0 40px 90px rgba(21,21,21,.35), 0 0 0 3px #2a2a2a inset; transition: opacity .5s, transform .5s; }
+  #screen { width:682px; height:1477px; border-radius:62px; overflow:hidden; background:#fff; position:relative; }
+  #app { width:390px; height:844.0px; border:0; transform: scale(1.75); transform-origin: 0 0; display:block; }
+
+  /* ---------- finger ---------- */
+  #finger { position:absolute; width:74px; height:74px; margin:-37px 0 0 -37px; border-radius:50%; z-index:50; pointer-events:none;
+    background: rgba(255,107,26,.38); border:5px solid var(--orange); box-shadow:0 8px 24px rgba(0,0,0,.25);
+    transition: left .42s cubic-bezier(.3,.7,.2,1), top .42s cubic-bezier(.3,.7,.2,1), opacity .3s, transform .15s; opacity:0; left:540px; top:1500px; }
+  #finger.show { opacity:1; }
+  #finger.press { transform: scale(.72); }
+  .ripple { position:absolute; width:74px; height:74px; margin:-37px 0 0 -37px; border-radius:50%; border:6px solid var(--orange); z-index:49;
+    pointer-events:none; animation: rip .7s ease-out forwards; }
+  @keyframes rip { from { transform:scale(.6); opacity:.9; } to { transform:scale(2.6); opacity:0; } }
+
+  /* ---------- full-screen scenes ---------- */
+  .scene { position:absolute; inset:0; z-index:100; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding:80px 70px; opacity:0; pointer-events:none; transition: opacity .6s; }
+  .scene.on { opacity:1; }
+  #sIntro, #sOutro { background: linear-gradient(160deg, #FF6B1A 0%, #E5530A 55%, #151515 140%); color:#fff; }
+  .logo { width:190px; height:190px; border-radius:48px; background:#fff; display:grid; place-items:center; box-shadow:0 30px 60px rgba(0,0,0,.3); margin-bottom:56px; }
+  .big { font-size:118px; font-weight:900; font-style:italic; line-height:1; letter-spacing:-.02em; }
+  .mid { font-size:52px; font-weight:700; margin-top:34px; line-height:1.2; }
+  .small { font-size:34px; font-weight:500; margin-top:44px; opacity:.92; line-height:1.35; max-width:860px; }
+  .tag { margin-top:70px; font-size:44px; font-weight:800; font-style:italic; padding:18px 40px; border-radius:99px; background:rgba(21,21,21,.35); }
+
+  #sImpact { background: var(--cream); justify-content:flex-start; padding:70px 56px 40px; }
+  #sImpact::before { content:""; position:absolute; inset:0; z-index:-1; background:
+    radial-gradient(900px 700px at 105% -5%, rgba(255,107,26,.25), transparent 60%); }
+  .ih { font-size:34px; font-weight:800; letter-spacing:.1em; color:var(--orange-d); text-transform:uppercase; }
+  .it { font-size:76px; font-weight:900; font-style:italic; line-height:1.05; margin-top:12px; }
+  .cards { display:grid; grid-template-columns:1fr 1fr; gap:24px; width:100%; margin-top:40px; }
+  .card { background:#fff; border-radius:36px; padding:30px 28px; text-align:left; box-shadow:0 10px 30px rgba(21,21,21,.08); border:2px solid var(--cream-2); }
+  .card .k { font-size:26px; font-weight:700; color:var(--muted); letter-spacing:.02em; }
+  .card .v { font-size:92px; font-weight:900; font-style:italic; line-height:1.05; margin-top:6px; }
+  .card .v small { font-size:40px; font-weight:800; font-style:normal; color:var(--muted); margin-left:6px; }
+  .card .s { font-size:26px; font-weight:600; color:var(--muted); margin-top:4px; }
+  .card.hero { grid-column:1 / span 2; display:flex; align-items:center; gap:36px; }
+  .grade { width:120px; height:120px; border-radius:50%; display:grid; place-items:center; font-size:68px; font-weight:900; font-style:italic; color:#151515; }
+  .stars { font-size:46px; letter-spacing:6px; color:var(--amber); margin-top:6px; }
+  .bars { width:100%; margin-top:34px; background:#fff; border-radius:36px; padding:26px 30px; box-shadow:0 10px 30px rgba(21,21,21,.08); border:2px solid var(--cream-2); text-align:left; }
+  .bars h4 { font-size:28px; color:var(--muted); font-weight:800; letter-spacing:.04em; margin-bottom:14px; }
+  .bar { display:grid; grid-template-columns:260px 1fr 190px; align-items:center; gap:18px; margin:14px 0; font-size:28px; font-weight:700; }
+  .bar .tr { height:26px; border-radius:99px; background:#F1E6DD; overflow:hidden; }
+  .bar .tr b { display:block; height:100%; width:0; border-radius:99px; transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+  .bar .n { text-align:right; color:var(--muted); font-size:26px; font-weight:700; }
+  .goals { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px; }
+  .goals span { background:var(--ink); color:#fff; font-weight:700; font-size:28px; padding:12px 24px; border-radius:99px; }
+  .aim { font-size:26px; font-weight:700; color:var(--muted); margin-top:30px; letter-spacing:.02em; }
+  .fine { font-size:24px; color:var(--muted); margin-top:20px; max-width:900px; line-height:1.35; opacity:.9; }
+  .pop-in { opacity:0; transform: translateY(26px) scale(.97); transition: opacity .6s, transform .6s cubic-bezier(.2,.9,.3,1.2); }
+  .pop-in.in { opacity:1; transform:none; }
+</style>
+</head>
+<body>
+  <div id="cap">
+    <div class="row"><div id="chip">MY HEALTH PLAN</div><div id="track"></div></div>
+    <div id="title"></div>
+    <div id="sub"></div>
+  </div>
+
+  <div id="phone"><div id="screen"><iframe id="app" src="../index.html" title="My Health Plan app"></iframe></div></div>
+  <div id="finger"></div>
+
+  <div id="sIntro" class="scene">
+    <div class="logo"><svg width="120" height="120" viewBox="0 0 24 24" fill="#FF6B1A"><path d="M12 21s-7.5-4.6-9.6-9.3C.9 8.3 2.8 5 6.1 5c2 0 3.5 1.1 4.4 2.5.4.5 1 .5 1.4 0C12.8 6.1 14.2 5 16.2 5c3.3 0 5.2 3.3 3.7 6.7C17.700 16.400 12 21 12 21z"/><path d="M3 12.500h4l1.800-3.200 3 6 2-4.100 1.300 1.300H21" fill="none" stroke="#fff" stroke-width="1.600" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="big" id="iTitle"></div>
+    <div class="mid" id="iSub"></div>
+    <div class="small" id="iNote"></div>
+    <div class="tag" id="iTag"></div>
+  </div>
+  <div id="sOutro" class="scene">
+    <div class="big" id="oTitle"></div>
+    <div class="mid" id="oSub"></div>
+    <div class="small" id="oNote"></div>
+    <div class="tag" id="oTag"></div>
+  </div>
+  <div id="sImpact" class="scene"></div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var S = 1.75, OX = 185 + 14, OY = 372 + 14; // iframe CSS px -> stage px
+  function swap(el, html) { el.innerHTML = html; el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  window.stage = {
+    init: function (letters) {
+      $('track').innerHTML = letters.map(function (l) { return '<i>' + esc(l) + '</i>'; }).join('');
+    },
+    say: function (title, sub) { swap($('title'), title); swap($('sub'), sub || ''); },
+    chip: function (text) { var c = $('chip'); c.textContent = text; c.classList.add('pop'); setTimeout(function () { c.classList.remove('pop'); }, 350); },
+    mark: function (i, state) { var el = $('track').children[i]; if (el) el.className = state || ''; },
+    finger: function (x, y, show) {
+      var f = $('finger'); f.style.left = (OX + x * S) + 'px'; f.style.top = (OY + y * S) + 'px'; f.classList.toggle('show', show !== false);
+    },
+    hideFinger: function () { $('finger').classList.remove('show'); },
+    press: function () {
+      var f = $('finger'); f.classList.add('press'); setTimeout(function () { f.classList.remove('press'); }, 150);
+      var r = document.createElement('div'); r.className = 'ripple'; r.style.left = f.style.left; r.style.top = f.style.top;
+      document.body.appendChild(r); setTimeout(function () { r.remove(); }, 800);
+    },
+    scene: function (id, on) { $(id).classList.toggle('on', !!on); },
+    intro: function (d) { $('iTitle').textContent = d.title; $('iSub').textContent = d.sub; $('iNote').textContent = d.note; $('iTag').textContent = d.tag; },
+    outro: function (d) { $('oTitle').textContent = d.title; $('oSub').textContent = d.sub; $('oNote').textContent = d.note; $('oTag').textContent = d.tag; },
+    phone: function (on) { $('phone').style.opacity = on ? 1 : 0; },
+
+    /* Impact scene: every number comes from the app's own scoring and gamification, computed from the logged week. */
+    impact: function (d) {
+      var L = d.labels, el = $('sImpact');
+      var stars = ''; for (var i = 1; i <= 5; i++) stars += (d.rating.stars >= i ? '★' : (d.rating.stars >= i - .5 ? '⯨' : '☆'));
+      var rows = d.habits.map(function (h) {
+        return '<div class="bar"><div>' + esc(h.name) + '</div><div class="tr"><b data-w="' + Math.round(h.pct) + '" style="background:' + h.color + '"></b></div><div class="n">' + esc(h.note) + '</div></div>';
+      }).join('');
+      el.innerHTML =
+        '<div class="ih pop-in">' + esc(L.kicker) + '</div>' +
+        '<div class="it pop-in">' + esc(L.title) + '</div>' +
+        '<div class="cards">' +
+          '<div class="card hero pop-in"><div class="grade" style="background:' + d.rating.color + '">' + esc(d.rating.grade) + '</div>' +
+            '<div><div class="k">' + esc(L.commit) + '</div><div class="v"><span class="cnt" data-to="' + d.pct + '">0</span><small>%</small></div><div class="stars">' + stars + '</div></div></div>' +
+          '<div class="card pop-in"><div class="k">' + esc(L.streak) + '</div><div class="v"><span class="cnt" data-to="' + d.streak + '">0</span><small>' + esc(L.days) + '</small></div><div class="s">🔥 ' + esc(L.streakNote) + '</div></div>' +
+          '<div class="card pop-in"><div class="k">' + esc(L.xp) + '</div><div class="v"><span class="cnt" data-to="' + d.xp + '">0</span><small>XP</small></div><div class="s">' + esc(d.levelEmoji) + ' ' + esc(L.level) + ' ' + d.level + ' · ' + esc(d.levelName) + '</div></div>' +
+          '<div class="card pop-in"><div class="k">' + esc(L.done) + '</div><div class="v"><span class="cnt" data-to="' + d.doneTotal + '">0</span><small>/ ' + d.scheduledTotal + '</small></div><div class="s">' + esc(L.doneNote) + '</div></div>' +
+          '<div class="card pop-in"><div class="k">' + esc(L.perfect) + '</div><div class="v"><span class="cnt" data-to="' + d.perfectDays + '">0</span><small>/ 7</small></div><div class="s">🏅 ' + d.badges + ' ' + esc(L.badges) + '</div></div>' +
+        '</div>' +
+        '<div class="bars pop-in"><h4>' + esc(L.planVsActual) + '</h4>' + rows + '</div>' +
+        '<div class="aim pop-in">' + esc(L.aims) + '</div>' +
+        '<div class="goals pop-in">' + L.goals.map(function (g) { return '<span>' + esc(g) + '</span>'; }).join('') + '</div>' +
+        '<div class="fine pop-in">' + esc(L.fine) + '</div>';
+      this.scene('sImpact', true);
+      var items = el.querySelectorAll('.pop-in'), n = 0;
+      (function next() {
+        if (n >= items.length) return;
+        items[n].classList.add('in'); n++;
+        if (n === 3) { // hero card visible: start the count-ups and bars
+          el.querySelectorAll('.cnt').forEach(function (c) {
+            var to = +c.dataset.to, t0 = performance.now(), dur = 1500 + Math.random() * 300;
+            (function tick(now) { var k = Math.min(1, (now - t0) / dur); c.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); })(t0);
+          });
+        }
+        if (n === 8) el.querySelectorAll('.bar b').forEach(function (b) { b.style.width = b.dataset.w + '%'; });
+        setTimeout(next, n <= 3 ? 450 : 520);
+      })();
+    }
+  };
+})();
+</script>
+</body>
+</html>

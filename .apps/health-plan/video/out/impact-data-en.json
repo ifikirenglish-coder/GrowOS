@@ -1,0 +1,98 @@
+{
+  "pct": 99,
+  "rating": {
+    "stars": 5,
+    "grade": "S",
+    "key": "legend",
+    "color": "#FF6B1A"
+  },
+  "streak": 7,
+  "xp": 455,
+  "level": 4,
+  "levelName": "Steady",
+  "levelEmoji": "💧",
+  "doneTotal": 31,
+  "scheduledTotal": 32,
+  "perfectDays": 6,
+  "badges": 7,
+  "habits": [
+    {
+      "id": "supplements",
+      "name": "Supplements",
+      "color": "#FF6B1A",
+      "pct": 100,
+      "done": 7,
+      "scheduled": 7,
+      "total": 21,
+      "target": 3,
+      "note": "7/7 days"
+    },
+    {
+      "id": "water",
+      "name": "Water",
+      "color": "#1E9BF0",
+      "pct": 100,
+      "done": 7,
+      "scheduled": 7,
+      "total": 14,
+      "target": 2,
+      "note": "14 L"
+    },
+    {
+      "id": "sleep",
+      "name": "Sleep",
+      "color": "#7B61FF",
+      "pct": 100,
+      "done": 7,
+      "scheduled": 7,
+      "total": 7,
+      "target": 7,
+      "note": "7/7 nights"
+    },
+    {
+      "id": "walk",
+      "name": "Brisk Walk",
+      "color": "#22B573",
+      "pct": 90,
+      "done": 4,
+      "scheduled": 5,
+      "total": 135,
+      "target": 30,
+      "note": "135 / 150 min"
+    },
+    {
+      "id": "fasting",
+      "name": "Intermittent Fasting (IF)",
+      "color": "#F5A524",
+      "pct": 100,
+      "done": 6,
+      "scheduled": 6,
+      "total": 6,
+      "target": 1,
+      "note": "6/6 days"
+    }
+  ],
+  "labels": {
+    "kicker": "YOUR FIRST WEEK",
+    "title": "7 days, tracked",
+    "commit": "Commitment",
+    "streak": "Streak",
+    "days": "days",
+    "streakNote": "in a row",
+    "xp": "Total XP",
+    "level": "Level",
+    "done": "Habits done",
+    "doneNote": "this week",
+    "perfect": "Perfect days",
+    "badges": "badges earned",
+    "planVsActual": "YOUR PLAN VS WHAT YOU DID",
+    "aims": "WHAT THIS PLAN AIMS FOR",
+    "goals": [
+      "Healthier body",
+      "Steadier energy",
+      "Better focus",
+      "More productivity"
+    ],
+    "fine": "Sample week shown for illustration. Results differ for everyone. This app tracks habits and is not medical advice."
+  }
+}
