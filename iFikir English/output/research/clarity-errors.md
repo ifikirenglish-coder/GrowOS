@@ -171,3 +171,11 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 **Result:** No data collected for today.
 **Action required:** User must whitelist www.clarity.ms in the Claude Code remote environment network policy, or run this routine from an environment with unrestricted outbound HTTPS.
 
+
+## 2026-11-14 Saturday — API Block (18th consecutive missed day)
+
+**Error:** All 4 Clarity API calls failed — proxy returned `connect_rejected` on CONNECT to www.clarity.ms:443
+**HTTP status:** 000 (connection refused at egress)
+**Consecutive misses:** Oct 28 – Nov 14 (18 days)
+**Impact:** No data collected. No sheet row written. No CSV row appended.
+**Action required:** User must add www.clarity.ms to the allowed hosts in the Claude Code environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
