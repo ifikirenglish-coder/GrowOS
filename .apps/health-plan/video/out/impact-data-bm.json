@@ -1,0 +1,98 @@
+{
+  "pct": 99,
+  "rating": {
+    "stars": 5,
+    "grade": "S",
+    "key": "legend",
+    "color": "#FF6B1A"
+  },
+  "streak": 7,
+  "xp": 455,
+  "level": 4,
+  "levelName": "Konsisten",
+  "levelEmoji": "💧",
+  "doneTotal": 31,
+  "scheduledTotal": 32,
+  "perfectDays": 6,
+  "badges": 7,
+  "habits": [
+    {
+      "id": "supplements",
+      "name": "Suplemen",
+      "color": "#FF6B1A",
+      "pct": 100,
+      "done": 7,
+      "scheduled": 7,
+      "total": 21,
+      "target": 3,
+      "note": "7/7 hari"
+    },
+    {
+      "id": "water",
+      "name": "Air Putih",
+      "color": "#1E9BF0",
+      "pct": 100,
+      "done": 7,
+      "scheduled": 7,
+      "total": 14,
+      "target": 2,
+      "note": "14 L"
+    },
+    {
+      "id": "sleep",
+      "name": "Tidur",
+      "color": "#7B61FF",
+      "pct": 100,
+      "done": 7,
+      "scheduled": 7,
+      "total": 7,
+      "target": 7,
+      "note": "7/7 malam"
+    },
+    {
+      "id": "walk",
+      "name": "Brisk Walk",
+      "color": "#22B573",
+      "pct": 90,
+      "done": 4,
+      "scheduled": 5,
+      "total": 135,
+      "target": 30,
+      "note": "135 / 150 min"
+    },
+    {
+      "id": "fasting",
+      "name": "Puasa Berselang (IF)",
+      "color": "#F5A524",
+      "pct": 100,
+      "done": 6,
+      "scheduled": 6,
+      "total": 6,
+      "target": 1,
+      "note": "6/6 hari"
+    }
+  ],
+  "labels": {
+    "kicker": "MINGGU PERTAMA ANDA",
+    "title": "7 hari, direkod",
+    "commit": "Komitmen",
+    "streak": "Rentetan",
+    "days": "hari",
+    "streakNote": "berturut-turut",
+    "xp": "Jumlah XP",
+    "level": "Tahap",
+    "done": "Tabiat siap",
+    "doneNote": "minggu ini",
+    "perfect": "Hari sempurna",
+    "badges": "lencana diperoleh",
+    "planVsActual": "RANCANGAN VS YANG ANDA BUAT",
+    "aims": "MATLAMAT RANCANGAN INI",
+    "goals": [
+      "Badan lebih sihat",
+      "Tenaga lebih stabil",
+      "Fokus lebih baik",
+      "Produktiviti meningkat"
+    ],
+    "fine": "Contoh minggu untuk ilustrasi. Hasil berbeza bagi setiap orang. App ini menjejak tabiat dan bukan nasihat perubatan."
+  }
+}
