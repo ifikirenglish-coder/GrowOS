@@ -196,3 +196,10 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 **Impact:** No data collected. No sheet row written. No CSV row appended.
 **Action required:** User must add www.clarity.ms to the allowed hosts in the Claude Code environment's network policy at https://code.claude.com/docs/en/claude-code-on-the-web
 
+
+## 2026-11-17 (KL) — Scheduled run failed
+
+- **Error:** `www.clarity.ms:443` blocked by session network policy (gateway 403 / connect_rejected)
+- **Impact:** All 4 API calls failed. No metrics collected. No sheet write. No CSV row appended.
+- **Fix needed:** The Claude Code remote session's network policy must allowlist `www.clarity.ms`. The user (or org admin) can update this in the session/environment settings at https://code.claude.com/docs/en/claude-code-on-the-web
+- **API calls used today:** 0 / 10 (quota preserved)
