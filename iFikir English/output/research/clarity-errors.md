@@ -203,3 +203,14 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 - **Impact:** All 4 API calls failed. No metrics collected. No sheet write. No CSV row appended.
 - **Fix needed:** The Claude Code remote session's network policy must allowlist `www.clarity.ms`. The user (or org admin) can update this in the session/environment settings at https://code.claude.com/docs/en/claude-code-on-the-web
 - **API calls used today:** 0 / 10 (quota preserved)
+
+---
+## 2026-11-18 (Wednesday) — Run failed: proxy blocked clarity.ms
+
+**Date (KL):** 2026-11-18 Wednesday
+**Error:** `www.clarity.ms` is not allowed by the session proxy (HTTP 403 on CONNECT tunnel).
+**All 4 API calls failed.** No metrics collected.
+**Steps skipped:** Step 3 (parse), Step 4 (Google Sheet write), Step 5 (CSV append), Step 6 (git commit).
+
+**Action required:** The outbound network policy for this Claude Code remote session does not permit connections to `www.clarity.ms`. To fix, the session's network policy needs to allowlist `www.clarity.ms` (or `*.clarity.ms`). This is configured when creating the remote environment at https://code.claude.com/docs/en/claude-code-on-the-web.
+
