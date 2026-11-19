@@ -214,3 +214,14 @@ No data was written to the tracking CSV or Google Sheet for today's run.
 
 **Action required:** The outbound network policy for this Claude Code remote session does not permit connections to `www.clarity.ms`. To fix, the session's network policy needs to allowlist `www.clarity.ms` (or `*.clarity.ms`). This is configured when creating the remote environment at https://code.claude.com/docs/en/claude-code-on-the-web.
 
+
+## 2026-11-19 Thursday — Proxy 403 Block
+
+All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the outbound proxy with a 403 "policy denial."
+
+- Error: `connect_rejected` — gateway answered 403 to CONNECT
+- Host blocked: `www.clarity.ms:443`
+- Calls attempted: 4 (overall, Device, Source, OS dimensions)
+- Result: No data collected. Sheet write and CSV append skipped.
+
+**Action needed:** The network policy in this cloud environment does not allow outbound HTTPS to `www.clarity.ms`. To fix this, the environment's network policy must be updated to allow that host, or the routine must be run from a different environment.
