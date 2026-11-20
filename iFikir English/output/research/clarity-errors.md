@@ -225,3 +225,13 @@ All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the outbound pr
 - Result: No data collected. Sheet write and CSV append skipped.
 
 **Action needed:** The network policy in this cloud environment does not allow outbound HTTPS to `www.clarity.ms`. To fix this, the environment's network policy must be updated to allow that host, or the routine must be run from a different environment.
+
+---
+## 2026-11-20 Friday (KL) — Routine Run Failed
+
+**Error:** All 4 Clarity API calls blocked by outbound proxy (HTTP 000, proxy 403).  
+**Host:** www.clarity.ms:443  
+**Reason:** `connect_rejected` — this host is not on the egress allowlist for this remote execution environment.  
+**Impact:** No data written to Google Sheet (Step 4) or CSV (Step 5). Git commit skipped.  
+**Action needed:** The user must allow `www.clarity.ms` in the network policy for this cloud environment, or switch to an environment with unrestricted outbound HTTPS.
+
