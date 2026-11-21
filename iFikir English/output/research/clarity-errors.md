@@ -235,3 +235,12 @@ All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the outbound pr
 **Impact:** No data written to Google Sheet (Step 4) or CSV (Step 5). Git commit skipped.  
 **Action needed:** The user must allow `www.clarity.ms` in the network policy for this cloud environment, or switch to an environment with unrestricted outbound HTTPS.
 
+
+---
+## 2026-11-21 Saturday — API Blocked by Network Policy
+
+**Error:** Proxy returned 403 Forbidden for `www.clarity.ms:443`
+**Reason:** "no rule or network setting allows this host"
+**Impact:** All 4 Clarity API calls failed. No data written to sheet or CSV.
+**Action required:** The cloud session's network policy must allow `www.clarity.ms` for this routine to work. The user should update the environment's network policy to permit this host, or switch to a network policy that includes it.
+
