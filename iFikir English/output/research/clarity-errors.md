@@ -244,3 +244,13 @@ All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the outbound pr
 **Impact:** All 4 Clarity API calls failed. No data written to sheet or CSV.
 **Action required:** The cloud session's network policy must allow `www.clarity.ms` for this routine to work. The user should update the environment's network policy to permit this host, or switch to a network policy that includes it.
 
+
+---
+## 2026-11-22 (Sunday) — Clarity API Blocked
+
+**Run time (KL):** 2026-11-22 Sunday
+**Error:** HTTP 403 from proxy — `www.clarity.ms` is not in the allowed-host list for this execution environment.
+**Proxy message:** "no rule or network setting allows this host"
+**Steps completed:** Step 1 (token read) ✓ | Step 2 (API calls) ✗ — all 4 blocked
+**Steps skipped:** Step 3 (parse), Step 4 (sheet write), Step 5 (CSV append), Step 6 (git commit)
+**Action needed:** Add `www.clarity.ms` to the allowed-hosts network policy for this Claude Code remote session. This can be configured at https://code.claude.com/docs/en/claude-code-on-the-web when creating or editing the environment.
