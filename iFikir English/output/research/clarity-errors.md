@@ -254,3 +254,10 @@ All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the outbound pr
 **Steps completed:** Step 1 (token read) ✓ | Step 2 (API calls) ✗ — all 4 blocked
 **Steps skipped:** Step 3 (parse), Step 4 (sheet write), Step 5 (CSV append), Step 6 (git commit)
 **Action needed:** Add `www.clarity.ms` to the allowed-hosts network policy for this Claude Code remote session. This can be configured at https://code.claude.com/docs/en/claude-code-on-the-web when creating or editing the environment.
+
+## 2026-11-23 Monday
+
+**Error:** Proxy blocked outbound HTTPS to www.clarity.ms
+**HTTP Status:** 403 Forbidden — "agent proxy: no rule or network setting allows this host"
+**Impact:** All 4 Clarity API calls failed. No data written to sheet or CSV today.
+**Action needed:** The session's network policy must allowlist www.clarity.ms for this routine to run.
