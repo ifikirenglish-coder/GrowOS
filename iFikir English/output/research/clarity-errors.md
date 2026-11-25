@@ -270,3 +270,12 @@ All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the outbound pr
 **Message:** `HTTP/1.1 403 Forbidden (agent proxy: no rule or network setting allows this host)`
 **Action taken:** Routine aborted at Step 2. No data written to sheet or CSV.
 **Resolution needed:** Add `www.clarity.ms` to the allowed hosts in the Claude Code remote session network policy.
+
+## 2026-11-25 — Egress Proxy Blocked (www.clarity.ms)
+
+**Run time:** 2026-11-25 Wednesday (KL)  
+**Error:** All 4 Clarity API calls failed with HTTP 403 from egress proxy.  
+**Reason:** The host `www.clarity.ms:443` is not allowed for this cloud session's network policy (`connect_rejected`).  
+**Result:** No data written to sheet or CSV for today.  
+**Action required:** User must either (a) whitelist `www.clarity.ms` in the session network policy, or (b) run this routine from a session with unrestricted outbound access.
+
