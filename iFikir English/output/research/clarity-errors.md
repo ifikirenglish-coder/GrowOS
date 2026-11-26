@@ -279,3 +279,12 @@ All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the outbound pr
 **Result:** No data written to sheet or CSV for today.  
 **Action required:** User must either (a) whitelist `www.clarity.ms` in the session network policy, or (b) run this routine from a session with unrestricted outbound access.
 
+
+---
+## 2026-11-26 09:xx KL — API blocked by egress proxy
+
+**Date:** 2026-11-26 Thursday (KL)
+**Error:** All 4 Clarity API calls to `www.clarity.ms:443` returned HTTP 000 (connect_rejected, HTTP 403)
+**Cause:** The remote execution environment's egress proxy does not allow outbound connections to `www.clarity.ms`. This is a network policy restriction, not a token or API issue.
+**Impact:** Daily analytics run failed — no data written to Google Sheet or tracking CSV.
+**Action required:** The session's network policy needs to whitelist `www.clarity.ms` for Clarity API calls to succeed. The user should check their Claude Code remote environment settings and add `www.clarity.ms` to the allowed hosts list.
