@@ -288,3 +288,21 @@ All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the outbound pr
 **Cause:** The remote execution environment's egress proxy does not allow outbound connections to `www.clarity.ms`. This is a network policy restriction, not a token or API issue.
 **Impact:** Daily analytics run failed — no data written to Google Sheet or tracking CSV.
 **Action required:** The session's network policy needs to whitelist `www.clarity.ms` for Clarity API calls to succeed. The user should check their Claude Code remote environment settings and add `www.clarity.ms` to the allowed hosts list.
+
+---
+## 2026-11-27 (KL) — Proxy Block
+
+**Time:** $(TZ=Asia/Kuala_Lumpur date +"%H:%M %Z")
+**Error:** All 4 Clarity API calls failed — `www.clarity.ms:443` rejected by egress proxy (HTTP 403, connect_rejected).
+**Root cause:** The cloud execution environment's network policy does not allow outbound connections to `www.clarity.ms`.
+**Impact:** No analytics data fetched. Sheet not updated. CSV not updated.
+**Resolution needed:** Add `www.clarity.ms` to the allowed egress hosts for this cloud environment, or configure the scheduled task to run in an environment with broader network access.
+
+---
+## 2026-11-27 (KL) — Proxy Block
+
+**Time:** 09:03 +08
+**Error:** All 4 Clarity API calls failed — www.clarity.ms:443 rejected by egress proxy (HTTP 403, connect_rejected).
+**Root cause:** The cloud execution environment's network policy does not allow outbound connections to www.clarity.ms.
+**Impact:** No analytics data fetched. Sheet not updated. CSV not updated.
+**Resolution needed:** Add www.clarity.ms to the allowed egress hosts for this cloud environment, or configure the scheduled task to run in an environment with broader network access.
