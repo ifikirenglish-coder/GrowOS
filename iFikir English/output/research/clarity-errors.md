@@ -306,3 +306,9 @@ All 4 Clarity API calls to `www.clarity.ms:443` were rejected by the outbound pr
 **Root cause:** The cloud execution environment's network policy does not allow outbound connections to www.clarity.ms.
 **Impact:** No analytics data fetched. Sheet not updated. CSV not updated.
 **Resolution needed:** Add www.clarity.ms to the allowed egress hosts for this cloud environment, or configure the scheduled task to run in an environment with broader network access.
+
+## 2026-11-28 09:03 KL — API blocked by proxy
+- All 4 Clarity API calls failed: HTTP 403 from agent proxy
+- Reason: "no rule or network setting allows this host" for www.clarity.ms
+- This is a network policy restriction in the cloud execution environment
+- Action needed: Whitelist www.clarity.ms in the session's network policy
